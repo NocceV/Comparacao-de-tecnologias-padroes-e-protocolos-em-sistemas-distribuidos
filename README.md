@@ -1,1 +1,1 @@
-# Compara-o-de-tecnologias-padr-es-e-protocolos-em-sistemas-distribu-dos
+# Comparacao-de-tecnologias-padroes-e-protocolos-em-sistemas-distribuidos
