@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  python_service:
+    build: ../python/services/user-service
+    container_name: user-service-python
+    ports:
+      - "8000:8000"
+    networks:
+      - testnet
+
+  # java_service:
+  #   build: ../java/services/user-service
+  #   container_name: user-service-java
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - testnet
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - python_service
+      # - java_service
+    networks:
+      - testnet
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - testnet
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
+networks:
+  testnet:
+    driver: bridge
