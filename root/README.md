@@ -1,6 +1,6 @@
-# Comparacao-de-tecnologias-padroes-e-protocolos-em-sistemas-distribuidos
+<!-- # Comparacao-de-tecnologias-padroes-e-protocolos-em-sistemas-distribuidos -->
 
-Colocar fururamente como rodar ambiente de desenvolvimento para todos os "casos"
+<!-- Colocar fururamente como rodar ambiente de desenvolvimento para todos os "casos"
 
 
 Ferramentas
@@ -32,3 +32,249 @@ Quanto aos diagramas, a visão macro está representada no Diagrama de Arquitetu
 A estratégia de testes contempla, para cada combinação protocolo × serviço, uma bateria de experimentos repetida para cenários ideal, realista e crítico. Cada experimento registra métricas primárias e secundárias e salva seus dados de saída em um diretório organizado por data, protocolo e cenário, por exemplo tests/results/k6_rest_user_ideal_20251101.json. Os dados coletados são tratados com scripts simples em Python (pandas) quando for necessário agregar e produzir as tabelas e gráficos que irão constar no relatório. A apresentação final deve incluir painéis Grafana selecionados, tabelas comparativas claras e um fluxograma de decisão que sintetize os trade-offs observados. O cronograma geral até o dia da apresentação 13/11 foi definido em marcos semanais, com a semana inicial (24/10–30/10) dedicada à estruturação e preparação do projeto, a segunda semana ao desenvolvimento dos serviços, a terceira à execução extensiva dos testes e a última à análise dos resultados e preparação dos slides. Para a semana em curso, há instruções detalhadas dia a dia que orientam desde a criação do repositório até o primeiro docker-compose com Prometheus raspando métricas, e a estratégia é priorizar primeiro a infraestrutura que permita rodar testes simples, depois instrumentar mais profundamente e só então partir para cenários críticos.
 
 Para um novo integrante que entra no projeto é recomendável começar lendo a documentação em docs, clonando o repositório e subindo o ambiente com docker-compose. Em seguida deve abrir os diagramas da pasta docs/diagrams para ter a visão global, conferir o arquivo docs/api_contracts.md para conhecer os contratos mínimos e rodar um teste k6 simples sobre o serviço REST de referência para validar que o fluxo de testes está funcionando. Após entender essa sequência, o próximo passo é instrumentar métricas adicionais ou implementar um dos protocolos faltantes em linguagem de preferência, sempre seguindo os contratos e os padrões de logging definidos no repositório. Qualquer mudança de contrato deve ser negociada e versionada no docs/api_contracts.md e nas pastas de serviços correspondentes, e novas métricas ou dashboards em Grafana devem ser adicionados sob infra/grafana para manter rastreabilidade
+
+
+
+#TODO
+
+Fazer documentação 
+Salvar explicações
+Entender 100% de tudo
+Dia 6
+Dia 7 -->
+
+
+# 🔗 Comparative Study of Communication Protocols and Standards
+
+Este projeto tem como objetivo realizar uma **análise comparativa entre seis protocolos e padrões de comunicação** amplamente utilizados em sistemas distribuídos: **REST**, **SOAP**, **gRPC**, **WebSocket**, **GraphQL** e **Webhook**.  
+A proposta é avaliar o desempenho, escalabilidade, resiliência e consumo de recursos de cada tecnologia sob diferentes condições de rede, auxiliando na escolha ideal de comunicação entre sistemas.
+
+---
+
+## 🧭 Estrutura do Projeto
+
+O projeto foi desenvolvido de forma modular, separando os serviços por linguagem e função, garantindo flexibilidade e independência entre os componentes. A infraestrutura completa é orquestrada via **Docker Compose**.
+
+```
+📂 project-root/
+├── python/
+│   └── user-service/
+│       ├── main.py
+│       ├── requirements.txt
+│       └── Dockerfile
+├── java/
+│   └── user-service/
+│       ├── src/
+│       ├── pom.xml
+│       └── Dockerfile
+├── infra/
+│   ├── docker-compose.yml
+│   └── prometheus/
+│       └── prometheus.yml
+├── docs/
+│   ├── api_contracts.md
+│   └── diagrams/
+└── README.md
+```
+
+---
+
+## ⚙️ Tecnologias Utilizadas
+
+### **Linguagens e Frameworks**
+- **Python (FastAPI)** – utilizado para construir serviços leves e rápidos, com fácil integração a Prometheus.
+- **Java (Spring Boot)** – escolhido para sua robustez e uso comum em sistemas corporativos.
+- **gRPC / GraphQL / WebSocket / Webhook** – implementados sobre essas bases para comparação direta de desempenho.
+
+### **Infraestrutura e Monitoramento**
+- **Docker / Docker Compose** – garante isolamento e reprodutibilidade do ambiente de testes.
+- **Prometheus** – coleta métricas de desempenho (latência, throughput, uso de CPU/memória).
+- **Grafana** – visualiza as métricas coletadas em dashboards dinâmicos.
+- **k6 / Apache JMeter** – ferramentas utilizadas para simular carga e medir o comportamento dos serviços.
+
+---
+
+## 🧩 Funcionamento da Infraestrutura
+
+A arquitetura foi planejada para permitir testes padronizados entre linguagens e protocolos.  
+Cada serviço (tanto em Python quanto em Java) expõe um endpoint `/users/{id}`, com a mesma resposta em JSON, garantindo a equivalência funcional durante as medições.
+
+O **Prometheus** é configurado para “raspar” os endpoints de métricas expostos por cada serviço, permitindo registrar informações de uso e desempenho.  
+Esses dados podem ser visualizados no **Grafana**, que exibe os gráficos comparativos em tempo real.
+
+### Fluxo geral:
+1. O Docker Compose sobe todos os containers (`python_service`, `java_service`, `prometheus`, e opcionalmente `grafana`).
+2. O Prometheus começa a monitorar os endpoints de métricas definidos.
+3. Os serviços são testados com k6, JMeter ou scripts Python/Java customizados.
+4. As métricas são salvas e comparadas entre os diferentes protocolos e padrões.
+
+---
+
+## 🧱 Configuração dos Serviços
+
+### Python (FastAPI)
+Arquivo `main.py`:
+
+```python
+from fastapi import FastAPI
+from prometheus_client import start_http_server, Counter
+
+app = FastAPI()
+REQUESTS = Counter('requests_total', 'Total requests')
+start_http_server(8001)
+
+@app.get("/users/{user_id}")
+async def get_user(user_id: int):
+    REQUESTS.inc()
+    return {"id": user_id, "name": f"User{user_id}", "email": "user@example.com"}
+```
+
+Arquivo `requirements.txt`:
+
+```
+fastapi
+uvicorn[standard]
+prometheus-client
+```
+
+Arquivo `Dockerfile`:
+
+```dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+---
+
+### Java (Spring Boot)
+Arquivo `Dockerfile`:
+
+```dockerfile
+FROM maven:3.8-openjdk-17 AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn -q -DskipTests package
+
+FROM openjdk:17-jdk-slim
+COPY --from=build /app/target/app.jar /app/app.jar
+CMD ["java","-jar","/app/app.jar"]
+```
+
+---
+
+## 🧠 Observabilidade
+
+Arquivo `infra/prometheus/prometheus.yml`:
+
+```yaml
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'python_service'
+    static_configs:
+      - targets: ['python_service:8001']
+
+  - job_name: 'java_service'
+    static_configs:
+      - targets: ['java_service:8080']
+```
+
+Arquivo `infra/docker-compose.yml`:
+
+```yaml
+version: '3.8'
+services:
+  python_service:
+    build: ../python/user-service
+    ports:
+      - "8000:8000"
+    networks:
+      - testnet
+
+  java_service:
+    build: ../java/user-service
+    ports:
+      - "8080:8080"
+    networks:
+      - testnet
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - testnet
+
+networks:
+  testnet:
+```
+
+---
+
+## 🔬 Testes e Métricas
+
+Os testes são conduzidos em três cenários distintos:
+
+- **Ideal:** ambiente estável e com baixa latência.
+- **Realista:** condições típicas de rede com variações moderadas.
+- **Crítico:** alta carga, perda de pacotes e concorrência elevada.
+
+As métricas avaliadas incluem:
+- Latência (tempo de resposta)
+- Throughput (requisições por segundo)
+- Uso de CPU e memória
+- Escalabilidade e resiliência
+
+---
+
+## 🧾 Histórico de Comandos e Etapas Executadas
+
+### Dia 4 — 27/10: Configuração inicial dos serviços
+```bash
+cd python/user-service
+pip install -r requirements.txt
+uvicorn main:app --reload
+# Teste local
+curl http://localhost:8000/users/1
+```
+
+### Dia 5 — 28/10: Infraestrutura com Docker Compose e Prometheus
+```bash
+# Na pasta infra/
+docker-compose up --build
+# Verificação
+curl http://localhost:8000/users/1
+curl http://localhost:8080/users/1
+# Acesso ao Prometheus
+http://localhost:9090
+```
+
+---
+
+## 📈 Próximos Passos
+
+1. Adicionar instrumentação completa de métricas aos demais protocolos.
+2. Integrar Grafana para dashboards de desempenho.
+3. Executar os testes comparativos em cenários ideal, realista e crítico.
+4. Gerar tabelas e gráficos de análise.
+
+---
+
+## 👥 Autores
+
+**Vitor Lopes Nocce** – Implementação Python, instrumentação e análise de métricas.  
+**Rafael Sanzio e Silva** – Implementação Java, integração e monitoramento.
+
+---
+
+## 🧩 Licença
+
+Este projeto é de caráter **acadêmico e experimental**, desenvolvido para fins de pesquisa no contexto de análise de protocolos de comunicação em sistemas distribuídos.
