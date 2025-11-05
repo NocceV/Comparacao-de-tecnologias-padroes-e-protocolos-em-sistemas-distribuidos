@@ -11,7 +11,7 @@ REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'Tempo de resposta 
 @app.get("/users/{user_id}")
 async def get_user(user_id: int):
     start_time = time.time()
-    REQUEST_COUNT.labels(method='GET', endpoint='/users/{id}').inc()
+    REQUEST_COUNT.labels(method='GET', endpoint='/users/{user_id}').inc()
     response = {"id": user_id, "name": f"User{user_id}", "email": "user@example.com"}
     REQUEST_LATENCY.labels(endpoint='/users/{id}').observe(time.time() - start_time)
     return response
@@ -19,3 +19,8 @@ async def get_user(user_id: int):
 @app.get("/metrics") 
 def metrics():
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}

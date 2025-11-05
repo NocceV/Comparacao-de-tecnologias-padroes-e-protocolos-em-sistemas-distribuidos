@@ -1,5 +1,6 @@
 global:
   scrape_interval: 5s
+  evaluation_interval: 5s
 
 scrape_configs:
   - job_name: 'python_service'
@@ -7,7 +8,17 @@ scrape_configs:
     static_configs:
       - targets: ['python_service:8000']
 
-  # - job_name: 'java_service'
-  #   metrics_path: /actuator/prometheus
-  #   static_configs:
-  #     - targets: ['java_service:8080']
+  - job_name: 'user_graphql'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['user-graphql:8001']
+
+  - job_name: 'user_webhook'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['user-webhook:8003']
+
+  - job_name: 'user_grpc'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['user-grpc:50052']

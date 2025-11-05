@@ -1,14 +1,45 @@
-version: '3.8'
+version: "3.8"
 
 services:
   python_service:
-    build: ../python/services/user-service
+    build: ../python/services/user-service/off
     container_name: user-service-python
     ports:
-      - "8000:8000"
+      - "8000:8000"        
+    networks:
+      - testnet
+    depends_on:
+      - prometheus
+
+  user-graphql:
+    build: ../python/services/user-service/user-service-graphql
+    image: user-graphql:dev
+    container_name: user-graphql
+    ports:
+      - "8001:8001"   
     networks:
       - testnet
 
+  user-grpc:
+    build: ../python/services/user-service/user-service-grpc
+    image: user-grpc:dev
+    container_name: user-grpc
+    ports:
+      - "50051:50051"     
+      - "50052:50052"     
+    networks:
+      - testnet
+
+  user-webhook:
+    build: ../python/services/user-service/user-service-webhook
+    image: user-webhook:dev
+    container_name: user-webhook
+    ports:
+      - "8003:8003"
+    networks:
+      - testnet
+
+  # Uncomment and configure Java service when ready
   # java_service:
   #   build: ../java/services/user-service
   #   container_name: user-service-java
@@ -21,12 +52,9 @@ services:
     image: prom/prometheus:latest
     container_name: prometheus
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     ports:
       - "9090:9090"
-    depends_on:
-      - python_service
-      # - java_service
     networks:
       - testnet
 
@@ -46,3 +74,4 @@ services:
 networks:
   testnet:
     driver: bridge
+
