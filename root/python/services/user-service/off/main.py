@@ -16,6 +16,6 @@ async def get_user(user_id: int):
     REQUEST_LATENCY.labels(endpoint='/users/{id}').observe(time.time() - start_time)
     return response
 
-@app.get("/metrics")
+@app.get("/metrics") 
 def metrics():
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
