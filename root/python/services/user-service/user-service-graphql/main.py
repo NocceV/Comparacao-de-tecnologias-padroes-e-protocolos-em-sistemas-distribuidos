@@ -1,4 +1,3 @@
-# main.py
 from fastapi import FastAPI
 from ariadne import QueryType, make_executable_schema
 from ariadne.asgi import GraphQL

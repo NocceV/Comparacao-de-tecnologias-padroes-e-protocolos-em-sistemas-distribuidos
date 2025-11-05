@@ -3,7 +3,6 @@ import httpx
 import uuid, asyncio
 
 app = FastAPI()
-# in-memory store dos callbacks
 callbacks = []
 
 @app.post("/hooks/users")
@@ -16,9 +15,7 @@ async def register_hook(payload: dict):
 
 @app.post("/users")
 async def create_user(payload: dict):
-    # simula criação de um usuário e dispara eventos
     user = {"id": 1, "name": payload.get("name", "User1"), "email": payload.get("email","user@example.com")}
-    # dispatch assíncrono
     async def dispatch():
         async with httpx.AsyncClient() as client:
             for cb in callbacks:
@@ -31,6 +28,5 @@ async def create_user(payload: dict):
 
 @app.post("/webhook/receiver")
 async def webhook_receiver(payload: dict):
-    # endpoint para testar recebimento
     print("received webhook:", payload)
     return {"status":"received"}
