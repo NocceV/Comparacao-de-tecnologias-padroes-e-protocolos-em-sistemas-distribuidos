@@ -1,9 +1,10 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import Response
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 import httpx
 import time
 import asyncio
+import json
 
 app = FastAPI()
 
@@ -15,10 +16,13 @@ callbacks = []
 @app.post("/hooks/users")
 async def register_hook(request: Request):
     start = time.perf_counter()
-    payload = await request.json()
+    try:
+        payload = await request.json()
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=400, detail="Invalid or missing JSON body")
     url = payload.get("callback_url")
     if not url:
-        return {"error": "callback_url required"}
+        raise HTTPException(status_code=400, detail="callback_url required")
     callbacks.append(url)
     REQUEST_COUNT.labels(method='POST', endpoint='/hooks/users').inc()
     REQUEST_LATENCY.labels(endpoint='/hooks/users').observe(time.perf_counter() - start)
@@ -27,7 +31,10 @@ async def register_hook(request: Request):
 @app.post("/users")
 async def create_user(request: Request):
     start = time.perf_counter()
-    payload = await request.json()
+    try:
+        payload = await request.json()
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=400, detail="Invalid or missing JSON body")
     user = {"id": 1, "name": payload.get("name", "User1"), "email": payload.get("email", "user@example.com")}
     REQUEST_COUNT.labels(method='POST', endpoint='/users').inc()
 
@@ -45,7 +52,10 @@ async def create_user(request: Request):
 
 @app.post("/webhook/receiver")
 async def receiver(request: Request):
-    payload = await request.json()
+    try:
+        payload = await request.json()
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=400, detail="Invalid or missing JSON body")
     print("Webhook recebido:", payload)
     return {"status": "received"}
 
