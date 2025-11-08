@@ -43,3 +43,28 @@ def health():
 @app.get("/metrics")
 def metrics():
   return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+
+
+
+# Quando alguém consulta um usuário:
+
+# Marca o tempo inicial
+# Incrementa o contador de requisições
+# Cria um usuário fictício (dados mock)
+# Registra o tempo total da operação
+# Retorna os dados
+
+# 4. Endpoints
+
+# /graphql: Endpoint GraphQL principal para fazer queries
+# /health: Health check (retorna {"status": "ok"})
+# /metrics: Expõe métricas no formato Prometheus
+
+# Caso de Uso
+# Este código é típico de microsserviços em produção, permitindo:
+
+# Consultar dados via GraphQL
+# Monitorar performance e uso da API
+# Integrar com ferramentas de observabilidade (Prometheus + Grafana)
+
+# O usuário retornado é sempre fictício (User{id}, user@example.com), então este é um exemplo/protótipo para demonstrar a integração dessas tecnologias.

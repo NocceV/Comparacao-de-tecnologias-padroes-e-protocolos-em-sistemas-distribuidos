@@ -66,3 +66,32 @@ def metrics():
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+
+# Quando alguém cria um usuário:
+
+# Marca o tempo inicial
+# Incrementa o contador de requisições
+# Cria um usuário fictício (dados mock)
+# Dispara notificações assíncronas para todos os callbacks registrados
+# Registra o tempo total da operação
+# Retorna os dados imediatamente (sem esperar os webhooks)
+
+# Endpoints
+
+# /hooks/users: Registra URLs para receber notificações
+# /users: Cria usuário e dispara webhooks automaticamente
+# /webhook/receiver: Exemplo de endpoint que recebe notificações
+# /health: Health check (retorna {"status": "ok"})
+# /metrics: Expõe métricas no formato Prometheus
+
+# Caso de Uso
+# Este código é típico de arquiteturas orientadas a eventos, permitindo:
+
+# Notificar múltiplos serviços automaticamente quando eventos ocorrem
+# Desacoplar sistemas (serviços não precisam se conhecer diretamente)
+# Monitorar performance e uso da API
+# Processar notificações em background sem bloquear resposta
+
+# Limitações: Os callbacks são armazenados apenas em memória (não persistem após reiniciar) e não há validação/segurança. É um exemplo/protótipo para demonstrar o padrão webhook com processamento assíncrono.

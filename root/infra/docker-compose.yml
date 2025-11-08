@@ -50,6 +50,16 @@ services:
     networks:
       - testnet
 
+  event-grpc:
+    build: ../python/services/event-service/event-service-grpc
+    image: event-grpc:dev
+    container_name: event-grpc
+    ports:
+      - "50061:50061"
+      - "50062:50062"
+    networks:
+      - testnet
+
   user-webhook:
     build: ../python/services/user-service/user-service-webhook
     image: user-webhook:dev
@@ -76,19 +86,6 @@ services:
       - "8023:8023"
     networks:
       - testnet
-
-  event-grpc:
-    build: ../python/services/event-service/event-service-grpc
-    image: event-grpc:dev
-    container_name: event-grpc
-    ports:
-      - "50061:50061"
-      - "50062:50062"
-    networks:
-      - testnet
-
-
-
 
   prometheus:
     image: prom/prometheus:latest

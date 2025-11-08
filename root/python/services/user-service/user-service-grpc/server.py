@@ -33,3 +33,34 @@ def serve():
 
 if __name__ == '__main__':
     serve()
+
+
+
+# Arquivos do Projeto
+
+# user.proto: Define o contrato da API (como um schema)
+# user_pb2.py: Classes Python geradas automaticamente das mensagens
+# user_pb2_grpc.py: Classes Python geradas automaticamente do serviço
+# Servidor: Implementa a lógica do serviço
+# Cliente: Consome o serviço
+
+# O que é gRPC?
+# É um framework de comunicação entre serviços criado pelo Google. Diferente de REST/HTTP:
+
+# Usa Protocol Buffers (binário) em vez de JSON
+# Mais rápido e eficiente que REST
+# Fortemente tipado (contrato definido em .proto)
+
+# Quando o servidor recebe uma chamada GetUser:
+
+# Marca o tempo inicial
+# Incrementa o contador de requisições gRPC
+# Cria um usuário fictício (dados mock)
+# Registra a latência da operação
+# Retorna os dados serializados (formato binário)
+
+# Portas/Endpoints
+
+# Porta 50051: Servidor gRPC (recebe chamadas RPC)
+# Porta 50052: Servidor HTTP com métricas Prometheus
+# Método disponível: GetUser(id) → UserResponse
