@@ -25,15 +25,14 @@ class MessageService(message_pb2_grpc.MessageServiceServicer):
         return response
 
 def serve():
-    # Porta 50053 para métricas Prometheus
     start_http_server(50053)
 
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     message_pb2_grpc.add_MessageServiceServicer_to_server(MessageService(), server)
-    server.add_insecure_port('[::]:50052')
+    server.add_insecure_port('[::]:50054')
     server.start()
 
-    print("gRPC MessageService rodando na porta 50052, métricas em 50053")
+    print("gRPC MessageService rodando na porta 50054, métricas em 50053")
     try:
         while True:
             time.sleep(86400)

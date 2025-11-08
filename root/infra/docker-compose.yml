@@ -35,7 +35,7 @@ services:
     image: message-grpc:dev
     container_name: message-grpc
     ports:
-      - "50052:50052"
+      - "50054:50054"
       - "50053:50053"
     networks:
       - testnet
