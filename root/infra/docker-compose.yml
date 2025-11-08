@@ -1,15 +1,15 @@
 version: "3.8"
 
 services:
-  python_service:
-    build: ../python/services/user-service/off
-    container_name: user-service-python
-    ports:
-      - "8000:8000"        
-    networks:
-      - testnet
-    depends_on:
-      - prometheus
+  # python_service:
+  #   build: ../python/services/user-service/off
+  #   container_name: user-service-python
+  #   ports:
+  #     - "8000:8000"        
+  #   networks:
+  #     - testnet
+  #   depends_on:
+  #     - prometheus
 
   user-graphql:
     build: ../python/services/user-service/user-service-graphql

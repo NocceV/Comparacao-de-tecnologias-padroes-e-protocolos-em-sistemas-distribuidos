@@ -3,10 +3,10 @@ global:
   evaluation_interval: 5s
 
 scrape_configs:
-  - job_name: 'python_service'
-    metrics_path: /metrics
-    static_configs:
-      - targets: ['python_service:8000']
+#   - job_name: 'python_service'
+#     metrics_path: /metrics
+#     static_configs:
+#       - targets: ['python_service:8000']
 
   - job_name: 'user_graphql'
     metrics_path: /metrics
