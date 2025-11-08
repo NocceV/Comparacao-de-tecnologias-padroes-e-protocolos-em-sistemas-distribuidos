@@ -1,0 +1,9 @@
+# Requirements for the user service tests (GraphQL, gRPC, Webhook)
+# - requests: HTTP client used in all tests
+# - pytest: test runner / fixtures
+# - grpcio: gRPC runtime required by gRPC tests
+# - protobuf: runtime for generated *_pb2.py files
+requests>=2.28.0
+pytest>=7.0.0
+grpcio>=1.54.0
+protobuf>=4.21.0
