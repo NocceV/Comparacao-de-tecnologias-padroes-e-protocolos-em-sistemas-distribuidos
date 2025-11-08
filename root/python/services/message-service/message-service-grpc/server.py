@@ -41,3 +41,29 @@ def serve():
 
 if __name__ == '__main__':
     serve()
+
+
+# Marca o tempo inicial
+# Incrementa o contador de requisições gRPC
+# Cria uma mensagem com os dados recebidos (ou valores padrão)
+# Gera timestamp atual automaticamente
+# Registra a latência da operação
+# Retorna a mensagem serializada (formato binário)
+
+# Portas/Endpoints
+
+# Porta 50054: Servidor gRPC (recebe chamadas RPC)
+# Porta 50053: Servidor HTTP com métricas Prometheus
+# Método disponível: SendMessage(id, sender, content) → MessageResponse
+
+# Caso de Uso
+# Este código é típico de sistemas de mensageria de alta performance, permitindo:
+
+# Enviar mensagens entre microsserviços de forma eficiente
+# Sistemas de chat em tempo real (WhatsApp, Telegram)
+# Filas de mensagens (Kafka-like)
+# Comunicação entre backends em jogos online
+# Timestamp gerado automaticamente no servidor (evita problemas de sincronização)
+
+# Vantagem sobre REST: Para enviar 1000 mensagens/segundo, gRPC é ~10x mais rápido que POST /messages com JSON.
+# Observação: Assim como nos outros exemplos, os dados não são persistidos. É um exemplo/protótipo de serviço gRPC de escrita com métricas.

@@ -63,3 +63,39 @@ def health():
 @app.get("/metrics")
 def metrics():
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+
+
+# Quando alguém consulta uma mensagem (Query):
+
+# Marca o tempo inicial
+# Incrementa o contador de requisições
+# Retorna mensagem fictícia (dados mock)
+# Registra a latência
+# Retorna os dados
+
+
+# Quando alguém envia uma mensagem (Mutation):
+
+# Marca o tempo inicial
+# Incrementa o contador de requisições
+# Cria uma nova mensagem com os dados recebidos
+# Registra a latência
+# Retorna a mensagem criada com id=1
+
+
+# Endpoints
+
+# /graphql: Endpoint GraphQL (aceita queries E mutations)
+# /health: Health check (retorna {"status": "ok"})
+# /metrics: Expõe métricas no formato Prometheus
+
+# Caso de Uso
+# Este código simula um sistema de mensagens básico, permitindo:
+
+# Consultar mensagens existentes (Query)
+# Enviar novas mensagens (Mutation)
+# Monitorar performance separadamente para leitura vs escrita
+# Padrão comum em chats, sistemas de notificação, feeds
+
+# ⚠️ Limitação: Os dados são fictícios e não persistem. Mutation sempre retorna id=1 e não salva em banco de dados. É um exemplo/protótipo para demonstrar o padrão Query + Mutation com métricas.
+# Vantagem do GraphQL: Com REST você precisaria de 2 endpoints (GET /messages/:id e POST /messages). Com GraphQL, tudo é /graphql e o cliente especifica o que quer fazer.

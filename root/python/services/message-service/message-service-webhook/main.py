@@ -77,3 +77,33 @@ def metrics():
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+# Quando alguém cria uma mensagem:
+
+# Marca o tempo inicial
+# Incrementa o contador de requisições
+# Cria uma mensagem fictícia (com sender, content, timestamp)
+# Dispara notificações assíncronas para todos os callbacks registrados
+# Registra o tempo total da operação
+# Retorna a mensagem imediatamente (sem esperar os webhooks)
+
+# Endpoints
+
+# /hooks/messages: Registra URLs para receber notificações de novas mensagens
+# /messages: Cria mensagem e dispara webhooks automaticamente
+# /webhook/receiver: Exemplo de endpoint que recebe notificações
+# /health: Health check (retorna {"status": "ok"})
+# /metrics: Expõe métricas no formato Prometheus
+
+# Caso de Uso
+# Este código é típico de sistemas de chat/mensagens em tempo real, permitindo:
+
+# Notificar múltiplos serviços quando mensagens são enviadas
+# Sistema de notificações push (enviar para mobile/email)
+# Analytics e monitoramento de mensagens
+# Integração com bots ou IA (moderação automática)
+# Sincronizar mensagens entre diferentes plataformas
+
+# Exemplo real: Slack/Discord - quando alguém envia mensagem, vários serviços são notificados (notificações, bots, analytics, backup, etc).
+# ⚠️ Mesmas limitações: Callbacks apenas em memória (não persistem), sem validação/segurança. É um exemplo/protótipo do padrão webhook aplicado a mensagens.
