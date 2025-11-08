@@ -31,9 +31,7 @@ mutation = MutationType()
 REQUEST_COUNT = Counter('http_requests_total', 'Total de requisições HTTP', ['method', 'endpoint'])
 REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'Tempo de resposta das requisições', ['endpoint'])
 
-
 events_db = []
-
 
 @query.field("events")
 def resolve_events(*_):
@@ -64,7 +62,6 @@ def resolve_publish_event(*_, type, source):
 
     REQUEST_LATENCY.labels(endpoint='/graphql/publishEvent').observe(time.perf_counter() - start)
     return new_event
-
 
 schema = make_executable_schema(type_defs, [query, mutation])
 app = FastAPI()

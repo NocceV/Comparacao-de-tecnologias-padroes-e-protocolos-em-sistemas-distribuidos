@@ -30,7 +30,6 @@ async def register_event_hook(request: Request):
     REQUEST_LATENCY.labels(endpoint='/hooks/events').observe(time.perf_counter() - start)
     return {"status": "registered", "callback": url}
 
-
 @app.post("/events")
 async def create_event(request: Request):
     start = time.perf_counter()
@@ -61,15 +60,14 @@ async def create_event(request: Request):
     REQUEST_LATENCY.labels(endpoint='/events').observe(time.perf_counter() - start)
     return {"status": "event emitted", "event": event}
 
-
 @app.get("/metrics")
 def metrics():
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
-
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
 
 # Quando alguém cria um evento:
 

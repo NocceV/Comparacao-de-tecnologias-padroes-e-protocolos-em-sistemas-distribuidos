@@ -22,14 +22,11 @@ type_defs = """
       sendMessage(sender: String!, content: String!): Message
     }
 """
-
 query = QueryType()
 mutation = MutationType()
 
-
 REQUEST_COUNT = Counter('http_requests_total', 'Total de requisições HTTP', ['method', 'endpoint'])
 REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'Tempo de resposta das requisições', ['endpoint'])
-
 
 @query.field("message")
 def resolve_message(*_, id):
@@ -39,7 +36,6 @@ def resolve_message(*_, id):
     REQUEST_LATENCY.labels(endpoint='/graphql/message').observe(time.perf_counter() - start)
     return resp
 
-
 @mutation.field("sendMessage")
 def resolve_send_message(*_, sender, content):
     start = time.perf_counter()
@@ -48,12 +44,9 @@ def resolve_send_message(*_, sender, content):
     REQUEST_LATENCY.labels(endpoint='/graphql/sendMessage').observe(time.perf_counter() - start)
     return resp
 
-
-
 schema = make_executable_schema(type_defs, [query, mutation])
 app = FastAPI()
 app.mount("/graphql", GraphQL(schema, debug=True))
-
 
 @app.get("/health")
 def health():
