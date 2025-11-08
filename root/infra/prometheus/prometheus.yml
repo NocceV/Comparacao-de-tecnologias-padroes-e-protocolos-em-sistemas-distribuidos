@@ -4,6 +4,8 @@ global:
 
 scrape_configs:
 
+  #########GaphQL#########
+
   - job_name: 'user_graphql'
     metrics_path: /metrics
     static_configs:
@@ -19,6 +21,8 @@ scrape_configs:
     static_configs:
       - targets: ['event-graphql:8021']
 
+  #########WebHook#########
+
   - job_name: 'user_webhook'
     metrics_path: /metrics
     static_configs:
@@ -33,6 +37,8 @@ scrape_configs:
     metrics_path: /metrics
     static_configs:
       - targets: ['event-webhook:8023']
+
+  #########GRPC#########
 
   - job_name: 'user_grpc'
     metrics_path: /metrics

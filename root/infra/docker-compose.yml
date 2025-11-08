@@ -2,6 +2,8 @@ version: "3.8"
 
 services:
 
+  #########GaphQL#########
+
   user-graphql:
     build: ../python/services/user-service/user-service-graphql
     image: user-graphql:dev
@@ -29,6 +31,7 @@ services:
     networks:
       - testnet
 
+  #########GRPC#########
 
   user-grpc:
     build: ../python/services/user-service/user-service-grpc
@@ -60,6 +63,8 @@ services:
     networks:
       - testnet
 
+  #########WebHook#########
+
   user-webhook:
     build: ../python/services/user-service/user-service-webhook
     image: user-webhook:dev
@@ -86,6 +91,8 @@ services:
       - "8023:8023"
     networks:
       - testnet
+
+  #########Metric and Health#########
 
   prometheus:
     image: prom/prometheus:latest
