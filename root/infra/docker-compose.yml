@@ -39,6 +39,16 @@ services:
     networks:
       - testnet
 
+  message-webhook:
+    build: ../python/services/message-service/message-service-webhook
+    image: message-webhook:dev
+    container_name: message-webhook
+    ports:
+      - "8004:8004"
+    networks:
+      - testnet
+
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
