@@ -1,15 +1,6 @@
 version: "3.8"
 
 services:
-  # python_service:
-  #   build: ../python/services/user-service/off
-  #   container_name: user-service-python
-  #   ports:
-  #     - "8000:8000"        
-  #   networks:
-  #     - testnet
-  #   depends_on:
-  #     - prometheus
 
   user-graphql:
     build: ../python/services/user-service/user-service-graphql
@@ -17,6 +8,15 @@ services:
     container_name: user-graphql
     ports:
       - "8001:8001"   
+    networks:
+      - testnet
+
+  message-graphql:
+    build: ../python/services/message-service/message-service-graphql
+    image: message-graphql:dev
+    container_name: message-graphql
+    ports:
+      - "8011:8011"
     networks:
       - testnet
 
@@ -38,15 +38,6 @@ services:
       - "8003:8003"
     networks:
       - testnet
-
-  # Uncomment and configure Java service when ready
-  # java_service:
-  #   build: ../java/services/user-service
-  #   container_name: user-service-java
-  #   ports:
-  #     - "8080:8080"
-  #   networks:
-  #     - testnet
 
   prometheus:
     image: prom/prometheus:latest
@@ -75,3 +66,23 @@ networks:
   testnet:
     driver: bridge
 
+
+
+  # python_service:
+  #   build: ../python/services/user-service/off
+  #   container_name: user-service-python
+  #   ports:
+  #     - "8000:8000"        
+  #   networks:
+  #     - testnet
+  #   depends_on:
+  #     - prometheus
+
+  # Uncomment and configure Java service when ready
+  # java_service:
+  #   build: ../java/services/user-service
+  #   container_name: user-service-java
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - testnet
