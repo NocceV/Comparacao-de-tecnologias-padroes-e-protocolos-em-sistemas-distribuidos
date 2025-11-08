@@ -68,6 +68,16 @@ services:
     networks:
       - testnet
 
+  event-webhook:
+    build: ../python/services/event-service/event-service-webhook
+    image: event-webhook:dev
+    container_name: event-webhook
+    ports:
+      - "8023:8023"
+    networks:
+      - testnet
+
+
 
   prometheus:
     image: prom/prometheus:latest
