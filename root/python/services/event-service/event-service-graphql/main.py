@@ -77,3 +77,52 @@ def health():
 @app.get("/metrics")
 def metrics():
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+
+
+# Quando alguém consulta eventos:
+# Query events (listar todos):
+
+# Incrementa contador de requisições
+# Retorna lista completa de events_db
+
+# Query event(id) (buscar um):
+
+# Incrementa contador de requisições
+# Busca evento por ID na lista
+# Retorna evento ou null se não existir
+
+# Quando alguém publica um evento (Mutation):
+
+# Marca o tempo inicial
+# Incrementa contador de requisições
+# Cria novo evento com:
+
+# ID automático (sequencial: 1, 2, 3...)
+# Type e source informados pelo usuário
+# Timestamp automático (horário atual)
+# Status fixo: "published"
+
+
+# Salva na lista events_db
+# Registra latência
+# Retorna o evento criado
+
+# Endpoints
+
+# /graphql: Endpoint GraphQL (queries + mutations)
+# /health: Health check
+# /metrics: Métricas Prometheus
+
+# Caso de Uso
+# Este código implementa Event Sourcing básico, usado em:
+
+# Sistemas distribuídos: rastrear tudo que acontece
+# Auditoria: log de todas ações do sistema
+# Event-driven architecture: microsserviços publicam eventos
+# CQRS: separar comandos (mutations) de consultas (queries)
+
+# Exemplo real:
+
+# user.created quando usuário se registra
+# order.placed quando pedido é feito
+# payment.processed quando pagamento confirma

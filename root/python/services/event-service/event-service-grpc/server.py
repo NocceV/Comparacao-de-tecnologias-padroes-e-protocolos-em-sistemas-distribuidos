@@ -11,7 +11,7 @@ EVENT_COUNT = Counter('grpc_events_emitted_total', 'Total de eventos emitidos')
 
 class EventService(event_pb2_grpc.EventServiceServicer):
     def StreamEvents(self, request, context):
-        REQUEST_COUNT.labels(method='StreamEvents').inc()
+        REQUEST_COUsNT.labels(method='StreamEvents').inc()
         print(f"Stream iniciado com filtro: {request.filter}")
         try:
             while True:
@@ -45,7 +45,6 @@ class EventService(event_pb2_grpc.EventServiceServicer):
         REQUEST_LATENCY.labels(method='EmitEvent').observe(time.perf_counter() - start)
         return response
 
-
 def serve():
     print("🚀 Iniciando Event gRPC Service...")
     start_http_server(50062)
@@ -62,3 +61,35 @@ def serve():
 
 if __name__ == "__main__":
     serve()
+
+# Métodos Disponíveis
+# 1. StreamEvents (Server Streaming)
+# Quando um cliente conecta:
+
+# Incrementa contador de requisições
+# Recebe filtro do cliente (por enquanto só imprime)
+# Entra em loop infinito enviando eventos a cada 3 segundos
+# Gera evento com timestamp atual
+# Envia via stream (yield)
+# Incrementa contador de eventos emitidos
+# Registra latência de cada evento
+# Continua até cliente desconectar
+
+# Diferença crítica: Não retorna 1 resposta, envia stream infinito!
+# 2. EmitEvent (Unary RPC - normal)
+# Quando recebe um evento:
+
+# Marca tempo inicial
+# Incrementa contadores
+# Cria evento com dados recebidos + timestamp
+# Registra latência
+# Retorna evento criado (resposta única)
+
+# Portas/Endpoints
+
+# Porta 50061: Servidor gRPC (recebe chamadas + streams)
+# Porta 50062: Métricas Prometheus
+# Métodos:
+
+# StreamEvents(filter) → stream de Events (infinito)
+# EmitEvent(type, source) → Event (único)

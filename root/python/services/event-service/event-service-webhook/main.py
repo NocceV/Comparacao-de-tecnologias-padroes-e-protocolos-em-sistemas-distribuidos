@@ -70,3 +70,27 @@ def metrics():
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+# Quando alguém cria um evento:
+
+# Marca o tempo inicial
+# Incrementa contador de requisições HTTP
+# Cria evento com:
+
+# ID baseado em timestamp Unix (único)
+# Type e source (customizáveis ou padrão)
+# Timestamp formatado ISO 8601
+# Status: "emitted"
+
+
+# Dispara notificações assíncronas para todos callbacks
+# Incrementa contador de dispatch para cada webhook enviado
+# Registra latência da operação
+# Retorna o evento imediatamente
+
+# Endpoints
+
+# /hooks/events: Registra URLs para receber notificações de eventos
+# /events: Cria evento e dispara webhooks automaticamente
+# /health: Health check
+# /metrics: Métricas Prometheus (agora com contador de webhooks enviados!)
