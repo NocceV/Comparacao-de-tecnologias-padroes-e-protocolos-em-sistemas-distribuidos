@@ -24,14 +24,12 @@ scrape_configs:
     static_configs:
       - targets: ['message-webhook:8004']
 
-
   - job_name: 'user_grpc'
     metrics_path: /metrics
     static_configs:
       - targets: ['user-grpc:50052']
 
-
-#   - job_name: 'python_service'
-#     metrics_path: /metrics
-#     static_configs:
-#       - targets: ['python_service:8000']
+  - job_name: 'message_grpc'
+    metrics_path: /
+    static_configs:
+      - targets: ['message-grpc:50053']

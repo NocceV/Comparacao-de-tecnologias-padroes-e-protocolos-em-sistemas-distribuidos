@@ -30,6 +30,17 @@ services:
     networks:
       - testnet
 
+  message-grpc:
+    build: ../python/services/message-service/message-service-grpc
+    image: message-grpc:dev
+    container_name: message-grpc
+    ports:
+      - "50052:50052"
+      - "50053:50053"
+    networks:
+      - testnet
+
+
   user-webhook:
     build: ../python/services/user-service/user-service-webhook
     image: user-webhook:dev
@@ -76,23 +87,3 @@ networks:
   testnet:
     driver: bridge
 
-
-
-  # python_service:
-  #   build: ../python/services/user-service/off
-  #   container_name: user-service-python
-  #   ports:
-  #     - "8000:8000"        
-  #   networks:
-  #     - testnet
-  #   depends_on:
-  #     - prometheus
-
-  # Uncomment and configure Java service when ready
-  # java_service:
-  #   build: ../java/services/user-service
-  #   container_name: user-service-java
-  #   ports:
-  #     - "8080:8080"
-  #   networks:
-  #     - testnet
