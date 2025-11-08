@@ -14,6 +14,11 @@ scrape_configs:
     static_configs:
       - targets: ['message-graphql:8011']
 
+  - job_name: 'event_graphql'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['event-graphql:8021']
+
   - job_name: 'user_webhook'
     metrics_path: /metrics
     static_configs:

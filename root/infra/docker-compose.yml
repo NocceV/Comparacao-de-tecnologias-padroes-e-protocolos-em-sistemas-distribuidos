@@ -20,6 +20,16 @@ services:
     networks:
       - testnet
 
+  event-graphql:
+    build: ../python/services/event-service/event-service-graphql
+    image: event-graphql:dev
+    container_name: event-graphql
+    ports:
+      - "8021:8021"
+    networks:
+      - testnet
+
+
   user-grpc:
     build: ../python/services/user-service/user-service-grpc
     image: user-grpc:dev
@@ -39,7 +49,6 @@ services:
       - "50053:50053"
     networks:
       - testnet
-
 
   user-webhook:
     build: ../python/services/user-service/user-service-webhook
