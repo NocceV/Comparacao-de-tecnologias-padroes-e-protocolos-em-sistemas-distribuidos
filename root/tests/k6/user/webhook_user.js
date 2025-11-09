@@ -9,7 +9,7 @@ export let options = {
   },
 };
 
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = "http://localhost:8003";
 
 // Pré-teste: registrar webhook (executa uma vez antes dos VUs)
 export function setup() {

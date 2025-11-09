@@ -1,0 +1,19 @@
+syntax = "proto3";
+package event;
+
+message Event {
+  int32 id = 1;
+  string type = 2;
+  string source = 3;
+  string timestamp = 4;
+  string status = 5;
+}
+
+message EventRequest {
+  string filter = 1;
+}
+
+service EventService {
+  rpc StreamEvents(EventRequest) returns (stream Event);
+  rpc EmitEvent(Event) returns (Event);
+}

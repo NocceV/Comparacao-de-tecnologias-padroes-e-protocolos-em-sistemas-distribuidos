@@ -10,8 +10,8 @@
           "method": "GRAPHQL"
         },
         "value": [
-          1762693247.046,
-          "31"
+          1762726884.115,
+          "21388"
         ]
       }
     ],
@@ -24,8 +24,8 @@
           "job": "user_graphql"
         },
         "value": [
-          1762693247.057,
-          "31"
+          1762726884.137,
+          "21388"
         ]
       }
     ],
@@ -44,8 +44,8 @@
           "method": "GetUser"
         },
         "value": [
-          1762693247.073,
-          "6"
+          1762726884.163,
+          "14864"
         ]
       }
     ],
@@ -58,8 +58,8 @@
           "method": "GetUser"
         },
         "value": [
-          1762693247.078,
-          "6"
+          1762726884.167,
+          "14864"
         ]
       }
     ]
@@ -75,8 +75,8 @@
           "method": "POST"
         },
         "value": [
-          1762693247.081,
-          "1"
+          1762726884.171,
+          "2"
         ]
       },
       {
@@ -88,8 +88,8 @@
           "method": "POST"
         },
         "value": [
-          1762693247.081,
-          "1"
+          1762726884.171,
+          "4095"
         ]
       }
     ],
@@ -102,8 +102,8 @@
           "job": "user_webhook"
         },
         "value": [
-          1762693247.084,
-          "1"
+          1762726884.175,
+          "2"
         ]
       },
       {
@@ -114,8 +114,8 @@
           "job": "user_webhook"
         },
         "value": [
-          1762693247.084,
-          "1"
+          1762726884.175,
+          "4095"
         ]
       }
     ],
@@ -133,21 +133,8 @@
           "method": "GRAPHQL"
         },
         "value": [
-          1762693247.095,
-          "26"
-        ]
-      },
-      {
-        "metric": {
-          "__name__": "http_requests_total",
-          "endpoint": "/graphql/sendMessage",
-          "instance": "message-graphql:8011",
-          "job": "message_graphql",
-          "method": "GRAPHQL"
-        },
-        "value": [
-          1762693247.095,
-          "1"
+          1762726884.186,
+          "21392"
         ]
       }
     ],
@@ -160,20 +147,8 @@
           "job": "message_graphql"
         },
         "value": [
-          1762693247.099,
-          "26"
-        ]
-      },
-      {
-        "metric": {
-          "__name__": "http_request_duration_seconds_count",
-          "endpoint": "/graphql/sendMessage",
-          "instance": "message-graphql:8011",
-          "job": "message_graphql"
-        },
-        "value": [
-          1762693247.099,
-          "1"
+          1762726884.19,
+          "21392"
         ]
       }
     ],
@@ -192,8 +167,8 @@
           "method": "SendMessage"
         },
         "value": [
-          1762693247.12,
-          "6"
+          1762726884.21,
+          "37568"
         ]
       }
     ],
@@ -206,8 +181,8 @@
           "method": "SendMessage"
         },
         "value": [
-          1762693247.122,
-          "6"
+          1762726884.213,
+          "37568"
         ]
       }
     ]
@@ -223,8 +198,8 @@
           "method": "POST"
         },
         "value": [
-          1762693247.125,
-          "1"
+          1762726884.216,
+          "2"
         ]
       },
       {
@@ -236,8 +211,8 @@
           "method": "POST"
         },
         "value": [
-          1762693247.125,
-          "1"
+          1762726884.216,
+          "12918"
         ]
       }
     ],
@@ -250,8 +225,8 @@
           "job": "message_webhook"
         },
         "value": [
-          1762693247.13,
-          "1"
+          1762726884.219,
+          "2"
         ]
       },
       {
@@ -262,8 +237,8 @@
           "job": "message_webhook"
         },
         "value": [
-          1762693247.13,
-          "1"
+          1762726884.219,
+          "12918"
         ]
       }
     ],
@@ -281,34 +256,8 @@
           "method": "GRAPHQL"
         },
         "value": [
-          1762693247.139,
-          "1"
-        ]
-      },
-      {
-        "metric": {
-          "__name__": "http_requests_total",
-          "endpoint": "/graphql/events",
-          "instance": "event-graphql:8021",
-          "job": "event_graphql",
-          "method": "GRAPHQL"
-        },
-        "value": [
-          1762693247.139,
-          "21"
-        ]
-      },
-      {
-        "metric": {
-          "__name__": "http_requests_total",
-          "endpoint": "/graphql/event",
-          "instance": "event-graphql:8021",
-          "job": "event_graphql",
-          "method": "GRAPHQL"
-        },
-        "value": [
-          1762693247.139,
-          "1"
+          1762726884.227,
+          "21391"
         ]
       }
     ],
@@ -321,8 +270,8 @@
           "job": "event_graphql"
         },
         "value": [
-          1762693247.142,
-          "1"
+          1762726884.23,
+          "21391"
         ]
       }
     ],
@@ -341,20 +290,8 @@
           "method": "EmitEvent"
         },
         "value": [
-          1762693247.159,
-          "6"
-        ]
-      },
-      {
-        "metric": {
-          "__name__": "grpc_requests_total",
-          "instance": "event-grpc:50062",
-          "job": "event_grpc",
-          "method": "StreamEvents"
-        },
-        "value": [
-          1762693247.159,
-          "1"
+          1762726884.249,
+          "16569"
         ]
       }
     ],
@@ -367,20 +304,8 @@
           "method": "EmitEvent"
         },
         "value": [
-          1762693247.162,
-          "6"
-        ]
-      },
-      {
-        "metric": {
-          "__name__": "grpc_request_latency_seconds_count",
-          "instance": "event-grpc:50062",
-          "job": "event_grpc",
-          "method": "StreamEvents"
-        },
-        "value": [
-          1762693247.162,
-          "1"
+          1762726884.252,
+          "16569"
         ]
       }
     ]
@@ -390,27 +315,14 @@
       {
         "metric": {
           "__name__": "http_requests_total",
-          "endpoint": "/hooks/events",
-          "instance": "event-webhook:8023",
-          "job": "event_webhook",
-          "method": "POST"
-        },
-        "value": [
-          1762693247.164,
-          "1"
-        ]
-      },
-      {
-        "metric": {
-          "__name__": "http_requests_total",
           "endpoint": "/events",
           "instance": "event-webhook:8023",
           "job": "event_webhook",
           "method": "POST"
         },
         "value": [
-          1762693247.164,
-          "1"
+          1762726884.258,
+          "18347"
         ]
       }
     ],
@@ -418,25 +330,13 @@
       {
         "metric": {
           "__name__": "http_request_duration_seconds_count",
-          "endpoint": "/hooks/events",
-          "instance": "event-webhook:8023",
-          "job": "event_webhook"
-        },
-        "value": [
-          1762693247.167,
-          "1"
-        ]
-      },
-      {
-        "metric": {
-          "__name__": "http_request_duration_seconds_count",
           "endpoint": "/events",
           "instance": "event-webhook:8023",
           "job": "event_webhook"
         },
         "value": [
-          1762693247.167,
-          "1"
+          1762726884.261,
+          "18347"
         ]
       }
     ],

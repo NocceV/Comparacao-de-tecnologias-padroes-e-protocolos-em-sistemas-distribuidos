@@ -1,0 +1,346 @@
+{
+  "user_graphql": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/graphql/user",
+          "instance": "user-graphql:8001",
+          "job": "user_graphql",
+          "method": "GRAPHQL"
+        },
+        "value": [
+          1762724761.095,
+          "500"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/graphql/user",
+          "instance": "user-graphql:8001",
+          "job": "user_graphql"
+        },
+        "value": [
+          1762724761.104,
+          "500"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": []
+  },
+  "user_grpc": {
+    "http_requests_total": [],
+    "http_request_duration_seconds_count": [],
+    "grpc_requests_total": [
+      {
+        "metric": {
+          "__name__": "grpc_requests_total",
+          "instance": "user-grpc:50052",
+          "job": "user_grpc",
+          "method": "GetUser"
+        },
+        "value": [
+          1762724761.121,
+          "500"
+        ]
+      }
+    ],
+    "grpc_request_latency_seconds_count": [
+      {
+        "metric": {
+          "__name__": "grpc_request_latency_seconds_count",
+          "instance": "user-grpc:50052",
+          "job": "user_grpc",
+          "method": "GetUser"
+        },
+        "value": [
+          1762724761.124,
+          "500"
+        ]
+      }
+    ]
+  },
+  "user_webhook": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/hooks/users",
+          "instance": "user-webhook:8003",
+          "job": "user_webhook",
+          "method": "POST"
+        },
+        "value": [
+          1762724761.128,
+          "1"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/users",
+          "instance": "user-webhook:8003",
+          "job": "user_webhook",
+          "method": "POST"
+        },
+        "value": [
+          1762724761.128,
+          "500"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/hooks/users",
+          "instance": "user-webhook:8003",
+          "job": "user_webhook"
+        },
+        "value": [
+          1762724761.132,
+          "1"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/users",
+          "instance": "user-webhook:8003",
+          "job": "user_webhook"
+        },
+        "value": [
+          1762724761.132,
+          "500"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": []
+  },
+  "message_graphql": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/graphql/message",
+          "instance": "message-graphql:8011",
+          "job": "message_graphql",
+          "method": "GRAPHQL"
+        },
+        "value": [
+          1762724761.145,
+          "500"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/graphql/message",
+          "instance": "message-graphql:8011",
+          "job": "message_graphql"
+        },
+        "value": [
+          1762724761.148,
+          "500"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": []
+  },
+  "message_grpc": {
+    "http_requests_total": [],
+    "http_request_duration_seconds_count": [],
+    "grpc_requests_total": [
+      {
+        "metric": {
+          "__name__": "grpc_requests_total",
+          "instance": "message-grpc:50053",
+          "job": "message_grpc",
+          "method": "SendMessage"
+        },
+        "value": [
+          1762724761.165,
+          "500"
+        ]
+      }
+    ],
+    "grpc_request_latency_seconds_count": [
+      {
+        "metric": {
+          "__name__": "grpc_request_latency_seconds_count",
+          "instance": "message-grpc:50053",
+          "job": "message_grpc",
+          "method": "SendMessage"
+        },
+        "value": [
+          1762724761.167,
+          "500"
+        ]
+      }
+    ]
+  },
+  "message_webhook": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/hooks/messages",
+          "instance": "message-webhook:8004",
+          "job": "message_webhook",
+          "method": "POST"
+        },
+        "value": [
+          1762724761.171,
+          "1"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/messages",
+          "instance": "message-webhook:8004",
+          "job": "message_webhook",
+          "method": "POST"
+        },
+        "value": [
+          1762724761.171,
+          "500"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/hooks/messages",
+          "instance": "message-webhook:8004",
+          "job": "message_webhook"
+        },
+        "value": [
+          1762724761.175,
+          "1"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/messages",
+          "instance": "message-webhook:8004",
+          "job": "message_webhook"
+        },
+        "value": [
+          1762724761.175,
+          "500"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": []
+  },
+  "event_graphql": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/graphql/publishEvent",
+          "instance": "event-graphql:8021",
+          "job": "event_graphql",
+          "method": "GRAPHQL"
+        },
+        "value": [
+          1762724761.183,
+          "500"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/graphql/publishEvent",
+          "instance": "event-graphql:8021",
+          "job": "event_graphql"
+        },
+        "value": [
+          1762724761.187,
+          "500"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": []
+  },
+  "event_grpc": {
+    "http_requests_total": [],
+    "http_request_duration_seconds_count": [],
+    "grpc_requests_total": [
+      {
+        "metric": {
+          "__name__": "grpc_requests_total",
+          "instance": "event-grpc:50062",
+          "job": "event_grpc",
+          "method": "EmitEvent"
+        },
+        "value": [
+          1762724761.201,
+          "500"
+        ]
+      }
+    ],
+    "grpc_request_latency_seconds_count": [
+      {
+        "metric": {
+          "__name__": "grpc_request_latency_seconds_count",
+          "instance": "event-grpc:50062",
+          "job": "event_grpc",
+          "method": "EmitEvent"
+        },
+        "value": [
+          1762724761.204,
+          "500"
+        ]
+      }
+    ]
+  },
+  "event_webhook": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/events",
+          "instance": "event-webhook:8023",
+          "job": "event_webhook",
+          "method": "POST"
+        },
+        "value": [
+          1762724761.208,
+          "500"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/events",
+          "instance": "event-webhook:8023",
+          "job": "event_webhook"
+        },
+        "value": [
+          1762724761.211,
+          "500"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": []
+  }
+}

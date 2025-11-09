@@ -1,0 +1,171 @@
+Vitor@DESKTOP-9FLGP6C MINGW64 ~/Documents/Comparacao-de-tecnologias-padroes-e-protocolos-em-sistemas-distribuidos/root/tests/k6/user (main)
+$ k6 run graphql_user.js
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: graphql_user.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 50 max VUs, 2m20s max duration (incl. graceful stop):
+              * default: Up to 50 looping VUs for 1m50s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+
+  █ THRESHOLDS
+
+    http_req_duration
+    ✓ 'p(95)<800' p(95)=4.27ms
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 41776   379.439256/s
+    checks_succeeded...: 100.00% 41776 out of 41776
+    checks_failed......: 0.00%   0 out of 41776
+
+    ✓ status 200
+    ✓ tem dados válidos
+
+    HTTP
+    http_req_duration..............: avg=1.88ms   min=0s       med=1.56ms   max=38.82ms  p(90)=3.12ms   p(95)=4.27ms
+      { expected_response:true }...: avg=1.88ms   min=0s       med=1.56ms   max=38.82ms  p(90)=3.12ms   p(95)=4.27ms
+    http_req_failed................: 0.00%  0 out of 41776
+    http_reqs......................: 41776  379.439256/s
+
+    EXECUTION
+    iteration_duration.............: avg=204.16ms min=201.13ms med=203.23ms max=248.28ms p(90)=205.98ms p(95)=209.27ms
+    iterations.....................: 20888  189.719628/s
+    vus............................: 1      min=1          max=50
+    vus_max........................: 50     min=50         max=50
+
+    NETWORK
+    data_received..................: 7.2 MB 65 kB/s
+    data_sent......................: 10 MB  92 kB/s
+
+
+
+                                                                                                                                                                                                          
+running (1m50.1s), 00/50 VUs, 20888 complete and 0 interrupted iterations                                                                                                                                 
+default ✓ [======================================] 00/50 VUs  1m50s   
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Vitor@DESKTOP-9FLGP6C MINGW64 ~/Documents/Comparacao-de-tecnologias-padroes-e-protocolos-em-sistemas-distribuidos/root/tests/k6/user (main)
+$ k6 run grpc_user.js
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: grpc_user.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 50 max VUs, 1m0s max duration (incl. graceful stop):
+              * default: 50 looping VUs for 30s (gracefulStop: 30s)
+
+
+
+  █ THRESHOLDS
+
+    grpc_req_duration
+    ✓ 'p(95)<200' p(95)=3.76ms
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 14364   477.733106/s
+    checks_succeeded...: 100.00% 14364 out of 14364
+    checks_failed......: 0.00%   0 out of 14364
+
+    ✓ status OK
+
+    EXECUTION
+    iteration_duration...: avg=104.51ms min=101.56ms med=103.83ms max=154.4ms p(90)=106.67ms p(95)=108.45ms
+    iterations...........: 14364  477.733106/s
+    vus..................: 50     min=50       max=50
+    vus_max..............: 50     min=50       max=50
+
+    NETWORK
+    data_received........: 3.9 MB 130 kB/s
+    data_sent............: 3.8 MB 127 kB/s
+
+    GRPC
+    grpc_req_duration....: avg=1.85ms   min=306.3µs  med=1.56ms   max=46.13ms p(90)=2.94ms   p(95)=3.76ms
+
+
+
+                                                                                                                                                                                                          
+running (0m30.1s), 00/50 VUs, 14364 complete and 0 interrupted iterations                                                                                                                                 
+default ✓ [======================================] 50 VUs  30s            
+
+//////////////////////////////////////////////////////////////////
+
+
+
+$ k6 run webhook_user.js
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: webhook_user.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 50 max VUs, 1m0s max duration (incl. graceful stop):
+              * default: 50 looping VUs for 30s (gracefulStop: 30s)
+
+
+
+  █ THRESHOLDS
+
+    http_req_duration
+    ✗ 'p(95)<200' p(95)=462.57ms
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 3596    118.813128/s
+    checks_succeeded...: 100.00% 3596 out of 3596
+    checks_failed......: 0.00%   0 out of 3596
+
+    ✓ Webhook registrado com sucesso
+    ✓ status 200
+
+    HTTP
+    http_req_duration..............: avg=319.47ms min=1.56ms   med=309.81ms max=3.96s p(90)=449.19ms p(95)=462.57ms
+      { expected_response:true }...: avg=319.47ms min=1.56ms   med=309.81ms max=3.96s p(90)=449.19ms p(95)=462.57ms
+    http_req_failed................: 0.00%  0 out of 3596
+    http_reqs......................: 3596   118.813128/s
+
+    EXECUTION
+    iteration_duration.............: avg=420.78ms min=104.79ms med=409.99ms max=4.08s p(90)=549.86ms p(95)=562.95ms
+    iterations.....................: 3595   118.780088/s
+    vus............................: 50     min=50        max=50
+    vus_max........................: 50     min=50        max=50
+
+    NETWORK
+    data_received..................: 667 kB 22 kB/s
+    data_sent......................: 652 kB 22 kB/s
+
+
+
+                                                                                                                                                                                                          
+running (0m30.3s), 00/50 VUs, 3595 complete and 0 interrupted iterations                                                                                                                                  
+default ✓ [======================================] 50 VUs  30s                                                                                                                                            
+ERRO[0030] thresholds on metrics 'http_req_duration' have been crossed

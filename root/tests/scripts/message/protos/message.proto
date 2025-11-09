@@ -1,0 +1,19 @@
+syntax = "proto3";
+package message;
+
+message SendMessageRequest {
+  int32 id = 1;
+  string sender = 2;
+  string content = 3;
+}
+
+message MessageResponse {
+  int32 id = 1;
+  string sender = 2;
+  string content = 3;
+  string timestamp = 4;
+}
+
+service MessageService {
+  rpc SendMessage (SendMessageRequest) returns (MessageResponse);
+}

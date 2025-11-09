@@ -1,0 +1,200 @@
+Vitor@DESKTOP-9FLGP6C MINGW64 ~/Documents/Comparacao-de-tecnologias-padroes-e-protocolos-em-sistemas-distribuidos/root/tests/k6/message (main)
+$ k6 run webhook_message.js
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: webhook_message.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 50 max VUs, 2m20s max duration (incl. graceful stop):
+              * default: Up to 50 looping VUs for 1m50s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+INFO[0000] ✅ Webhook registrado com sucesso antes do teste.  source=console
+WARN[0075] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0076] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0077] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0077] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0078] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0079] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0079] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0080] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0080] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0081] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0082] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0082] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0083] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0083] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0084] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0085] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0085] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0086] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0086] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0087] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0088] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0088] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0089] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0090] Request Failed                                error="Post \"http://localhost:8004/messages\": request timeout"
+WARN[0102] Request Failed                                error="Post \"http://localhost:8004/messages\": EOF"
+WARN[0102] Request Failed                                error="Post \"http://localhost:8004/messages\": EOF"                                                                                             
+
+
+  █ THRESHOLDS
+
+    http_req_duration
+    ✓ 'p(95)<500' p(95)=230.63ms
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.20%
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 12427  100.531597/s
+    checks_succeeded...: 99.79% 12401 out of 12427
+    checks_failed......: 0.20%  26 out of 12427
+
+    ✓ Webhook registrado
+    ✗ status 200
+      ↳  99% — ✓ 12400 / ✗ 26
+
+    HTTP
+    http_req_duration..............: avg=272.2ms  min=514.9µs  med=73.65ms  max=1m0s   p(90)=149.79ms p(95)=230.63ms
+      { expected_response:true }...: avg=152.9ms  min=514.9µs  med=73.64ms  max=55.26s p(90)=149.5ms  p(95)=223.45ms
+    http_req_failed................: 0.20%  26 out of 12427
+    http_reqs......................: 12427  100.531597/s
+
+    EXECUTION
+    iteration_duration.............: avg=372.65ms min=100.75ms med=174.15ms max=1m0s   p(90)=249.8ms  p(95)=331.61ms
+    iterations.....................: 12426  100.523507/s
+    vus............................: 1      min=1           max=50
+    vus_max........................: 50     min=50          max=50
+
+    NETWORK
+    data_received..................: 2.8 MB 23 kB/s
+    data_sent......................: 2.4 MB 19 kB/s
+
+
+
+                                                                                                                                                                                                          
+running (2m03.6s), 00/50 VUs, 12426 complete and 1 interrupted iterations                                                                                                                                 
+default ✓ [======================================] 00/50 VUs  1m50s  
+
+
+////////////////////////////////////////////////////////////////
+
+Vitor@DESKTOP-9FLGP6C MINGW64 ~/Documents/Comparacao-de-tecnologias-padroes-e-protocolos-em-sistemas-distribuidos/root/tests/k6/message (main)
+$ k6 run graphql_message.js
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: graphql_message.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 50 max VUs, 2m20s max duration (incl. graceful stop):
+              * default: Up to 50 looping VUs for 1m50s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+
+  █ THRESHOLDS
+
+    http_req_duration
+    ✓ 'p(95)<800' p(95)=4.16ms
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 41784   379.395946/s
+    checks_succeeded...: 100.00% 41784 out of 41784
+    checks_failed......: 0.00%   0 out of 41784
+
+    ✓ status 200
+    ✓ resposta contém "Mensagem"
+
+    HTTP
+    http_req_duration..............: avg=1.87ms   min=0s       med=1.56ms   max=110.31ms p(90)=3.12ms   p(95)=4.16ms
+      { expected_response:true }...: avg=1.87ms   min=0s       med=1.56ms   max=110.31ms p(90)=3.12ms   p(95)=4.16ms
+    http_req_failed................: 0.00%  0 out of 41784
+    http_reqs......................: 41784  379.395946/s
+
+    EXECUTION
+    iteration_duration.............: avg=204.15ms min=201.04ms med=203.27ms max=324.08ms p(90)=205.74ms p(95)=208.03ms
+    iterations.....................: 20892  189.697973/s
+    vus............................: 1      min=1          max=50
+    vus_max........................: 50     min=50         max=50
+
+    NETWORK
+    data_received..................: 7.9 MB 72 kB/s
+    data_sent......................: 11 MB  101 kB/s
+
+
+
+                                                                                                                                                                                                          
+running (1m50.1s), 00/50 VUs, 20892 complete and 0 interrupted iterations                                                                                                                                 
+default ✓ [======================================] 00/50 VUs  1m50s     
+
+//////////////////////////////////////////////////////////////////////////
+
+
+Vitor@DESKTOP-9FLGP6C MINGW64 ~/Documents/Comparacao-de-tecnologias-padroes-e-protocolos-em-sistemas-distribuidos/root/tests/k6/message (main)
+$ k6 run grpc_message.js
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: grpc_message.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 50 max VUs, 2m20s max duration (incl. graceful stop):
+              * default: Up to 50 looping VUs for 1m50s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+
+  █ THRESHOLDS
+
+    grpc_req_duration
+    ✓ 'p(95)<800' p(95)=5.22ms
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 37068   336.926568/s
+    checks_succeeded...: 100.00% 37068 out of 37068
+    checks_failed......: 0.00%   0 out of 37068
+
+    ✓ status OK
+
+    EXECUTION
+    iteration_duration...: avg=114.99ms min=101.55ms med=105.05ms max=1.15s   p(90)=112.45ms p(95)=114.63ms
+    iterations...........: 37068 336.926568/s
+    vus..................: 1     min=1        max=50
+    vus_max..............: 50    min=50       max=50
+
+    NETWORK
+    data_received........: 11 MB 98 kB/s
+    data_sent............: 11 MB 104 kB/s
+
+    GRPC
+    grpc_req_duration....: avg=2.26ms   min=0s       med=1.72ms   max=19.49ms p(90)=4.24ms   p(95)=5.22ms
+
+
+
+                                                                                                                                  
+running (1m50.0s), 00/50 VUs, 37068 complete and 0 interrupted iterations                                                         
+default ✓ [======================================] 00/50 VUs  1m50s    

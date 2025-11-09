@@ -1,0 +1,157 @@
+Vitor@DESKTOP-9FLGP6C MINGW64 ~/Documents/Comparacao-de-tecnologias-padroes-e-protocolos-em-sistemas-distribuidos/root/tests/k6/event (main)
+$ k6 run graphql_event.js
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: graphql_event.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 50 max VUs, 2m20s max duration (incl. graceful stop):
+              * default: Up to 50 looping VUs for 1m50s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+
+  █ THRESHOLDS
+
+    http_req_duration
+    ✓ 'p(95)<600' p(95)=4.17ms
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 41782   379.470095/s
+    checks_succeeded...: 100.00% 41782 out of 41782
+    checks_failed......: 0.00%   0 out of 41782
+
+    ✓ status 200
+    ✓ resposta contém "emitted"
+
+    HTTP
+    http_req_duration..............: avg=1.88ms   min=0s       med=1.56ms   max=97.11ms p(90)=3.14ms   p(95)=4.17ms
+      { expected_response:true }...: avg=1.88ms   min=0s       med=1.56ms   max=97.11ms p(90)=3.14ms   p(95)=4.17ms
+    http_req_failed................: 0.00%  0 out of 41782
+    http_reqs......................: 41782  379.470095/s
+
+    EXECUTION
+    iteration_duration.............: avg=204.17ms min=201.26ms med=203.45ms max=299.6ms p(90)=205.91ms p(95)=207.81ms
+    iterations.....................: 20891  189.735047/s
+    vus............................: 1      min=1          max=50
+    vus_max........................: 50     min=50         max=50
+
+    NETWORK
+    data_received..................: 8.5 MB 78 kB/s
+    data_sent......................: 14 MB  127 kB/s
+
+
+
+                                                                                                                                                                                                          
+running (1m50.1s), 00/50 VUs, 20891 complete and 0 interrupted iterations                                                                                                                                 
+default ✓ [======================================] 00/50 VUs  1m50s  
+
+
+////////////////////////////////////////////////////////////////////////////
+
+Vitor@DESKTOP-9FLGP6C MINGW64 ~/Documents/Comparacao-de-tecnologias-padroes-e-protocolos-em-sistemas-distribuidos/root/tests/k6/event (main)
+$ k6 run webhook_event.js
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: webhook_event.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 50 max VUs, 2m20s max duration (incl. graceful stop):
+              * default: Up to 50 looping VUs for 1m50s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+
+  █ THRESHOLDS
+
+    http_req_duration
+    ✓ 'p(95)<400' p(95)=197.6ms
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 17847   162.126273/s
+    checks_succeeded...: 100.00% 17847 out of 17847
+    checks_failed......: 0.00%   0 out of 17847
+
+    ✓ status 200
+
+    HTTP
+    http_req_duration..............: avg=138.45ms min=366.2µs  med=174.28ms max=517.21ms p(90)=190.25ms p(95)=197.6ms
+      { expected_response:true }...: avg=138.45ms min=366.2µs  med=174.28ms max=517.21ms p(90)=190.25ms p(95)=197.6ms
+    http_req_failed................: 0.00%  0 out of 17847
+    http_reqs......................: 17847  162.126273/s
+
+    EXECUTION
+    iteration_duration.............: avg=238.89ms min=100.59ms med=274.73ms max=618.26ms p(90)=290.63ms p(95)=298.24ms
+    iterations.....................: 17847  162.126273/s
+    vus............................: 1      min=1          max=50
+    vus_max........................: 50     min=50         max=50
+
+    NETWORK
+    data_received..................: 4.8 MB 44 kB/s
+    data_sent......................: 3.9 MB 35 kB/s
+
+
+
+                                                                                                                                                                                                          
+running (1m50.1s), 00/50 VUs, 17847 complete and 0 interrupted iterations                                                                                                                                 
+default ✓ [======================================] 00/50 VUs  1m50s     
+
+
+////////////////////////////////////////////////////////////////
+
+
+
+
+  █ THRESHOLDS
+
+    grpc_req_duration
+    ✓ 'p(95)<400' p(95)=3.91ms
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 16069   196.464252/s
+    checks_succeeded...: 100.00% 16069 out of 16069
+    checks_failed......: 0.00%   0 out of 16069
+
+    ✓ status OK
+
+    EXECUTION
+    iteration_duration...: avg=62.87ms min=1.22ms   med=47.34ms max=165.76ms p(90)=104.87ms p(95)=106.93ms
+    iterations...........: 52840  646.037156/s
+    vus..................: 50     min=2        max=50
+    vus_max..............: 50     min=50       max=50
+
+    NETWORK
+    data_received........: 4.7 MB 58 kB/s
+    data_sent............: 4.6 MB 56 kB/s
+
+    GRPC
+    grpc_req_duration....: avg=1.86ms  min=304.89µs med=1.57ms  max=30.27ms  p(90)=3.12ms   p(95)=3.91ms
+
+
+
+                                                                                                                          
+running (1m21.8s), 00/50 VUs, 52840 complete and 50 interrupted iterations                                                
+default ✗ [===========================>----------] 38/50 VUs  1m21.8s/1m50.0s                                             
+ERRO[0082] test run was aborted because k6 received a 'interrupt' signal

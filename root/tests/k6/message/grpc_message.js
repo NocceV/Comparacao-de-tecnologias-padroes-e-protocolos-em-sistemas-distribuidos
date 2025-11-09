@@ -13,7 +13,7 @@ export const options = {
 };
 
 const client = new grpc.Client();
-client.load(["../protos"], "message.proto");
+client.load(["./protos"], "message.proto");
 
 export default function () {
   client.connect("localhost:50054", { plaintext: true });

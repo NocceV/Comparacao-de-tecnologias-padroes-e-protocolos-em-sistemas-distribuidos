@@ -3,7 +3,7 @@ import time
 import statistics
 import random
 
-BASE_URL = "http://localhost:8000"
+BASE_URL = "http://localhost:8003"
 TOTAL_REQUESTS = 500
 
 def register_webhook():
