@@ -11,7 +11,7 @@ EVENT_COUNT = Counter('grpc_events_emitted_total', 'Total de eventos emitidos')
 
 class EventService(event_pb2_grpc.EventServiceServicer):
     def StreamEvents(self, request, context):
-        REQUEST_COUsNT.labels(method='StreamEvents').inc()
+        REQUEST_COUNT.labels(method='StreamEvents').inc()
         print(f"Stream iniciado com filtro: {request.filter}")
         try:
             while True:
