@@ -22,16 +22,19 @@ TARGETS = [
     ("user", "grpc"),
     ("user", "webhook"),
     ("user", "websocket"),
+    ("user", "soap"),
     ("message", "rest"),
     ("message", "graphql"),
     ("message", "grpc"),
     ("message", "webhook"),
     ("message", "websocket"),
+    ("message", "soap"),
     ("event", "rest"),
     ("event", "graphql"),
     ("event", "grpc"),
     ("event", "webhook"),
     ("event", "websocket"),
+    ("event", "soap"),
 ]
 
 def collect_metrics():

@@ -58,15 +58,10 @@ O projeto foi desenvolvido de forma modular, separando os serviços por linguage
 ```
 📂 project-root/
 ├── python/
-│   └── user-service/
-│       ├── main.py
-│       ├── requirements.txt
-│       └── Dockerfile
-├── java/
-│   └── user-service/
-│       ├── src/
-│       ├── pom.xml
-│       └── Dockerfile
+│   └── services/
+│       ├── user-service/
+│       ├── message-service/
+│       └── event-service/
 ├── infra/
 │   ├── docker-compose.yml
 │   └── prometheus/
@@ -82,9 +77,8 @@ O projeto foi desenvolvido de forma modular, separando os serviços por linguage
 ## ⚙️ Tecnologias Utilizadas
 
 ### **Linguagens e Frameworks**
-- **Python (FastAPI)** – utilizado para construir serviços leves e rápidos, com fácil integração a Prometheus.
-- **Java (Spring Boot)** – escolhido para sua robustez e uso comum em sistemas corporativos.
-- **gRPC / GraphQL / WebSocket / Webhook** – implementados sobre essas bases para comparação direta de desempenho.
+- **Python (FastAPI)** – utilizado para construir todos os serviços do projeto, com fácil integração a Prometheus.
+- **REST / SOAP / gRPC / GraphQL / WebSocket / Webhook** – os seis protocolos comparados, todos implementados em Python sobre essa mesma base.
 
 ### **Infraestrutura e Monitoramento**
 - **Docker / Docker Compose** – garante isolamento e reprodutibilidade do ambiente de testes.
@@ -96,16 +90,16 @@ O projeto foi desenvolvido de forma modular, separando os serviços por linguage
 
 ## 🧩 Funcionamento da Infraestrutura
 
-A arquitetura foi planejada para permitir testes padronizados entre linguagens e protocolos.  
-Cada serviço (tanto em Python quanto em Java) expõe um endpoint `/users/{id}`, com a mesma resposta em JSON, garantindo a equivalência funcional durante as medições.
+A arquitetura foi planejada para permitir testes padronizados entre protocolos.  
+Cada serviço expõe um contrato mínimo equivalente (ver `docs/api_contracts.md`), garantindo a equivalência funcional durante as medições.
 
 O **Prometheus** é configurado para “raspar” os endpoints de métricas expostos por cada serviço, permitindo registrar informações de uso e desempenho.  
 Esses dados podem ser visualizados no **Grafana**, que exibe os gráficos comparativos em tempo real.
 
 ### Fluxo geral:
-1. O Docker Compose sobe todos os containers (`python_service`, `java_service`, `prometheus`, e opcionalmente `grafana`).
+1. O Docker Compose sobe todos os containers de serviço, `prometheus` e `grafana`.
 2. O Prometheus começa a monitorar os endpoints de métricas definidos.
-3. Os serviços são testados com k6, JMeter ou scripts Python/Java customizados.
+3. Os serviços são testados com k6 ou os scripts Python customizados em `tests/scripts`.
 4. As métricas são salvas e comparadas entre os diferentes protocolos e padrões.
 
 ---
@@ -150,23 +144,6 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 ---
 
-### Java (Spring Boot)
-Arquivo `Dockerfile`:
-
-```dockerfile
-FROM maven:3.8-openjdk-17 AS build
-WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-RUN mvn -q -DskipTests package
-
-FROM openjdk:17-jdk-slim
-COPY --from=build /app/target/app.jar /app/app.jar
-CMD ["java","-jar","/app/app.jar"]
-```
-
----
-
 ## 🧠 Observabilidade
 
 Arquivo `infra/prometheus/prometheus.yml`:
@@ -179,10 +156,6 @@ scrape_configs:
   - job_name: 'python_service'
     static_configs:
       - targets: ['python_service:8001']
-
-  - job_name: 'java_service'
-    static_configs:
-      - targets: ['java_service:8080']
 ```
 
 Arquivo `infra/docker-compose.yml`:
@@ -194,13 +167,6 @@ services:
     build: ../python/user-service
     ports:
       - "8000:8000"
-    networks:
-      - testnet
-
-  java_service:
-    build: ../java/user-service
-    ports:
-      - "8080:8080"
     networks:
       - testnet
 
@@ -252,7 +218,6 @@ curl http://localhost:8000/users/1
 docker-compose up --build
 # Verificação
 curl http://localhost:8000/users/1
-curl http://localhost:8080/users/1
 # Acesso ao Prometheus
 http://localhost:9090
 ```
@@ -271,7 +236,7 @@ http://localhost:9090
 ## 👥 Autores
 
 **Vitor Lopes Nocce** – Implementação Python, instrumentação e análise de métricas.  
-**Rafael Sanzio e Silva** – Implementação Java, integração e monitoramento.
+**Rafael Sanzio e Silva** – Implementação Python (REST, SOAP, WebSocket), integração e monitoramento.
 
 ---
 

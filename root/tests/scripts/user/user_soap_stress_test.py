@@ -2,18 +2,25 @@ import requests
 import time
 import statistics
 
-BASE_URL = "http://localhost:8002"
+BASE_URL = "http://localhost:8006/soap/users"
 TOTAL_REQUESTS = 500
+HEADERS = {"Content-Type": "text/xml", "SOAPAction": "CreateUser"}
 RUN_ID = int(time.time())
 
 
 def create_user(index):
-    params = {
-        "name": f"User{index}",
-        "email": f"user{RUN_ID}_{index}@example.com"
-    }
+    body = f"""<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <CreateUser>
+      <name>User{index}</name>
+      <email>user{RUN_ID}_{index}@example.com</email>
+    </CreateUser>
+  </soap:Body>
+</soap:Envelope>"""
+
     start = time.perf_counter()
-    response = requests.post(f"{BASE_URL}/user/create", params=params)
+    response = requests.post(BASE_URL, data=body, headers=HEADERS)
     elapsed = (time.perf_counter() - start) * 1000
     status = response.status_code
     print(f"Usuário {index} criado - Status: {status} {'OK' if status == 200 else 'ERRO'} - Tempo: {elapsed:.0f}ms")
@@ -21,7 +28,7 @@ def create_user(index):
 
 
 def main():
-    print("=== TESTE DE STRESS - REST USER ===")
+    print("=== TESTE DE STRESS - SOAP USER ===")
 
     tempos = []
     start_total = time.perf_counter()
@@ -35,7 +42,7 @@ def main():
     max_time = max(tempos)
     throughput = TOTAL_REQUESTS / (total_time / 1000)
 
-    print("\n=== RESULTADOS - TESTE DE STRESS (REST USER) ===")
+    print("\n=== RESULTADOS - TESTE DE STRESS (SOAP USER) ===")
     print(f"Total de requisições: {TOTAL_REQUESTS}")
     print(f"Tempo total do teste: {total_time:.0f}ms")
     print(f"Tempo médio por requisição: {avg_time:.0f}ms")

@@ -150,6 +150,35 @@ services:
     networks:
       - testnet
 
+  #########SOAP#########
+
+  user-soap:
+    build: ../python/services/user-service/user-service-soap
+    image: user-soap:dev
+    container_name: user-soap
+    ports:
+      - "8006:8006"
+    networks:
+      - testnet
+
+  message-soap:
+    build: ../python/services/message-service/message-service-soap
+    image: message-soap:dev
+    container_name: message-soap
+    ports:
+      - "8016:8016"
+    networks:
+      - testnet
+
+  event-soap:
+    build: ../python/services/event-service/event-service-soap
+    image: event-soap:dev
+    container_name: event-soap
+    ports:
+      - "8026:8026"
+    networks:
+      - testnet
+
   #########Metric and Health#########
 
   prometheus:

@@ -39,36 +39,45 @@ Accept: application/json
 
 ## 🧼 SOAP (XML over HTTP)
 
-**Endpoint:** `/soap/users`
+Implementado em Python (FastAPI), com envelope e parsing SOAP feitos manualmente via `xml.etree.ElementTree` — não há uma biblioteca de servidor SOAP moderna e mantida para Python, então o contrato abaixo é a fonte de verdade (não segue um WSDL de terceiros).
 
-**WSDL Exemplo:** `http://localhost:8080/soap/users?wsdl`
+**Endpoints:** `/soap/users` (porta 8006), `/soap/messages` (porta 8016), `/soap/events` (porta 8026)
 
-**Operações:**
+**WSDL:** disponível via `GET` no próprio endpoint (ex: `http://localhost:8006/soap/users`)
+
+**Operações (User):** `CreateUser(name, email)`, `GetUser(id)`
+
+**Request:**
 ```xml
-<definitions name="UserService"
-    targetNamespace="http://example.com/users"
-    xmlns="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="http://example.com/users"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
-
-  <message name="GetUserRequest">
-    <part name="id" type="xsd:int"/>
-  </message>
-
-  <message name="GetUserResponse">
-    <part name="user" type="tns:User"/>
-  </message>
-
-  <portType name="UserServicePortType">
-    <operation name="GetUser">
-      <input message="tns:GetUserRequest"/>
-      <output message="tns:GetUserResponse"/>
-    </operation>
-  </portType>
-
-</definitions>
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <CreateUser>
+      <name>João</name>
+      <email>joao@example.com</email>
+    </CreateUser>
+  </soap:Body>
+</soap:Envelope>
 ```
+
+**Response:**
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <CreateUserResponse>
+      <id>1</id>
+      <name>João</name>
+      <email>joao@example.com</email>
+    </CreateUserResponse>
+  </soap:Body>
+</soap:Envelope>
+```
+
+**Erros** (e-mail duplicado, usuário/evento não encontrado, tipo de evento inválido) retornam um `soap:Fault` com `faultcode`/`faultstring`, com o status HTTP correspondente (409/404/400).
+
+**Operações (Message):** `CreateMessage(user, content)`, `GetMessage(id)`
+**Operações (Event):** `CreateEvent(type, source)`, `GetEvent(id)`, `ToggleEventStatus(id)`
 
 ---
 

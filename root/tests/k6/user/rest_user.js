@@ -15,9 +15,11 @@ export const options = {
 
 const BASE_URL = "http://localhost:8002";
 
+const RUN_ID = Date.now();
+
 export default function () {
   const name = `User_${__VU}_${__ITER}`;
-  const email = `user_${__VU}_${__ITER}@example.com`;
+  const email = `user_${RUN_ID}_${__VU}_${__ITER}@example.com`;
 
   const res = http.post(`${BASE_URL}/user/create?name=${name}&email=${email}`);
 
