@@ -67,6 +67,6 @@ def test_metrics_exposed():
     resp = requests.get(METRICS_URL)
     assert resp.status_code == 200
     content = resp.text
-    assert "user_http_requests_total" in content
-    assert "user_http_request_duration_seconds" in content
+    assert "http_requests_total" in content
+    assert "http_request_duration_seconds" in content
     print("📊 Métricas coletadas com sucesso!")

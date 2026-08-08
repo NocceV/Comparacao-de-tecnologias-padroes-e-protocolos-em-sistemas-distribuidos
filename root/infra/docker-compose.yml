@@ -121,6 +121,35 @@ services:
     networks:
       - testnet
 
+  #########WebSocket#########
+
+  user-websocket:
+    build: ../python/services/user-service/user-service-websocket
+    image: user-websocket:dev
+    container_name: user-websocket
+    ports:
+      - "8005:8005"
+    networks:
+      - testnet
+
+  message-websocket:
+    build: ../python/services/message-service/message-service-websocket
+    image: message-websocket:dev
+    container_name: message-websocket
+    ports:
+      - "8015:8015"
+    networks:
+      - testnet
+
+  event-websocket:
+    build: ../python/services/event-service/event-service-websocket
+    image: event-websocket:dev
+    container_name: event-websocket
+    ports:
+      - "8025:8025"
+    networks:
+      - testnet
+
   #########Metric and Health#########
 
   prometheus:

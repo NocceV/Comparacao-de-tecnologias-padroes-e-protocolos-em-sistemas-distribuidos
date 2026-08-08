@@ -25,12 +25,12 @@ _events: Dict[int, dict] = {}
 _next_id = 0
 
 REQUEST_COUNT = Counter(
-    "event_http_requests_total",
+    "http_requests_total",
     "Total de requisicoes HTTP do servico de eventos",
     ["method", "endpoint"],
 )
 REQUEST_LATENCY = Histogram(
-    "event_http_request_duration_seconds",
+    "http_request_duration_seconds",
     "Tempo de resposta das requisicoes do servico de eventos",
     ["endpoint"],
 )

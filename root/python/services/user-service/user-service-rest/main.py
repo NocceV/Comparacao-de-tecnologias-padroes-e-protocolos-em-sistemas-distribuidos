@@ -12,12 +12,12 @@ _users: Dict[int, dict] = {}
 _next_id = 0
 
 REQUEST_COUNT = Counter(
-    "user_http_requests_total",
+    "http_requests_total",
     "Total de requisicoes HTTP do servico de usuarios",
     ["method", "endpoint"],
 )
 REQUEST_LATENCY = Histogram(
-    "user_http_request_duration_seconds",
+    "http_request_duration_seconds",
     "Tempo de resposta das requisicoes do servico de usuarios",
     ["endpoint"],
 )

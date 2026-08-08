@@ -19,12 +19,12 @@ _messages: Dict[int, dict] = {}
 _next_id = 0
 
 REQUEST_COUNT = Counter(
-    "message_http_requests_total",
+    "http_requests_total",
     "Total de requisicoes HTTP do servico de mensagens",
     ["method", "endpoint"],
 )
 REQUEST_LATENCY = Histogram(
-    "message_http_request_duration_seconds",
+    "http_request_duration_seconds",
     "Tempo de resposta das requisicoes do servico de mensagens",
     ["endpoint"],
 )
