@@ -2,6 +2,35 @@ version: "3.8"
 
 services:
 
+  #########REST#########
+
+  user-rest:
+    build: ../python/services/user-service/user-service-rest
+    image: user-rest:dev
+    container_name: user-rest
+    ports:
+      - "8002:8002"
+    networks:
+      - testnet
+
+  message-rest:
+    build: ../python/services/message-service/message-service-rest
+    image: message-rest:dev
+    container_name: message-rest
+    ports:
+      - "8012:8012"
+    networks:
+      - testnet
+
+  event-rest:
+    build: ../python/services/event-service/event-service-rest
+    image: event-rest:dev
+    container_name: event-rest
+    ports:
+      - "8022:8022"
+    networks:
+      - testnet
+
   #########GaphQL#########
 
   user-graphql:

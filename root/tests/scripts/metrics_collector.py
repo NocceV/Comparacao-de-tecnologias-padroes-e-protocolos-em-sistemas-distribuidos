@@ -14,12 +14,15 @@ METRICS = [
 
 # Serviços e protocolos
 TARGETS = [
+    ("user", "rest"),
     ("user", "graphql"),
     ("user", "grpc"),
     ("user", "webhook"),
+    ("message", "rest"),
     ("message", "graphql"),
     ("message", "grpc"),
     ("message", "webhook"),
+    ("event", "rest"),
     ("event", "graphql"),
     ("event", "grpc"),
     ("event", "webhook"),

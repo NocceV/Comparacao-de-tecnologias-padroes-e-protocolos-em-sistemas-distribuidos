@@ -4,6 +4,23 @@ global:
 
 scrape_configs:
 
+  #########REST#########
+
+  - job_name: 'user_rest'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['user-rest:8002']
+
+  - job_name: 'message_rest'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['message-rest:8012']
+
+  - job_name: 'event_rest'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['event-rest:8022']
+
   #########GaphQL#########
 
   - job_name: 'user_graphql'
