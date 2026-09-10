@@ -12,7 +12,9 @@ METRICS = [
     'grpc_request_latency_seconds_count',
     'ws_connections_total',
     'ws_messages_total',
-    'ws_message_duration_seconds_count'
+    'ws_message_duration_seconds_count',
+    'sse_connections_total',
+    'sse_events_total'
 ]
 
 # Serviços e protocolos
@@ -23,18 +25,21 @@ TARGETS = [
     ("user", "webhook"),
     ("user", "websocket"),
     ("user", "soap"),
+    ("user", "sse"),
     ("message", "rest"),
     ("message", "graphql"),
     ("message", "grpc"),
     ("message", "webhook"),
     ("message", "websocket"),
     ("message", "soap"),
+    ("message", "sse"),
     ("event", "rest"),
     ("event", "graphql"),
     ("event", "grpc"),
     ("event", "webhook"),
     ("event", "websocket"),
     ("event", "soap"),
+    ("event", "sse"),
 ]
 
 def collect_metrics():
