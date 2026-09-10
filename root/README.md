@@ -46,7 +46,7 @@ Dia 7 -->
 
 # 🔗 Comparative Study of Communication Protocols and Standards
 
-Este projeto tem como objetivo realizar uma **análise comparativa entre seis protocolos e padrões de comunicação** amplamente utilizados em sistemas distribuídos: **REST**, **SOAP**, **gRPC**, **WebSocket**, **GraphQL** e **Webhook**.  
+Este projeto tem como objetivo realizar uma **análise comparativa entre protocolos e padrões de comunicação** amplamente utilizados em sistemas distribuídos: **REST**, **SOAP**, **gRPC**, **WebSocket**, **GraphQL**, **Webhook** e **Server-Sent Events (SSE)**.  
 A proposta é avaliar o desempenho, escalabilidade, resiliência e consumo de recursos de cada tecnologia sob diferentes condições de rede, auxiliando na escolha ideal de comunicação entre sistemas.
 
 ---
@@ -78,7 +78,7 @@ O projeto foi desenvolvido de forma modular, separando os serviços por linguage
 
 ### **Linguagens e Frameworks**
 - **Python (FastAPI)** – utilizado para construir todos os serviços do projeto, com fácil integração a Prometheus.
-- **REST / SOAP / gRPC / GraphQL / WebSocket / Webhook** – os seis protocolos comparados, todos implementados em Python sobre essa mesma base.
+- **REST / SOAP / gRPC / GraphQL / WebSocket / Webhook / SSE** – os protocolos comparados, todos implementados em Python sobre essa mesma base.
 
 ### **Infraestrutura e Monitoramento**
 - **Docker / Docker Compose** – garante isolamento e reprodutibilidade do ambiente de testes.

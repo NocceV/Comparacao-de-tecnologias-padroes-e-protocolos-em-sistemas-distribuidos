@@ -178,6 +178,34 @@ services:
       - "8026:8026"
     networks:
       - testnet
+  #########SSE#########
+
+  user-sse:
+    build: ../python/services/user-service/user-service-sse
+    image: user-sse:dev
+    container_name: user-sse
+    ports:
+      - "8007:8007"
+    networks:
+      - testnet
+
+  message-sse:
+    build: ../python/services/message-service/message-service-sse
+    image: message-sse:dev
+    container_name: message-sse
+    ports:
+      - "8017:8017"
+    networks:
+      - testnet
+
+  event-sse:
+    build: ../python/services/event-service/event-service-sse
+    image: event-sse:dev
+    container_name: event-sse
+    ports:
+      - "8027:8027"
+    networks:
+      - testnet
 
   #########Metric and Health#########
 

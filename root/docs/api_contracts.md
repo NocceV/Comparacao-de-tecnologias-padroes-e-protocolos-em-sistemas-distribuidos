@@ -196,6 +196,60 @@ Servidor → Cliente:
 
 ---
 
+## 📡 Server-Sent Events (SSE)
+
+O **Server-Sent Events (SSE)** é um protocolo baseado em HTTP para transmissão unidirecional (Servidor → Cliente) em tempo real, utilizando o padrão `text/event-stream`.
+
+### **Endpoints de Conexão SSE**
+- **User Service:** `GET http://localhost:8007/sse/users`
+- **Message Service:** `GET http://localhost:8017/sse/messages`
+- **Event Service:** `GET http://localhost:8027/sse/events`
+
+**Cabeçalhos de resposta padrão:**
+```http
+Content-Type: text/event-stream
+Cache-Control: no-cache
+Connection: keep-alive
+```
+
+### **Fluxo e Formato de Eventos**
+
+1. **Conexão Inicial:** Ao abrir a conexão, o cliente recebe:
+```text
+event: connected
+data: {"status": "connected"}
+
+```
+
+2. **User Service:**
+- **Disparo:** `POST /user/create` ou `POST /users` (corpo JSON ou query params: `name`, `email`)
+- **Evento SSE emitido:**
+```text
+event: user_created
+data: {"id": 1, "name": "João Silva", "email": "joao.silva@example.com"}
+
+```
+
+3. **Message Service:**
+- **Disparo:** `POST /messages/create` ou `POST /messages` (corpo JSON: `user`, `content`)
+- **Evento SSE emitido:**
+```text
+event: message_created
+data: {"id": 1, "user": "João", "content": "Olá mundo", "timestamp": "2026-09-10T18:00:00.000000"}
+
+```
+
+4. **Event Service:**
+- **Disparo:** `POST /create` ou `POST /events/create` (corpo JSON ou query params: `type`, `source`)
+- **Evento SSE emitido:**
+```text
+event: event_published
+data: {"id": 1, "type": "PUBLISH", "source": "sensor-1", "status": "ENABLED", "date": "2026-09-10T18:00:00.000000"}
+
+```
+
+---
+
 ## 📊 Métricas Monitoradas (comuns a todos)
 
 Durante os testes, todos os serviços deverão registrar:
