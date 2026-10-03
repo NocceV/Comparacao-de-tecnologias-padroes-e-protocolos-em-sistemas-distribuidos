@@ -45,7 +45,7 @@ def req_rest(index: int) -> tuple[float, bool]:
 
 
 def req_graphql(index: int) -> tuple[float, bool]:
-    query = f"""query {{ event(id: {index}) {{ id type source status date }} }}"""
+    query = f"""query {{ event(id: {index}) {{ id type source status timestamp }} }}"""
     start = time.perf_counter()
     r = requests.post(URL_GRAPHQL, json={"query": query}, headers={"Content-Type": "application/json"}, timeout=5)
     elapsed = (time.perf_counter() - start) * 1000
@@ -114,8 +114,8 @@ def req_grpc(index: int) -> tuple[float, bool]:
 
     start = time.perf_counter()
     try:
-        req = event_pb2.GetEventRequest(id=index)
-        _grpc_stub.GetEvent(req, timeout=5)
+        req = event_pb2.Event(id=index, type="PUBLISH", source=f"src_grpc_{RUN_ID}_{index}")
+        _grpc_stub.EmitEvent(req, timeout=5)
         elapsed = (time.perf_counter() - start) * 1000
         return elapsed, True
     except Exception:

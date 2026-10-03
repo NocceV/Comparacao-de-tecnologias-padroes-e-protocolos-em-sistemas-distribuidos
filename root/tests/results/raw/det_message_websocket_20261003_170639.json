@@ -1,0 +1,18 @@
+{
+  "service": "message",
+  "timestamp": "2026-10-03T17:06:55.227870",
+  "total_requests": 100,
+  "total_time_ms": 566.2784999985888,
+  "throughput_rps": 176.59155344984703,
+  "protocols": {
+    "websocket": {
+      "requests": 100,
+      "percentage": 100.0,
+      "success": 100,
+      "errors": 0,
+      "avg_latency_ms": 0.56,
+      "min_latency_ms": 0.47,
+      "max_latency_ms": 0.97
+    }
+  }
+}

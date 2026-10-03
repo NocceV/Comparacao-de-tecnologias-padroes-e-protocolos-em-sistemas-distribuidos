@@ -1,0 +1,18 @@
+{
+  "service": "user",
+  "timestamp": "2026-10-03T17:06:48.728422",
+  "total_requests": 100,
+  "total_time_ms": 5350.920799999585,
+  "throughput_rps": 18.68837228912223,
+  "protocols": {
+    "graphql": {
+      "requests": 100,
+      "percentage": 100.0,
+      "success": 100,
+      "errors": 0,
+      "avg_latency_ms": 53.36,
+      "min_latency_ms": 46.94,
+      "max_latency_ms": 75.17
+    }
+  }
+}

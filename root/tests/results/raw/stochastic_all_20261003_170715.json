@@ -1,0 +1,97 @@
+{
+  "title": "Teste de Carga Aleat\u00f3rio Multi-Protocolo",
+  "service_filter": "all",
+  "timestamp": "2026-10-03T17:07:18.212594",
+  "total_requests": 200,
+  "concurrency": 1,
+  "total_time_ms": 2521.6641999977583,
+  "throughput_rps": 79.31270150885982,
+  "protocols": {
+    "graphql": {
+      "requests": 27,
+      "percentage": 13.5,
+      "success": 27,
+      "errors": 0,
+      "avg_latency_ms": 50.16,
+      "min_latency_ms": 46.45,
+      "max_latency_ms": 71.93
+    },
+    "grpc": {
+      "requests": 23,
+      "percentage": 11.5,
+      "success": 23,
+      "errors": 0,
+      "avg_latency_ms": 8.11,
+      "min_latency_ms": 0.84,
+      "max_latency_ms": 51.93
+    },
+    "rest": {
+      "requests": 28,
+      "percentage": 14.000000000000002,
+      "success": 28,
+      "errors": 0,
+      "avg_latency_ms": 7.74,
+      "min_latency_ms": 3.4,
+      "max_latency_ms": 24.31
+    },
+    "soap": {
+      "requests": 31,
+      "percentage": 15.5,
+      "success": 30,
+      "errors": 1,
+      "avg_latency_ms": 5.52,
+      "min_latency_ms": 3.0,
+      "max_latency_ms": 25.81
+    },
+    "sse": {
+      "requests": 32,
+      "percentage": 16.0,
+      "success": 32,
+      "errors": 0,
+      "avg_latency_ms": 5.54,
+      "min_latency_ms": 2.87,
+      "max_latency_ms": 19.69
+    },
+    "webhook": {
+      "requests": 29,
+      "percentage": 14.499999999999998,
+      "success": 29,
+      "errors": 0,
+      "avg_latency_ms": 6.0,
+      "min_latency_ms": 3.04,
+      "max_latency_ms": 22.5
+    },
+    "websocket": {
+      "requests": 30,
+      "percentage": 15.0,
+      "success": 30,
+      "errors": 0,
+      "avg_latency_ms": 0.61,
+      "min_latency_ms": 0.51,
+      "max_latency_ms": 0.87
+    }
+  },
+  "services": {
+    "event": {
+      "requests": 59,
+      "percentage": 29.5,
+      "success": 59,
+      "errors": 0,
+      "avg_latency_ms": 13.75
+    },
+    "message": {
+      "requests": 67,
+      "percentage": 33.5,
+      "success": 66,
+      "errors": 1,
+      "avg_latency_ms": 10.57
+    },
+    "user": {
+      "requests": 74,
+      "percentage": 37.0,
+      "success": 74,
+      "errors": 0,
+      "avg_latency_ms": 10.59
+    }
+  }
+}

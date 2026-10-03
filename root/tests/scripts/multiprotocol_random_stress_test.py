@@ -21,9 +21,13 @@ try:
     import grpc
     import user.protos.user_pb2 as user_pb2
     import user.protos.user_pb2_grpc as user_pb2_grpc
-    HAS_GRPC_USER = True
+    import message.protos.message_pb2 as message_pb2
+    import message.protos.message_pb2_grpc as message_pb2_grpc
+    import event.protos.event_pb2 as event_pb2
+    import event.protos.event_pb2_grpc as event_pb2_grpc
+    HAS_GRPC = True
 except (ImportError, ModuleNotFoundError):
-    HAS_GRPC_USER = False
+    HAS_GRPC = False
 
 RUN_ID = int(time.time())
 
@@ -73,7 +77,7 @@ def call_message_rest(idx: int) -> Tuple[float, bool]:
 
 def call_message_graphql(idx: int) -> Tuple[float, bool]:
     start = time.perf_counter()
-    r = requests.post("http://localhost:8011/graphql", json={"query": f"query {{ message(id: {idx}) {{ id user content }} }}"}, timeout=5)
+    r = requests.post("http://localhost:8011/graphql", json={"query": f"query {{ message(id: {idx}) {{ id sender content }} }}"}, timeout=5)
     return (time.perf_counter() - start) * 1000, r.status_code == 200 and "errors" not in r.json()
 
 def call_message_soap(idx: int) -> Tuple[float, bool]:
@@ -142,6 +146,55 @@ def call_event_websocket(idx: int) -> Tuple[float, bool]:
     return asyncio.run(_send())
 
 
+_grpc_user_stub = None
+def call_user_grpc(idx: int) -> Tuple[float, bool]:
+    global _grpc_user_stub
+    if not HAS_GRPC:
+        return 0.0, False
+    if _grpc_user_stub is None:
+        ch = grpc.insecure_channel("localhost:50051")
+        _grpc_user_stub = user_pb2_grpc.UserServiceStub(ch)
+    start = time.perf_counter()
+    try:
+        req = user_pb2.GetUserRequest(id=idx)
+        _grpc_user_stub.GetUser(req, timeout=5)
+        return (time.perf_counter() - start) * 1000, True
+    except Exception:
+        return (time.perf_counter() - start) * 1000, False
+
+_grpc_msg_stub = None
+def call_message_grpc(idx: int) -> Tuple[float, bool]:
+    global _grpc_msg_stub
+    if not HAS_GRPC:
+        return 0.0, False
+    if _grpc_msg_stub is None:
+        ch = grpc.insecure_channel("localhost:50054")
+        _grpc_msg_stub = message_pb2_grpc.MessageServiceStub(ch)
+    start = time.perf_counter()
+    try:
+        req = message_pb2.SendMessageRequest(id=idx, sender=f"U{idx}", content=f"Msg {RUN_ID}_{idx}")
+        _grpc_msg_stub.SendMessage(req, timeout=5)
+        return (time.perf_counter() - start) * 1000, True
+    except Exception:
+        return (time.perf_counter() - start) * 1000, False
+
+_grpc_evt_stub = None
+def call_event_grpc(idx: int) -> Tuple[float, bool]:
+    global _grpc_evt_stub
+    if not HAS_GRPC:
+        return 0.0, False
+    if _grpc_evt_stub is None:
+        ch = grpc.insecure_channel("localhost:50061")
+        _grpc_evt_stub = event_pb2_grpc.EventServiceStub(ch)
+    start = time.perf_counter()
+    try:
+        req = event_pb2.Event(id=idx, type="PUBLISH", source=f"src_grpc_{RUN_ID}_{idx}")
+        _grpc_evt_stub.EmitEvent(req, timeout=5)
+        return (time.perf_counter() - start) * 1000, True
+    except Exception:
+        return (time.perf_counter() - start) * 1000, False
+
+
 REGISTRY: Dict[str, Dict[str, Callable[[int], Tuple[float, bool]]]] = {
     "user": {
         "rest": call_user_rest,
@@ -170,6 +223,11 @@ if HAS_WEBSOCKETS:
     REGISTRY["user"]["websocket"] = call_user_websocket
     REGISTRY["message"]["websocket"] = call_message_websocket
     REGISTRY["event"]["websocket"] = call_event_websocket
+
+if HAS_GRPC:
+    REGISTRY["user"]["grpc"] = call_user_grpc
+    REGISTRY["message"]["grpc"] = call_message_grpc
+    REGISTRY["event"]["grpc"] = call_event_grpc
 
 
 def run_multiprotocol_test(

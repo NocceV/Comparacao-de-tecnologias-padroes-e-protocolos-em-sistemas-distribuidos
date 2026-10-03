@@ -102,6 +102,16 @@ def get_all_events() -> List[dict]:
     return list(_events.values())
 
 
+@app.get("/health")
+def health() -> Dict[str, str]:
+    return {"status": "ok"}
+
+
+@app.get("/metrics")
+def metrics() -> Response:
+    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+
+
 @app.get("/{id}")
 @app.get("/events/{id}")
 def get_event(id: int) -> dict:
@@ -168,11 +178,4 @@ def update_status(id: int) -> str:
     return "Evento ativado com sucesso."
 
 
-@app.get("/health")
-def health() -> Dict[str, str]:
-    return {"status": "ok"}
 
-
-@app.get("/metrics")
-def metrics() -> Response:
-    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)

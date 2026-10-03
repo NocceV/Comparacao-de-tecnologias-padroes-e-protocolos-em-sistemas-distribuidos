@@ -1,0 +1,18 @@
+{
+  "service": "event",
+  "timestamp": "2026-10-03T17:07:15.259795",
+  "total_requests": 100,
+  "total_time_ms": 660.0904000006267,
+  "throughput_rps": 151.49440137275903,
+  "protocols": {
+    "sse": {
+      "requests": 100,
+      "percentage": 100.0,
+      "success": 100,
+      "errors": 0,
+      "avg_latency_ms": 6.5,
+      "min_latency_ms": 2.58,
+      "max_latency_ms": 25.12
+    }
+  }
+}

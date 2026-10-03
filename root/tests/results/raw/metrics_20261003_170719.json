@@ -1,0 +1,1090 @@
+{
+  "user_rest": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/user/create",
+          "instance": "user-rest:8002",
+          "job": "user_rest",
+          "method": "POST"
+        },
+        "value": [
+          1791058038.527,
+          "113"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/user/{id}",
+          "instance": "user-rest:8002",
+          "job": "user_rest",
+          "method": "GET"
+        },
+        "value": [
+          1791058038.527,
+          "2"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/user",
+          "instance": "user-rest:8002",
+          "job": "user_rest",
+          "method": "GET"
+        },
+        "value": [
+          1791058038.527,
+          "1"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/user/create",
+          "instance": "user-rest:8002",
+          "job": "user_rest"
+        },
+        "value": [
+          1791058038.533,
+          "112"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/user/{id}",
+          "instance": "user-rest:8002",
+          "job": "user_rest"
+        },
+        "value": [
+          1791058038.533,
+          "1"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/user",
+          "instance": "user-rest:8002",
+          "job": "user_rest"
+        },
+        "value": [
+          1791058038.533,
+          "1"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "user_graphql": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/graphql/user",
+          "instance": "user-graphql:8001",
+          "job": "user_graphql",
+          "method": "GRAPHQL"
+        },
+        "value": [
+          1791058038.561,
+          "139"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/graphql/user",
+          "instance": "user-graphql:8001",
+          "job": "user_graphql"
+        },
+        "value": [
+          1791058038.565,
+          "139"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "user_grpc": {
+    "http_requests_total": [],
+    "http_request_duration_seconds_count": [],
+    "grpc_requests_total": [
+      {
+        "metric": {
+          "__name__": "grpc_requests_total",
+          "instance": "user-grpc:50052",
+          "job": "user_grpc",
+          "method": "GetUser"
+        },
+        "value": [
+          1791058038.603,
+          "116"
+        ]
+      }
+    ],
+    "grpc_request_latency_seconds_count": [
+      {
+        "metric": {
+          "__name__": "grpc_request_latency_seconds_count",
+          "instance": "user-grpc:50052",
+          "job": "user_grpc",
+          "method": "GetUser"
+        },
+        "value": [
+          1791058038.607,
+          "116"
+        ]
+      }
+    ],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "user_webhook": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/hooks/users",
+          "instance": "user-webhook:8003",
+          "job": "user_webhook",
+          "method": "POST"
+        },
+        "value": [
+          1791058038.629,
+          "1"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/users",
+          "instance": "user-webhook:8003",
+          "job": "user_webhook",
+          "method": "POST"
+        },
+        "value": [
+          1791058038.629,
+          "117"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/hooks/users",
+          "instance": "user-webhook:8003",
+          "job": "user_webhook"
+        },
+        "value": [
+          1791058038.633,
+          "1"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/users",
+          "instance": "user-webhook:8003",
+          "job": "user_webhook"
+        },
+        "value": [
+          1791058038.633,
+          "117"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "user_websocket": {
+    "http_requests_total": [],
+    "http_request_duration_seconds_count": [],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [
+      {
+        "metric": {
+          "__name__": "ws_connections_total",
+          "instance": "user-websocket:8005",
+          "job": "user_websocket"
+        },
+        "value": [
+          1791058038.672,
+          "111"
+        ]
+      }
+    ],
+    "ws_messages_total": [
+      {
+        "metric": {
+          "__name__": "ws_messages_total",
+          "action": "create_user",
+          "instance": "user-websocket:8005",
+          "job": "user_websocket"
+        },
+        "value": [
+          1791058038.676,
+          "109"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "ws_messages_total",
+          "action": "get_user",
+          "instance": "user-websocket:8005",
+          "job": "user_websocket"
+        },
+        "value": [
+          1791058038.676,
+          "2"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "ws_messages_total",
+          "action": "delete_user",
+          "instance": "user-websocket:8005",
+          "job": "user_websocket"
+        },
+        "value": [
+          1791058038.676,
+          "1"
+        ]
+      }
+    ],
+    "ws_message_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "ws_message_duration_seconds_count",
+          "action": "create_user",
+          "instance": "user-websocket:8005",
+          "job": "user_websocket"
+        },
+        "value": [
+          1791058038.68,
+          "109"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "ws_message_duration_seconds_count",
+          "action": "get_user",
+          "instance": "user-websocket:8005",
+          "job": "user_websocket"
+        },
+        "value": [
+          1791058038.68,
+          "2"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "ws_message_duration_seconds_count",
+          "action": "delete_user",
+          "instance": "user-websocket:8005",
+          "job": "user_websocket"
+        },
+        "value": [
+          1791058038.68,
+          "1"
+        ]
+      }
+    ],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "user_soap": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "CreateUser",
+          "instance": "user-soap:8006",
+          "job": "user_soap",
+          "method": "POST"
+        },
+        "value": [
+          1791058038.69,
+          "127"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "GetUser",
+          "instance": "user-soap:8006",
+          "job": "user_soap",
+          "method": "POST"
+        },
+        "value": [
+          1791058038.69,
+          "2"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "CreateUser",
+          "instance": "user-soap:8006",
+          "job": "user_soap"
+        },
+        "value": [
+          1791058038.693,
+          "127"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "GetUser",
+          "instance": "user-soap:8006",
+          "job": "user_soap"
+        },
+        "value": [
+          1791058038.693,
+          "2"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "user_sse": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/user/create",
+          "instance": "user-sse:8007",
+          "job": "user_sse",
+          "method": "POST"
+        },
+        "value": [
+          1791058038.717,
+          "131"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/user/{id}",
+          "instance": "user-sse:8007",
+          "job": "user_sse",
+          "method": "GET"
+        },
+        "value": [
+          1791058038.717,
+          "1"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/user",
+          "instance": "user-sse:8007",
+          "job": "user_sse",
+          "method": "GET"
+        },
+        "value": [
+          1791058038.717,
+          "1"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/user/create",
+          "instance": "user-sse:8007",
+          "job": "user_sse"
+        },
+        "value": [
+          1791058038.72,
+          "130"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/user/{id}",
+          "instance": "user-sse:8007",
+          "job": "user_sse"
+        },
+        "value": [
+          1791058038.72,
+          "1"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/user",
+          "instance": "user-sse:8007",
+          "job": "user_sse"
+        },
+        "value": [
+          1791058038.72,
+          "1"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [
+      {
+        "metric": {
+          "__name__": "sse_connections_total",
+          "instance": "user-sse:8007",
+          "job": "user_sse"
+        },
+        "value": [
+          1791058038.74,
+          "1"
+        ]
+      }
+    ],
+    "sse_events_total": [
+      {
+        "metric": {
+          "__name__": "sse_events_total",
+          "event": "user_created",
+          "instance": "user-sse:8007",
+          "job": "user_sse"
+        },
+        "value": [
+          1791058038.744,
+          "130"
+        ]
+      }
+    ]
+  },
+  "message_rest": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/messages/create",
+          "instance": "message-rest:8012",
+          "job": "message_rest",
+          "method": "POST"
+        },
+        "value": [
+          1791058038.747,
+          "121"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/messages/create",
+          "instance": "message-rest:8012",
+          "job": "message_rest"
+        },
+        "value": [
+          1791058038.749,
+          "121"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "message_graphql": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/graphql/message",
+          "instance": "message-graphql:8011",
+          "job": "message_graphql",
+          "method": "GRAPHQL"
+        },
+        "value": [
+          1791058038.772,
+          "122"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/graphql/message",
+          "instance": "message-graphql:8011",
+          "job": "message_graphql"
+        },
+        "value": [
+          1791058038.775,
+          "122"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "message_grpc": {
+    "http_requests_total": [],
+    "http_request_duration_seconds_count": [],
+    "grpc_requests_total": [
+      {
+        "metric": {
+          "__name__": "grpc_requests_total",
+          "instance": "message-grpc:50053",
+          "job": "message_grpc",
+          "method": "SendMessage"
+        },
+        "value": [
+          1791058038.807,
+          "111"
+        ]
+      }
+    ],
+    "grpc_request_latency_seconds_count": [
+      {
+        "metric": {
+          "__name__": "grpc_request_latency_seconds_count",
+          "instance": "message-grpc:50053",
+          "job": "message_grpc",
+          "method": "SendMessage"
+        },
+        "value": [
+          1791058038.81,
+          "111"
+        ]
+      }
+    ],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "message_webhook": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/messages",
+          "instance": "message-webhook:8004",
+          "job": "message_webhook",
+          "method": "POST"
+        },
+        "value": [
+          1791058038.829,
+          "126"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/messages",
+          "instance": "message-webhook:8004",
+          "job": "message_webhook"
+        },
+        "value": [
+          1791058038.832,
+          "126"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "message_websocket": {
+    "http_requests_total": [],
+    "http_request_duration_seconds_count": [],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [
+      {
+        "metric": {
+          "__name__": "ws_connections_total",
+          "instance": "message-websocket:8015",
+          "job": "message_websocket"
+        },
+        "value": [
+          1791058038.868,
+          "113"
+        ]
+      }
+    ],
+    "ws_messages_total": [
+      {
+        "metric": {
+          "__name__": "ws_messages_total",
+          "action": "send_message",
+          "instance": "message-websocket:8015",
+          "job": "message_websocket"
+        },
+        "value": [
+          1791058038.87,
+          "113"
+        ]
+      }
+    ],
+    "ws_message_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "ws_message_duration_seconds_count",
+          "action": "send_message",
+          "instance": "message-websocket:8015",
+          "job": "message_websocket"
+        },
+        "value": [
+          1791058038.874,
+          "113"
+        ]
+      }
+    ],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "message_soap": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "CreateMessage",
+          "instance": "message-soap:8016",
+          "job": "message_soap",
+          "method": "POST"
+        },
+        "value": [
+          1791058038.886,
+          "115"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "CreateMessage",
+          "instance": "message-soap:8016",
+          "job": "message_soap"
+        },
+        "value": [
+          1791058038.889,
+          "115"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "message_sse": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/messages/create",
+          "instance": "message-sse:8017",
+          "job": "message_sse",
+          "method": "POST"
+        },
+        "value": [
+          1791058038.913,
+          "112"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/messages/create",
+          "instance": "message-sse:8017",
+          "job": "message_sse"
+        },
+        "value": [
+          1791058038.916,
+          "112"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [
+      {
+        "metric": {
+          "__name__": "sse_connections_total",
+          "instance": "message-sse:8017",
+          "job": "message_sse"
+        },
+        "value": [
+          1791058038.934,
+          "0"
+        ]
+      }
+    ],
+    "sse_events_total": [
+      {
+        "metric": {
+          "__name__": "sse_events_total",
+          "event": "message_created",
+          "instance": "message-sse:8017",
+          "job": "message_sse"
+        },
+        "value": [
+          1791058038.938,
+          "112"
+        ]
+      }
+    ]
+  },
+  "event_rest": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/create",
+          "instance": "event-rest:8022",
+          "job": "event_rest",
+          "method": "POST"
+        },
+        "value": [
+          1791058038.941,
+          "115"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/create",
+          "instance": "event-rest:8022",
+          "job": "event_rest"
+        },
+        "value": [
+          1791058038.944,
+          "115"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "event_graphql": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/graphql/event",
+          "instance": "event-graphql:8021",
+          "job": "event_graphql",
+          "method": "GRAPHQL"
+        },
+        "value": [
+          1791058038.969,
+          "105"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "event_grpc": {
+    "http_requests_total": [],
+    "http_request_duration_seconds_count": [],
+    "grpc_requests_total": [
+      {
+        "metric": {
+          "__name__": "grpc_requests_total",
+          "instance": "event-grpc:50062",
+          "job": "event_grpc",
+          "method": "EmitEvent"
+        },
+        "value": [
+          1791058039.003,
+          "112"
+        ]
+      }
+    ],
+    "grpc_request_latency_seconds_count": [
+      {
+        "metric": {
+          "__name__": "grpc_request_latency_seconds_count",
+          "instance": "event-grpc:50062",
+          "job": "event_grpc",
+          "method": "EmitEvent"
+        },
+        "value": [
+          1791058039.006,
+          "112"
+        ]
+      }
+    ],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "event_webhook": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/events",
+          "instance": "event-webhook:8023",
+          "job": "event_webhook",
+          "method": "POST"
+        },
+        "value": [
+          1791058039.025,
+          "117"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/events",
+          "instance": "event-webhook:8023",
+          "job": "event_webhook"
+        },
+        "value": [
+          1791058039.028,
+          "117"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "event_websocket": {
+    "http_requests_total": [],
+    "http_request_duration_seconds_count": [],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [
+      {
+        "metric": {
+          "__name__": "ws_connections_total",
+          "instance": "event-websocket:8025",
+          "job": "event_websocket"
+        },
+        "value": [
+          1791058039.064,
+          "111"
+        ]
+      }
+    ],
+    "ws_messages_total": [
+      {
+        "metric": {
+          "__name__": "ws_messages_total",
+          "action": "publish_event",
+          "instance": "event-websocket:8025",
+          "job": "event_websocket"
+        },
+        "value": [
+          1791058039.067,
+          "111"
+        ]
+      }
+    ],
+    "ws_message_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "ws_message_duration_seconds_count",
+          "action": "publish_event",
+          "instance": "event-websocket:8025",
+          "job": "event_websocket"
+        },
+        "value": [
+          1791058039.072,
+          "111"
+        ]
+      }
+    ],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "event_soap": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "CreateEvent",
+          "instance": "event-soap:8026",
+          "job": "event_soap",
+          "method": "POST"
+        },
+        "value": [
+          1791058039.081,
+          "114"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "CreateEvent",
+          "instance": "event-soap:8026",
+          "job": "event_soap"
+        },
+        "value": [
+          1791058039.085,
+          "114"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [],
+    "sse_events_total": []
+  },
+  "event_sse": {
+    "http_requests_total": [
+      {
+        "metric": {
+          "__name__": "http_requests_total",
+          "endpoint": "/create",
+          "instance": "event-sse:8027",
+          "job": "event_sse",
+          "method": "POST"
+        },
+        "value": [
+          1791058039.109,
+          "106"
+        ]
+      }
+    ],
+    "http_request_duration_seconds_count": [
+      {
+        "metric": {
+          "__name__": "http_request_duration_seconds_count",
+          "endpoint": "/create",
+          "instance": "event-sse:8027",
+          "job": "event_sse"
+        },
+        "value": [
+          1791058039.112,
+          "106"
+        ]
+      }
+    ],
+    "grpc_requests_total": [],
+    "grpc_request_latency_seconds_count": [],
+    "ws_connections_total": [],
+    "ws_messages_total": [],
+    "ws_message_duration_seconds_count": [],
+    "sse_connections_total": [
+      {
+        "metric": {
+          "__name__": "sse_connections_total",
+          "instance": "event-sse:8027",
+          "job": "event_sse"
+        },
+        "value": [
+          1791058039.137,
+          "0"
+        ]
+      }
+    ],
+    "sse_events_total": [
+      {
+        "metric": {
+          "__name__": "sse_events_total",
+          "event": "event_published",
+          "instance": "event-sse:8027",
+          "job": "event_sse"
+        },
+        "value": [
+          1791058039.14,
+          "106"
+        ]
+      }
+    ]
+  }
+}

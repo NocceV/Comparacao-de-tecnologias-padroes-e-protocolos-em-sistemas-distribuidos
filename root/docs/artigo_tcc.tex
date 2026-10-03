@@ -1,0 +1,370 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{abakos}
+\usepackage{abntex2cite} 
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{amsmath}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Capa da revista
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\monog}{Comparação de tecnologias, padrões e protocolos em sistemas distribuídos}
+\newcommand{\monogES}{Comparison of Technologies, Standards, and Protocols in Distributed Systems}
+\newcommand{\origem}{Brasil}
+\newcommand{\editorial}{\textbf{Abakós}, Belo Horizonte, v. 8, n. 2, p. 00-00, Sep. 2026 - ISSN: 2316-9451}
+
+%%%%%%%%%%%%%%%%%INFORMAÇÕES SOBRE AUTORES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\AutorA}{Rafael Sanzio e Silva}
+\newcommand{\funcaoA}{Autor - }
+\newcommand{\cursA}{Sistemas de Informação}
+\newcommand{\emailA}{rafael.sanzio@edu.pucminas.br}
+
+\newcommand{\AutorB}{Vitor Lopes Nocce}
+\newcommand{\funcaoB}{Autor - }
+\newcommand{\cursB}{Sistemas de Informação}
+\newcommand{\emailB}{vitor.nocce@edu.pucminas.br}
+
+\newcommand{\AutorC}{Sinaide Nunes Bezerra}
+\newcommand{\funcaoC}{Orientador - }
+\newcommand{\cursC}{Sistemas de Informação}
+\newcommand{\emailC}{sinaide@edu.pucminas.br}
+
+\newcommand{\keyword}[1]{\textsf{#1}}
+
+\begin{document}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %% Pagina de titulo
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{flushleft}
+\begin{minipage} [c][5cm][b]{16.5cm}
+\includegraphics[scale=1.1]{figuras/pucmg.png} 
+\end{minipage}
+ \vspace{0cm} {
+ \singlespacing \Large{\monog \symbolfootnote[1]{Submetido em 14/09/2026} \\ }
+  \normalsize{\monogES}
+ }
+\end{flushleft}
+
+\begin{flushright}
+\singlespacing 
+\normalsize{\AutorA -- \footnote{\funcaoA \cursA, \origem -- \emailA }} \\
+ \normalsize{\AutorB -- \footnote{\funcaoB \cursB, \origem -- \emailB }} \\
+  \normalsize{\AutorC -- \footnote{\funcaoC \cursC, \origem -- \emailC }} \\
+\end{flushright}
+\thispagestyle{empty}
+
+\begin{abstract}
+\noindent
+A área de tecnologia apresenta uma grande variedade de padrões, protocolos e arquiteturas de comunicação com aplicabilidades específicas. Essa diversidade aumenta a complexidade de escolha adequada para cenários distintos, podendo levar a decisões inadequadas, resultando em redução do desempenho, aumento de custos e gargalos na comunicação entre os sistemas. O objetivo deste estudo é realizar uma análise comparativa entre sete tecnologias utilizadas em sistemas distribuídos: REST, SOAP, gRPC, WebSocket, GraphQL, Webhook e Server-Sent Events (SSE). A partir dessa análise, são avaliados seus desempenhos e especificações técnicas, de modo a evidenciar os contextos ideais de aplicação e fornecer uma avaliação abrangente e imparcial que contribua para a tomada de decisão em grandes sistemas.
+A metodologia consistiu na execução de experimentos comparativos em diferentes cenários de carga, permitindo observar o comportamento das tecnologias diante de diferentes demandas de comunicação. Os resultados revelam variações significativas de desempenho entre os protocolos avaliados. Concluiu-se que cada tecnologia apresenta vantagens específicas conforme o contexto, contribuindo para escolhas mais adequadas em Sistemas de Informação distribuídos.
+\\\textbf{\keyword{Palavras-chave:}} REST, gRPC, WebSocket, Webhook, GraphQL, CPU, HTTP, JSON, SSE, Soap, Server-Sent Events.
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage 
+\selectlanguage{english}
+\begin{abstract}
+\noindent
+The technology field presents a wide variety of communication standards, protocols, and architectures with specific applications. This diversity increases the complexity of selecting the most appropriate solution for different scenarios, potentially leading to inadequate decisions that may result in reduced performance, increased costs, and communication bottlenecks between systems. The objective of this study is to conduct a comparative analysis of seven technologies used in distributed systems: REST, SOAP, gRPC, WebSocket, GraphQL, Webhook, and Server-Sent Events (SSE). Based on this analysis, their performance and technical specifications are evaluated in order to identify the most suitable application contexts and provide a comprehensive and impartial assessment that contributes to decision-making in large-scale systems.
+
+The methodology consisted of conducting comparative experiments under varying load scenarios, allowing the observation of the behavior of these technologies under different communication demands. The results reveal significant performance variations among the evaluated technologies. It was concluded that each technology presents specific advantages depending on the context, providing support for more appropriate choices in distributed Information Systems.
+
+\textbf{\keyword{Keywords:}} REST, gRPC, WebSocket, Webhook, GraphQL, CPU, HTTP, JSON, SSE, SOAP, Server-Sent Events.
+
+\end{abstract}
+
+\newpage
+
+\selectlanguage{brazilian}
+ \onehalfspace
+ \setlength{\parindent}{1.25cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% INICIO DO TEXTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introdução}
+
+Na comunicação entre sistemas, protocolos e padrões têm papéis complementares. Os protocolos tratam das regras que permitem a troca de informações entre dispositivos, enquanto padrões, estilos arquiteturais e tecnologias de integração estabelecem diferentes métodos para estruturar essa comunicação. Dessa forma, essas soluções contribuem para o funcionamento entre sistemas desenvolvidos com diferentes linguagens, plataformas e arquiteturas.
+
+No mercado, existe uma grande variedade de tecnologias destinadas à comunicação e integração entre sistemas, cada uma apresentando características próprias e sendo mais pertinente a determinados contextos da engenharia de software. Entretanto, no desenvolvimento de sistemas, é comum que organizações adotem determinadas soluções sem a realização de uma análise aprofundada de seus requisitos e limitações. Esse comportamento também é observado em estudos sobre tomada de decisão arquitetural, que destacam a ausência de critérios claros e a limitação de conhecimento como fatores recorrentes \citeonline{persson2016software}.
+
+Diante desse contexto, este estudo busca comparar sete tecnologias utilizadas na comunicação entre sistemas distribuídos, analisando seus comportamentos em diferentes condições de utilização, incluindo cenários de carga moderada e elevada. Além da análise de suas características, vantagens e limitações, são conduzidos testes práticos com o objetivo de avaliar o desempenho e o consumo de recursos de cada abordagem.
+
+As tecnologias selecionadas para este estudo são REST, SOAP, gRPC, WebSocket, GraphQL, Webhook e Server-Sent Events (SSE). A escolha dessas tecnologias se justifica pela diversidade de modelos de comunicação que representam. Enquanto algumas são voltadas para arquiteturas baseadas em requisição e resposta, outras possibilitam comunicação bidirecional ou o envio de eventos em tempo real. Além disso, algumas abordagens utilizam formatos de dados padronizados, enquanto outras foram criadas com foco em eficiência e desempenho na comunicação entre serviços.
+
+Essa diversidade permite identificar os pontos fortes, limitações e contextos de aplicação mais ideais para cada tecnologia. Assim, a principal contribuição esperada deste trabalho é auxiliar profissionais e pesquisadores da área de Sistemas de Informação na seleção de tecnologias de comunicação mais adequadas, considerando os requisitos técnicos e as necessidades específicas de cada projeto.
+
+\section{Referencial Teórico}
+
+Para sustentar os experimentos desenvolvidos, esta seção reúne definições, princípios e tecnologias essenciais, além de revisar estudos anteriores que exploram o desempenho de protocolos aplicados a arquiteturas distribuídas.
+
+\subsection{Fundamentação Teórica}
+
+A comunicação entre sistemas distribuídos constitui um dos pilares da computação, viabilizando arquiteturas escaláveis e compostas por múltiplos serviços independentes. Segundo \citeonline{newman2015building}, arquiteturas de microsserviços dependem de protocolos de comunicação eficientes, capazes de suportar baixa latência e alto volume de mensagens em ambientes distribuídos. Nesse cenário, consolidaram-se diferentes padrões, protocolos e tecnologias (REST, SOAP, gRPC, GraphQL, WebSocket, Webhook e Server-Sent Events (SSE)), cada uma representando um modelo de comunicação e um conjunto próprio de compromissos.
+
+Entre os modelos de requisição/resposta, REST e SOAP representam duas gerações distintas de solução. REST, proposto por \citeonline{fielding2000rest}, fundamenta-se nos princípios da Arquitetura Orientada a Recursos e utiliza o protocolo HTTP como mecanismo de transporte, caracterizando-se por comunicação síncrona e \textit{stateless}, com respostas representadas em JSON; sua simplicidade e ampla compatibilidade explicam a adoção quase universal em APIs Web, ainda que o custo de serialização textual introduza sobrecarga em cenários de alta concorrência. Já o SOAP, formalizado pelo W3C \cite{soap2007w3c}, é um protocolo baseado em XML apoiado em um envelope padronizado e em contratos rígidos descritos via WSDL, o que confere previsibilidade e forte suporte a padrões corporativos de segurança e transação, ao custo de mensagens mais verbosas e maior sobrecarga de processamento.
+
+Como alternativas voltadas à otimização de desempenho e flexibilidade, destacam-se o gRPC e o GraphQL. O gRPC, mantido pelo Google \cite{grpcio}, adota o modelo de Chamada de Procedimento Remoto sobre HTTP/2, com serialização binária via Protocol Buffers, permitindo multiplexação de streams e comunicação bidirecional contínua; \citeonline{zahid2021grpc} demonstram que essa arquitetura pode apresentar latências até oito vezes menores que o REST em cenários de alta concorrência. O GraphQL, por sua vez, criado pelo Facebook, inverte a lógica tradicional de exposição de recursos ao permitir que o cliente especifique os dados desejados em uma única requisição, eliminando os problemas de \textit{overfetching} e \textit{underfetching} comuns em APIs REST \cite{ambasht}; em contrapartida, \citeonline{grambow2020benchmarking} apontam maior consumo de CPU e memória decorrente da interpretação dinâmica de consultas e do encadeamento de \textit{resolvers}, sobretudo em modelos de dados relacionais.
+
+Por fim, WebSocket, Webhook e SSE representam três formas distintas de superar as limitações do modelo tradicional de requisição-resposta em cenários que exigem atualização contínua. O WebSocket, padronizado pela RFC 6455 \cite{rfc6455}, estabelece um canal bidirecional persistente entre cliente e servidor, eliminando os múltiplos \textit{handshakes} HTTP e reduzindo a latência, embora seu desempenho dependa da capacidade do servidor de sustentar um grande número de conexões simultâneas. O Webhook opera em um paradigma inverso ao cliente-servidor tradicional, em que o próprio servidor notifica URLs externas assim que eventos específicos ocorrem, dispensando o \textit{polling} constante do cliente \cite{webhookdoc}, sendo empregado em integrações assíncronas e serviços SaaS, ainda que sofra com limitações sob alta concorrência e ausência de garantias formais de entrega. Já o SSE, especificado pelo WHATWG como parte do HTML Living Standard \cite{whatwg2024sse}, define um mecanismo de \textit{streaming} unidirecional do servidor para o cliente sobre uma única conexão HTTP persistente, consumido no navegador pela API \textit{EventSource}; diferentemente do WebSocket, não oferece comunicação bidirecional, mas compensa essa limitação com maior simplicidade de implementação e reconexão automática nativa.
+
+A instrumentação e o monitoramento também desempenham papel relevante na avaliação de sistemas distribuídos. Ferramentas como Prometheus e Grafana permitem a coleta, o armazenamento e a visualização de métricas de desempenho, como latência, throughput e uso de CPU e memória \cite{turnbull2014monitoring}, sendo essenciais para validar requisitos não funcionais. Os detalhes de sua aplicação neste trabalho são apresentados nas seções seguintes.
+
+\subsection{Trabalhos Relacionados}
+
+Diversos estudos têm investigado o desempenho de diferentes tecnologias de comunicação em arquiteturas de microsserviços, embora a maior parte se concentre nas alternativas mais recentes de troca de dados via JSON. \citeonline{Niswar} realizam uma análise comparativa entre REST, GraphQL e gRPC, implementando os serviços em contêineres integrados com Redis e MySQL. Os experimentos consideram métricas como tempo de resposta e utilização de CPU sob cargas variando entre 100 e 500 requisições, concluindo que o gRPC apresenta o melhor desempenho geral, enquanto o REST demonstra menor consumo de recursos e o GraphQL, maior latência.
+
+\citeonline{9474834} comparam REST e GraphQL a partir de métricas como volume de dados trafegados, quantidade de requisições e tempo de resposta, indicando que o GraphQL não substitui o REST, mas atua como abordagem complementar, vantajosa em consultas dinâmicas que demandam flexibilidade na definição dos dados retornados.
+
+Ainda no campo dos protocolos mais tradicionais, \citeonline{tihomirovs2016comparison} comparam REST e SOAP a partir de métricas de engenharia de software, incluindo tempo de resposta e volume de código necessário para implementação. Os autores constatam que o REST apresenta tempos de resposta menores que o SOAP, ao passo que o SOAP demanda, em média, menor quantidade de linhas de código, evidenciando que a escolha entre os dois protocolos envolve também compromissos de manutenibilidade, e não apenas de desempenho bruto.
+
+Por fim, pesquisas como a de \citeonline{grambow2020benchmarking} reforçam que o desempenho de cada tecnologia está associado às condições do ambiente, como latência de rede, níveis de carga e quantidade de chamadas simultâneas. Esses estudos demonstram que não existe um único protocolo ideal para todos os cenários, reforçando a importância de avaliações experimentais para orientar decisões arquiteturais.
+
+Observa-se, contudo, que os trabalhos relacionados concentram-se na comparação entre REST, GraphQL, gRPC e SOAP, havendo escassez de estudos que avaliem, sob metodologia experimental controlada, tecnologias orientadas a eventos e comunicação contínua, como WebSocket, Webhook e SSE. Este trabalho se diferencia, portanto, por comparar sete tecnologias (REST, SOAP, gRPC, GraphQL, WebSocket, Webhook e SSE), adotando uma metodologia experimental mais ampla, que abrange cenários ideais, realistas e críticos, com monitoramento detalhado por meio do Prometheus e do Grafana. Dessa forma, o estudo oferece uma visão prática e consolidada que auxilia na escolha adequada de tecnologias de comunicação em sistemas distribuídos.
+
+\section{Metodologia}
+
+A metodologia foi elaborada de forma a proporcionar uma análise comparativa entre diferentes tecnologias de comunicação em sistemas distribuídos, buscando garantir a validade dos resultados obtidos por meio de uma abordagem experimental controlada. O trabalho foi desenvolvido em quatro etapas principais: o levantamento teórico, o projeto arquitetural do ambiente experimental, o desenvolvimento das implementações e a execução dos testes.
+
+No levantamento teórico, foram definidos os critérios de seleção das sete tecnologias avaliadas, com base na representatividade dos principais paradigmas de comunicação empregados em sistemas distribuídos. Em seguida, no projeto arquitetural, foi concebida a infraestrutura experimental baseada em microsserviços conteinerizados, incluindo a definição dos serviços de domínio, o orquestrador automatizado de testes e os dois regimes complementares de avaliação de carga: o modo determinístico, com execução isolada de cada protocolo sob cenários de esforço crescente, e o modo estocástico, com alternância aleatória entre protocolos para simular tráfego heterogêneo de produção.
+
+A terceira etapa consistiu no desenvolvimento de implementações equivalentes das tecnologias avaliadas, buscando manter condições comparáveis entre elas por meio de contratos de API padronizados e armazenamento em memória. Por fim, a etapa de testes foi dedicada à execução dos experimentos sob diferentes condições de carga e à análise quantitativa de métricas como latência e throughput e consumo de recursos. Essa sequência metodológica permitiu avaliar o comportamento das sete tecnologias em condições controladas e comparar sua aplicabilidade em diferentes contextos.
+
+\subsection{Tecnologias Avaliadas}
+
+A seleção das tecnologias avaliadas neste estudo seguiu o critério de representatividade dos principais paradigmas de comunicação empregados em sistemas distribuídos atuais, de modo a possibilitar uma comparação abrangente entre modelos síncronos tradicionais, abordagens orientadas a desempenho e flexibilidade, e mecanismos assíncronos ou orientados a eventos. As características técnicas de cada tecnologia foram detalhadas na Seção~2.1; esta subseção concentra-se, portanto, nos critérios que justificam sua inclusão no escopo experimental.
+
+REST e SOAP foram incluídos como representantes do paradigma de requisição-resposta, permitindo confrontar duas gerações distintas de solução: o REST, como padrão de fato das APIs Web, e o SOAP, como protocolo formal ainda adotado em sistemas corporativos legados que exigem contratos rígidos e suporte nativo a transações.
+
+gRPC e GraphQL foram selecionados por representarem alternativas atuais ao modelo REST, cada um otimizando um aspecto diferente da comunicação: o gRPC prioriza desempenho bruto por meio de serialização binária e RPC sobre HTTP/2, enquanto o GraphQL prioriza flexibilidade na definição dos dados retornados pelo cliente. A inclusão de ambos permite comparar tecnologias orientadas a desempenho com tecnologias orientadas a flexibilidade de consulta, sob as mesmas condições experimentais.
+
+WebSocket, Webhook e SSE foram incorporados para estender a comparação além do paradigma de requisição-resposta, contemplando cenários de comunicação contínua e orientada a eventos. O WebSocket representa o modelo de canal bidirecional persistente; o SSE, o modelo de streaming unidirecional mais leve; e o Webhook, o modelo assíncrono de notificação disparada pelo servidor, sem necessidade de conexão persistente. Juntas, essas três tecnologias permitem avaliar o impacto de diferentes estratégias de push de dados sobre latência e consumo de recursos, complementando a análise dos modelos síncronos tradicionais.
+
+O conjunto das sete tecnologias (REST, SOAP, gRPC, GraphQL, WebSocket, Webhook e SSE) cobre, portanto, o espectro relevante de paradigmas de comunicação para sistemas distribuídos, fornecendo a base técnica para os experimentos descritos nas seções seguintes.
+
+\subsection{Arquitetura Experimental}
+
+A avaliação comparativa de tecnologias e protocolos de comunicação em sistemas distribuídos exige uma infraestrutura experimental controlada e isolada, de modo que as variações observadas de latência, vazão e consumo de recursos sejam atribuídas aos mecanismos de cada protocolo e não a interferências externas.
+
+% Figura 1
+\begin{figure}[H]
+	\centering
+	\caption[Macroarquitetura e fluxo de execução dos experimentos controlados.]{Macroarquitetura e fluxo de execução dos experimentos controlados}
+	\label{fig:macroarquitetura}
+	\includegraphics[width=1.0\textwidth]{figuras/arquitetura_tcc.png}\\
+	\textbf{\footnotesize Fonte: Elaborada pelos autores (2026).}
+\end{figure}
+
+A Figura~\ref{fig:macroarquitetura} apresenta a macroarquitetura do ambiente experimental e o fluxo de execução dos testes, incluindo os componentes responsáveis pela orquestração, execução da carga, serviços e observabilidade.
+
+O sistema foi decomposto em três microsserviços independentes: \textit{user-service}, \textit{message-service} e \textit{event-service}, responsáveis por operações CRUD síncronas sobre a entidade \textit{User}, por comunicação contínua sobre a entidade \textit{Message} e pela simulação de arquiteturas orientadas a eventos sobre a entidade \textit{Event}, sendo este último essencial para avaliar tecnologias de envio ativo de dados como Webhook, SSE e WebSocket. Todos os serviços utilizam armazenamento em memória (\textit{in-memory}), eliminando gargalos de I/O de disco ou de banco de dados e garantindo que a latência medida corresponda ao custo da aplicação, da serialização e do transporte.
+
+A orquestração dos testes é automatizada por meio do script \textit{run\_app.py} e de rotinas auxiliares em Python e k6, que provisionam os contêineres via Docker Compose \cite{docker}, aguardam a estabilização dos serviços (\textit{healthcheck}/\textit{warm-up}), disparam a carga conforme o regime parametrizado, coletam a telemetria e persistem os relatórios finais em JSON e CSV. Essa automação reduz erros humanos e interferência de estado residual entre execuções.
+
+O ambiente suporta dois regimes complementares de avaliação de carga: um modo determinístico, em que cada protocolo é testado isoladamente sob cenários de esforço crescente (ideal, realista e crítico); e um modo estocástico, em que o protocolo de destino de cada requisição é sorteado em tempo de execução dentre os sete avaliados. O segundo regime simula o tráfego heterogêneo típico de \textit{API Gateways} em produção e reduz possíveis vieses de aquecimento e localidade que favoreceriam um único protocolo.
+
+% Figura 2
+\begin{figure}[H]
+	\centering
+	\caption[Diagrama de Casos de Uso do ambiente experimental.]{Diagrama de Casos de Uso do ambiente experimental}
+	\label{fig:diagramacasouso}
+	\includegraphics[width=1.0\textwidth]{figuras/diagrama_caso_uso_tcc.png}\\
+	\textbf{\footnotesize Fonte: Elaborada pelos autores (2026).}
+\end{figure}
+
+O Diagrama de Casos de Uso (Figura~\ref{fig:diagramacasouso}) especifica as interações entre o pesquisador e os componentes automatizados, evidenciando que a coleta de métricas e a persistência de relatórios são acionadas em ambos os regimes de teste. O Diagrama de Componentes e Camadas (Figura~\ref{fig:diagramacamadas}) consolida a integração entre as camadas de software e a infraestrutura de rede e observabilidade.
+
+% Figura 3
+\begin{figure}[H]
+	\centering
+	\caption[Diagrama de Componentes e Camadas do ambiente de testes.]{Diagrama de Componentes e Camadas do ambiente de testes}
+	\label{fig:diagramacamadas}
+	\includegraphics[width=0.8\textwidth]{figuras/diagrama_camada_tcc.png}\\
+	\textbf{\footnotesize Fonte: Elaborada pelos autores (2026).}
+\end{figure}
+
+O Diagrama de Classes (Figura~\ref{fig:diagramaclasses}) define as entidades canônicas compartilhadas pelos microsserviços e formaliza o padrão Strategy adotado no motor de testes, em que a interface \textit{ProtocolHandler} permite ao \textit{TestOrchestrator} despachar requisições uniformemente para qualquer uma das sete tecnologias.
+
+% Figura 4
+\begin{figure}[H]
+	\centering
+	\caption[Diagrama de Classes das entidades e arquitetura dos executores de teste.]{Diagrama de Classes das entidades e arquitetura dos executores de teste}
+	\label{fig:diagramaclasses}
+	\includegraphics[width=1.0\textwidth]{figuras/diagrama_classe_tcc.png}\\
+	\textbf{\footnotesize Fonte: Elaborada pelos autores (2026).}
+\end{figure}
+
+\section{Resultados e Discussão}
+\label{sec:resultados}
+
+Esta seção apresenta a avaliação quantitativa e qualitativa obtida a partir da execução dos experimentos controlados sobre as sete tecnologias e protocolos avaliados (REST, SOAP, gRPC, WebSocket, GraphQL, Webhook e Server-Sent Events). Os testes foram executados na infraestrutura automatizada com contêineres Docker, orquestrada pelo script \textit{run\_app.py}, abrangendo os 21 pontos de extremidade de serviço e a camada de observabilidade com Prometheus e Grafana.
+
+\subsection{Ambiente Experimental e Parâmetros de Teste}
+
+Os ensaios foram realizados sob condições de rede local e armazenamento estritamente em memória (\textit{in-memory}) em todos os microsserviços, isolando o impacto da pilha de protocolos das latências espúrias de acesso a disco e banco de dados. Antes do disparo de cada bateria de medição, o orquestrador executou verificações de sanidade (\textit{healthchecks}) em todas as 22 instâncias conteinerizadas (21 serviços de aplicação e o Prometheus), seguido de uma fase de aquecimento (\textit{warm-up}) para mitigar distorções causadas por compilação JIT ou inicialização de pools de conexões HTTP e canais gRPC.
+
+As baterias experimentais foram executadas sob dois regimes complementares:
+\begin{enumerate}
+    \item \textbf{Regime Determinístico (Isolado):} Cada tecnologia foi submetida individualmente a baterias de 100 requisições sequenciais sobre cada um dos três microsserviços (\textit{user}, \textit{message} e \textit{event}), totalizando 2.100 requisições controladas, permitindo a extração isolada da latência média, mínima, máxima e vazão (\textit{throughput}) nominal;
+    \item \textbf{Regime Estocástico (Tráfego Heterogêneo):} Simulação de carga com 200 requisições em que cada chamada teve seu protocolo de destino sorteado aleatoriamente e uniformemente dentre os sete disponíveis, refletindo a concorrência mista característica de um \textit{API Gateway} em produção.
+\end{enumerate}
+
+\subsection{Avaliação no Regime Determinístico}
+
+A Tabela~\ref{tab:resultados_deterministicos} consolida as medições obtidas no regime determinístico para as sete tecnologias nos três serviços de domínio implementados.
+
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Resultados de desempenho no regime determinístico (100 requisições por protocolo em cada serviço).}
+\label{tab:resultados_deterministicos}
+\begin{tabularx}{\textwidth}{|l|l|c|c|c|c|c|}
+\hline
+\textbf{Protocolo} & \textbf{Serviço} & \textbf{Lat. Média (ms)} & \textbf{Mín (ms)} & \textbf{Máx (ms)} & \textbf{Vazão (req/s)} & \textbf{Sucesso (\%)} \\ \hline
+\textbf{WebSocket} & User & 0,55 & 0,47 & 0,90 & 184,85 & 100\% \\ \cline{2-7}
+ & Message & 0,56 & 0,47 & 0,97 & 176,59 & 100\% \\ \cline{2-7}
+ & Event & 0,57 & 0,48 & 0,86 & 175,31 & 100\% \\ \hline
+\textbf{gRPC} & User & 1,38 & 0,67 & 52,76 & 680,81 & 100\% \\ \cline{2-7}
+ & Message & 1,24 & 0,65 & 51,09 & 766,43 & 100\% \\ \cline{2-7}
+ & Event & 1,24 & 0,65 & 51,81 & 771,06 & 100\% \\ \hline
+\textbf{REST} & User & 6,66 & 2,84 & 28,08 & 148,08 & 100\% \\ \cline{2-7}
+ & Message & 8,78 & 2,94 & 28,28 & 112,52 & 100\% \\ \cline{2-7}
+ & Event & 5,92 & 2,82 & 25,36 & 166,38 & 100\% \\ \hline
+\textbf{SSE} & User & 6,71 & 2,62 & 27,45 & 147,23 & 100\% \\ \cline{2-7}
+ & Message & 6,56 & 2,65 & 27,48 & 150,39 & 100\% \\ \cline{2-7}
+ & Event & 6,50 & 2,58 & 25,12 & 151,49 & 100\% \\ \hline
+\textbf{SOAP} & User & 7,42 & 2,57 & 28,21 & 133,21 & 100\% \\ \cline{2-7}
+ & Message & 6,48 & 2,45 & 27,57 & 152,25 & 100\% \\ \cline{2-7}
+ & Event & 8,51 & 2,58 & 27,75 & 116,12 & 100\% \\ \hline
+\textbf{Webhook} & User & 9,80 & 5,11 & 27,53 & 100,77 & 100\% \\ \cline{2-7}
+ & Message & 10,39 & 4,94 & 27,27 & 95,21 & 100\% \\ \cline{2-7}
+ & Event & 7,90 & 4,76 & 27,31 & 124,89 & 100\% \\ \hline
+\textbf{GraphQL} & User & 53,36 & 46,94 & 75,17 & 18,69 & 100\% \\ \cline{2-7}
+ & Message & 52,97 & 46,88 & 72,07 & 18,83 & 100\% \\ \cline{2-7}
+ & Event & 50,95 & 46,70 & 72,02 & 19,58 & 100\% \\ \hline
+\end{tabularx}
+{\footnotesize\\ \textbf{Fonte: Dados da pesquisa (2026).}}
+\end{table}
+
+A análise dos dados da Tabela~\ref{tab:resultados_deterministicos} evidencia padrões distintos entre as tecnologias avaliadas:
+
+\begin{itemize}
+    \item \textbf{WebSocket e gRPC:} O WebSocket destacou-se pela menor latência média absoluta (0,56~ms), com variações ínfimas (0,47~ms a 0,97~ms), em virtude da ausência de cabeçalhos repetidos e da persistência da conexão TCP após o \textit{handshake} HTTP inicial. O gRPC obteve a maior vazão computacional dentre todas as opções avaliadas, superando 760~req/s nos serviços \textit{message} e \textit{event} e atingindo latência de regime estável de apenas 0,65~ms. O pico observado de 52,76~ms na primeira chamada do gRPC decorreu da negociação TLS/HTTP/2 inicial e criação do canal (\textit{channel warming});
+    \item \textbf{REST, SSE e SOAP:} O grupo intermediário apresentou comportamento estável e previsível. O REST alcançou latência média de 7,12~ms e vazão média de 142,33~req/s. O SSE registrou desempenho ligeiramente superior e mais homogêneo entre os serviços (média de 6,59~ms e 149,70~req/s), demonstrando que o modelo de \textit{streaming} unidirecional persistente introduz menor sobrecarga operacional do que requisições REST avulsas. O SOAP obteve latência média de 7,47~ms e vazão de 133,86~req/s, sofrendo com o custo adicional de serialização e validação de envelopes XML, mas mantendo estabilidade próxima ao REST em condições controladas;
+    \item \textbf{Webhook:} Atingiu latência média de 9,36~ms e vazão em torno de 107~req/s. A degradação observada em relação ao REST convencional decorre da necessidade de despachar ativamente requisições HTTP de retorno (\textit{callbacks}), gerando um ciclo duplo de transporte de rede;
+    \item \textbf{GraphQL:} Apresentou a maior latência média (52,43~ms) e o menor \textit{throughput} (19,03~req/s). Esse resultado condiz com o custo computacional exigido para o parsing da árvore de sintaxe abstrata (AST), validação em tempo de execução do esquema contra a consulta informada e invocação dinâmica de \textit{resolvers}.
+\end{itemize}
+
+A Tabela~\ref{tab:resumo_consolidado} apresenta a consolidação geral das sete tecnologias em ordem decrescente de eficiência temporal.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Consolidação geral média por protocolo em todas as entidades de domínio.}
+\label{tab:resumo_consolidado}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Tecnologia} & \textbf{Latência Média (ms)} & \textbf{Latência Mín (ms)} & \textbf{Vazão Média (req/s)} & \textbf{Taxa Sucesso} \\ \hline
+WebSocket & 0,56 & 0,47 & 178,92 & 100\% \\ \hline
+gRPC & 1,29 & 0,65 & 739,43 & 100\% \\ \hline
+SSE & 6,59 & 2,58 & 149,70 & 100\% \\ \hline
+REST & 7,12 & 2,82 & 142,33 & 100\% \\ \hline
+SOAP & 7,47 & 2,45 & 133,86 & 100\% \\ \hline
+Webhook & 9,36 & 4,76 & 106,96 & 100\% \\ \hline
+GraphQL & 52,43 & 46,70 & 19,03 & 100\% \\ \hline
+\end{tabular}
+{\footnotesize\\ \textbf{Fonte: Dados da pesquisa (2026).}}
+\end{table}
+
+\subsection{Avaliação no Regime Estocástico (Multi-Protocolo)}
+
+No regime estocástico, foram executadas 200 requisições com alternância randômica entre protocolos e serviços, simulando o tráfego misto característico de ambientes integradores. A duração total do experimento foi de 2,52 segundos, gerando um \textit{throughput} global de 79,31~req/s com 99,5\% de sucesso geral. A Tabela~\ref{tab:resultados_estocasticos} detalha a distribuição das requisições e as latências observadas.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Resultados do teste de carga estocástico multi-protocolo (200 requisições aleatórias).}
+\label{tab:resultados_estocasticos}
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+\textbf{Protocolo} & \textbf{Req.} & \textbf{\% Carga} & \textbf{Sucesso} & \textbf{Lat. Média (ms)} & \textbf{Mín (ms)} & \textbf{Máx (ms)} \\ \hline
+WebSocket & 30 & 15,0\% & 30 & 0,61 & 0,51 & 0,87 \\ \hline
+SOAP & 31 & 15,5\% & 30 & 5,52 & 3,00 & 25,81 \\ \hline
+SSE & 32 & 16,0\% & 32 & 5,54 & 2,87 & 19,69 \\ \hline
+Webhook & 29 & 14,5\% & 29 & 6,00 & 3,04 & 22,50 \\ \hline
+REST & 28 & 14,0\% & 28 & 7,74 & 3,40 & 24,31 \\ \hline
+gRPC & 23 & 11,5\% & 23 & 8,11 & 0,84 & 51,93 \\ \hline
+GraphQL & 27 & 13,5\% & 27 & 50,16 & 46,45 & 71,93 \\ \hline
+\end{tabular}
+{\footnotesize\\ \textbf{Fonte: Dados da pesquisa (2026).}}
+\end{table}
+
+A distribuição percentual das requisições manteve-se equilibrada entre as tecnologias (variando entre 11,5\% e 16,0\%), confirmando a imparcialidade do sorteio estocástico. A decomposição da carga por serviço registrou 74 requisições (37,0\%) direcionadas ao \textit{user-service}, 67 (33,5\%) ao \textit{message-service} e 59 (29,5\%) ao \textit{event-service}, com latências médias por serviço de 10,59~ms, 10,57~ms e 13,75~ms, respectivamente.
+
+O regime estocástico comprovou que as vantagens relativas das tecnologias se mantêm mesmo quando submetidas à multiplexação de tráfego desordenado. O WebSocket permaneceu na liderança de tempo de resposta (0,61~ms), sem sofrer interferência das requisições síncronas paralelas. O gRPC, por sua vez, demonstrou maior sensibilidade ao contexto heterogêneo quando as conexões necessitam restabelecer canais de transporte sob concorrência, elevando sua média para 8,11~ms devido ao custo de inicialização, embora mantivesse latência mínima de apenas 0,84~ms após o canal estabelecido.
+
+\subsection{Telemetria e Observabilidade}
+
+A camada de telemetria baseada no Prometheus e no Grafana confirmou as diferenças no perfil de consumo de recursos. As métricas exportadas pelos microsserviços via \textit{prometheus\_client} registraram contadores e histogramas específicos:
+\begin{itemize}
+    \item \textbf{Vazão de Mensagens vs Conexões:} Enquanto os microsserviços REST, SOAP e GraphQL registraram um incremento estrito de \textit{http\_requests\_total} a cada operação pontual, os serviços WebSocket e SSE contabilizaram poucas conexões persistentes ativas (\textit{ws\_connections\_total} e \textit{sse\_connections\_total}) através das quais transitaram dezenas de eventos e mensagens;
+    \item \textbf{Consumo de CPU e Custo de Parsing:} O contêiner de GraphQL exibiu maior carga instantânea de CPU durante o processamento das consultas, confirmando o diagnóstico de sobrecarga apontado por \citeonline{grambow2020benchmarking}. Em contrapartida, os contêineres de gRPC registraram menor utilização de CPU por requisição, atribuível à eficiência da desserialização binária de Protocol Buffers sobre HTTP/2.
+\end{itemize}
+
+\subsection{Discussão dos Trade-offs e Diretrizes de Adoção}
+
+Os achados experimentais revelam que não existe uma tecnologia universalmente superior em todos os critérios. A escolha arquitetural deve considerar a natureza da interação e as restrições não funcionais do sistema:
+
+\begin{enumerate}
+    \item \textbf{Comunicação Inter-serviços de Alta Frequência:} O \textbf{gRPC} é a escolha indicada para comunicação síncrona interna entre microsserviços (\textit{east-west traffic}), onde baixa latência e alto \textit{throughput} são cruciais, aproveitando a tipagem estrita via contratos \textit{.proto} e o reaproveitamento de conexões HTTP/2;
+    \item \textbf{Troca de Mensagens Bidirecionais e Tempo Real:} O \textbf{WebSocket} demonstra incomparável eficiência (latência média inferior a 1~ms) para aplicações que demandam interatividade bidirecional (chats, jogos colaborativos, dashboards operacionais em tempo real). Contudo, exige infraestrutura capaz de sustentar conexões TCP abertas e gerenciamento explícito de estado de sessão;
+    \item \textbf{Notificações Unidirecionais e Feeds de Eventos:} O \textbf{Server-Sent Events (SSE)} demonstrou ser uma alternativa mais leve e eficiente que o Webhook e o WebSocket para cenários onde apenas o servidor precisa empurrar atualizações para o cliente. Sua simplicidade sobre HTTP padrão e suporte nativo a reconexão automática nos navegadores reduzem a complexidade de implementação;
+    \item \textbf{APIs Públicas e Integração de Sistemas:} O \textbf{REST} continua sendo o padrão mais pragmático para exposição pública de serviços, oferecendo simplicidade, suporte universal em ferramentas e bibliotecas, e cacheabilidade HTTP nativa;
+    \item \textbf{Front-ends Ricos e Consumo Flexível de Dados:} O \textbf{GraphQL} justifica sua sobrecarga de processamento computacional apenas quando a redução de transferências redundantes de dados na rede (\textit{overfetching} e \textit{underfetching}) compensar o tempo adicional de resolução no servidor;
+    \item \textbf{Sistemas Corporativos Legados:} O \textbf{SOAP} demonstrou desempenho satisfatório em chamadas simples (média de ~7~ms), viabilizando sua permanência em sistemas bancários e governamentais onde contratos formais e conformidade estrita com normas corporativas sobrepõem-se à necessidade de simplicidade.
+\end{enumerate}
+
+O Quadro~\ref{quadro:diretrizes} sintetiza a matriz comparativa e as diretrizes recomendadas.
+
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Matriz comparativa de tecnologias e recomendações arquiteturais.}
+\label{quadro:diretrizes}
+\begin{tabularx}{\textwidth}{|l|l|l|X|X|}
+\hline
+\textbf{Tecnologia} & \textbf{Paradigma} & \textbf{Transporte / Formato} & \textbf{Principais Vantagens} & \textbf{Contexto Recomendado} \\ \hline
+\textbf{gRPC} & RPC & HTTP/2 / Protobuf & Máximo throughput, serialização compacta e contratos fortes & Microsserviços internos, alto volume e baixa latência \\ \hline
+\textbf{WebSocket} & Full-Duplex & TCP / Texto ou Binário & Latência mínima (<1ms), canal bidirecional persistente & Mensageria instantânea, jogos e dashboards operacionais \\ \hline
+\textbf{SSE} & Push Unidirecional & HTTP / Texto puro & Leveza, reconexão nativa e simplicidade sobre HTTP & Feeds de notícias, cotações e notificações em tempo real \\ \hline
+\textbf{REST} & Req-Resp & HTTP/1.1 / JSON & Adoção universal, facilidade de teste e cache nativo & APIs Web públicas e microsserviços convencionais \\ \hline
+\textbf{SOAP} & Mensageria XML & HTTP / XML Envelope & Contratos rígidos WSDL e segurança corporativa (WS-*) & Sistemas bancários legados e serviços governamentais \\ \hline
+\textbf{Webhook} & Push Assíncrono & HTTP POST / JSON & Integração desacoplada sem manter conexões abertas & Notificações de pagamento e eventos de plataformas SaaS \\ \hline
+\textbf{GraphQL} & Declarativo & HTTP / JSON & Elimina over/underfetching em uma única chamada & Aplicações móveis com dados dinâmicos e front-ends web \\ \hline
+\end{tabularx}
+{\footnotesize\\ \textbf{Fonte: Elaborada pelos autores (2026).}}
+\end{table}
+
+\section{Considerações Finais}
+\label{sec:conclusao}
+
+Este trabalho apresentou uma análise comparativa abrangente entre sete tecnologias de comunicação amplamente utilizadas em arquiteturas distribuídas: REST, SOAP, gRPC, WebSocket, GraphQL, Webhook e Server-Sent Events. Por meio de uma infraestrutura experimental isolada e reprodutível baseada em contêineres Docker e observabilidade padronizada via Prometheus e Grafana, avaliou-se o desempenho e o comportamento técnico de cada solução sobre três microsserviços de domínio (\textit{user}, \textit{message} e \textit{event}).
+
+Os experimentos quantitativos, conduzidos sob regimes determinístico e estocástico, evidenciaram trade-offs nítidos entre os paradigmas de comunicação. O WebSocket apresentou a menor latência média por mensagem (0,56~ms), tornando-se ideal para cenários bidirecionais de alta interatividade. O gRPC demonstrou a maior capacidade nominal de processamento bruto, alcançando vazões superiores a 760~req/s com serialização binária altamente compacta. O Server-Sent Events (SSE) comprovou ser uma alternativa eficiente e leve para comunicação unidirecional contínua (média de 6,59~ms), superando o Webhook e o REST em estabilidade e vazão. Em contrapartida, o GraphQL, apesar de oferecer flexibilidade inestimável na definição dinâmica de esquemas, exigiu latências significativamente maiores (cerca de 52~ms) decorrentes da resolução dinâmica de consultas no servidor.
+
+Conclui-se que nenhuma tecnologia isolada atende de forma ótima a todos os requisitos de um sistema distribuído moderno. Arquiteturas de alta maturidade tendem a combinar múltiplos protocolos de acordo com a função de cada canal: gRPC no tráfego interno entre microsserviços, WebSocket e SSE na borda orientada a eventos, e REST ou GraphQL na interface com clientes externos e dispositivos móveis. Como trabalhos futuros, sugere-se a ampliação dos testes com a inclusão de simulações de degradação severa de rede (\textit{packet loss} e \textit{jitter} via \textit{netem}), avaliação de consumo de memória sob milhares de conexões concorrentes simultâneas e testes comparativos utilizando implementações complementares em linguagens compiladas como Go e Rust.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FIM DO TEXTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\bibliographystyle{abntex2-alf}
+\bibliography{bibliografia}
+
+\end{document}
