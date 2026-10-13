@@ -17,7 +17,6 @@ sys.path.insert(0, str(SCRIPTS))
 
 
 def load_script(path):
-    # Os handlers reais são substituídos nos testes; não há chamadas HTTP.
     sys.modules.setdefault("requests", types.ModuleType("requests"))
     spec = importlib.util.spec_from_file_location(path.stem, path)
     module = importlib.util.module_from_spec(spec)

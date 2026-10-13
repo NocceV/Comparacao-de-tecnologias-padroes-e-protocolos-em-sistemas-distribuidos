@@ -9,7 +9,6 @@ GRPC_SERVER_ADDR = "localhost:50051"
 TOTAL_REQUESTS = 500
 
 def create_user(stub, index):
-    """Cria um usuário via gRPC."""
     request = user_pb2.CreateUserRequest(name=f"User{index}", email=f"grpc_user_{index}@example.com")
     start = time.perf_counter()
     response = stub.CreateUser(request)

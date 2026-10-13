@@ -267,7 +267,6 @@ def run_multiprotocol_test(
     if concurrency <= 0:
         raise ValueError("A concorrência deve ser um inteiro positivo.")
 
-    # Cada combinação serviço/protocolo recebe exatamente a mesma carga.
     total_requests = requests_per_target * len(targets)
     schedule = targets * requests_per_target
     random.shuffle(schedule)

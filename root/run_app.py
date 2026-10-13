@@ -94,7 +94,6 @@ def check_health(timeout: int = 3) -> Dict[str, bool]:
 
 
 def reset_services():
-    """Reinicia os serviços para remover dados e callbacks de execuções anteriores."""
     compose_file = os.path.join(ROOT_DIR, "infra", "docker-compose.yml")
     subprocess.run(["docker", "compose", "-f", compose_file, "restart"], check=True)
     deadline = time.monotonic() + 60

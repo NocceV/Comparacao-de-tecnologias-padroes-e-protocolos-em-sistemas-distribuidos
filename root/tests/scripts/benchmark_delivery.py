@@ -1,5 +1,3 @@
-"""Medidas de ponta a ponta para os protocolos de entrega assíncrona."""
-
 import atexit
 import json
 import os
