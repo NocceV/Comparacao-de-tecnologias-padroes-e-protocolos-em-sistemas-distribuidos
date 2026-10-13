@@ -10,6 +10,7 @@ from datetime import datetime
 from typing import Callable, Dict, List, Optional, Tuple
 
 import requests
+from benchmark_delivery import prepare_webhook, sse_delivery, webhook_delivery
 
 try:
     import websockets
@@ -38,9 +39,15 @@ def call_user_rest(idx: int) -> Tuple[float, bool]:
     return (time.perf_counter() - start) * 1000, r.status_code == 200
 
 def call_user_graphql(idx: int) -> Tuple[float, bool]:
+    name = f"U{idx}"
+    email = f"rnd_graphql_u_{RUN_ID}_{idx}@test.com"
+    query = "mutation($name: String!, $email: String!) { createUser(name: $name, email: $email) { id name email } }"
     start = time.perf_counter()
-    r = requests.post("http://localhost:8001/graphql", json={"query": f"query {{ user(id: {idx}) {{ id name email }} }}"}, timeout=5)
-    return (time.perf_counter() - start) * 1000, r.status_code == 200 and "errors" not in r.json()
+    r = requests.post("http://localhost:8001/graphql", json={"query": query, "variables": {"name": name, "email": email}}, timeout=5)
+    elapsed = (time.perf_counter() - start) * 1000
+    body = r.json()
+    user = (body.get("data") or {}).get("createUser") or {}
+    return elapsed, r.status_code == 200 and not body.get("errors") and user.get("name") == name and user.get("email") == email
 
 def call_user_soap(idx: int) -> Tuple[float, bool]:
     body = f"""<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><CreateUser><name>U{idx}</name><email>rnd_soap_{RUN_ID}_{idx}@test.com</email></CreateUser></soap:Body></soap:Envelope>"""
@@ -49,14 +56,12 @@ def call_user_soap(idx: int) -> Tuple[float, bool]:
     return (time.perf_counter() - start) * 1000, r.status_code == 200
 
 def call_user_webhook(idx: int) -> Tuple[float, bool]:
-    start = time.perf_counter()
-    r = requests.post("http://localhost:8003/users", json={"name": f"U{idx}", "email": f"rnd_wh_{RUN_ID}_{idx}@test.com"}, timeout=5)
-    return (time.perf_counter() - start) * 1000, r.status_code == 200
+    token = f"bench-{RUN_ID}-{idx}"
+    return webhook_delivery("user", "http://localhost:8003/hooks/users", "http://localhost:8003/users", {"name": f"U{idx}", "email": f"{token}@test.com"}, token)
 
 def call_user_sse(idx: int) -> Tuple[float, bool]:
-    start = time.perf_counter()
-    r = requests.post("http://localhost:8007/user/create", params={"name": f"U{idx}", "email": f"rnd_sse_{RUN_ID}_{idx}@test.com"}, timeout=5)
-    return (time.perf_counter() - start) * 1000, r.status_code == 200
+    token = f"bench-{RUN_ID}-{idx}"
+    return sse_delivery("http://localhost:8007/sse/users", "http://localhost:8007/user/create", token, params={"name": f"U{idx}", "email": f"{token}@test.com"})
 
 def call_user_websocket(idx: int) -> Tuple[float, bool]:
     if not HAS_WEBSOCKETS:
@@ -76,9 +81,15 @@ def call_message_rest(idx: int) -> Tuple[float, bool]:
     return (time.perf_counter() - start) * 1000, r.status_code == 200
 
 def call_message_graphql(idx: int) -> Tuple[float, bool]:
+    sender = f"U{idx}"
+    content = f"Msg GraphQL {RUN_ID}_{idx}"
+    query = "mutation($sender: String!, $content: String!) { sendMessage(sender: $sender, content: $content) { id sender content } }"
     start = time.perf_counter()
-    r = requests.post("http://localhost:8011/graphql", json={"query": f"query {{ message(id: {idx}) {{ id sender content }} }}"}, timeout=5)
-    return (time.perf_counter() - start) * 1000, r.status_code == 200 and "errors" not in r.json()
+    r = requests.post("http://localhost:8011/graphql", json={"query": query, "variables": {"sender": sender, "content": content}}, timeout=5)
+    elapsed = (time.perf_counter() - start) * 1000
+    body = r.json()
+    message = (body.get("data") or {}).get("sendMessage") or {}
+    return elapsed, r.status_code == 200 and not body.get("errors") and message.get("sender") == sender and message.get("content") == content
 
 def call_message_soap(idx: int) -> Tuple[float, bool]:
     body = f"""<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><CreateMessage><user>U{idx}</user><content>SOAP {RUN_ID}_{idx}</content></CreateMessage></soap:Body></soap:Envelope>"""
@@ -87,14 +98,12 @@ def call_message_soap(idx: int) -> Tuple[float, bool]:
     return (time.perf_counter() - start) * 1000, r.status_code == 200
 
 def call_message_webhook(idx: int) -> Tuple[float, bool]:
-    start = time.perf_counter()
-    r = requests.post("http://localhost:8004/messages", json={"sender": f"U{idx}", "content": f"Hook {RUN_ID}_{idx}"}, timeout=5)
-    return (time.perf_counter() - start) * 1000, r.status_code == 200
+    token = f"bench-{RUN_ID}-{idx}"
+    return webhook_delivery("message", "http://localhost:8004/hooks/messages", "http://localhost:8004/messages", {"sender": f"U{idx}", "content": token}, token)
 
 def call_message_sse(idx: int) -> Tuple[float, bool]:
-    start = time.perf_counter()
-    r = requests.post("http://localhost:8017/messages/create", json={"user": f"U{idx}", "content": f"SSE {RUN_ID}_{idx}"}, timeout=5)
-    return (time.perf_counter() - start) * 1000, r.status_code == 200
+    token = f"bench-{RUN_ID}-{idx}"
+    return sse_delivery("http://localhost:8017/sse/messages", "http://localhost:8017/messages/create", token, json_body={"user": f"U{idx}", "content": token})
 
 def call_message_websocket(idx: int) -> Tuple[float, bool]:
     if not HAS_WEBSOCKETS:
@@ -114,9 +123,14 @@ def call_event_rest(idx: int) -> Tuple[float, bool]:
     return (time.perf_counter() - start) * 1000, r.status_code == 200
 
 def call_event_graphql(idx: int) -> Tuple[float, bool]:
+    source = f"src_graphql_{RUN_ID}_{idx}"
+    query = "mutation($type: String!, $source: String!) { publishEvent(type: $type, source: $source) { id type source } }"
     start = time.perf_counter()
-    r = requests.post("http://localhost:8021/graphql", json={"query": f"query {{ event(id: {idx}) {{ id type source }} }}"}, timeout=5)
-    return (time.perf_counter() - start) * 1000, r.status_code == 200 and "errors" not in r.json()
+    r = requests.post("http://localhost:8021/graphql", json={"query": query, "variables": {"type": "PUBLISH", "source": source}}, timeout=5)
+    elapsed = (time.perf_counter() - start) * 1000
+    body = r.json()
+    event = (body.get("data") or {}).get("publishEvent") or {}
+    return elapsed, r.status_code == 200 and not body.get("errors") and event.get("type") == "PUBLISH" and event.get("source") == source
 
 def call_event_soap(idx: int) -> Tuple[float, bool]:
     body = f"""<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><CreateEvent><type>PUBLISH</type><source>src_{RUN_ID}_{idx}</source></CreateEvent></soap:Body></soap:Envelope>"""
@@ -125,14 +139,12 @@ def call_event_soap(idx: int) -> Tuple[float, bool]:
     return (time.perf_counter() - start) * 1000, r.status_code == 200
 
 def call_event_webhook(idx: int) -> Tuple[float, bool]:
-    start = time.perf_counter()
-    r = requests.post("http://localhost:8023/events", json={"type": "PUBLISH", "source": f"src_{RUN_ID}_{idx}"}, timeout=5)
-    return (time.perf_counter() - start) * 1000, r.status_code == 200
+    token = f"bench-{RUN_ID}-{idx}"
+    return webhook_delivery("event", "http://localhost:8023/hooks/events", "http://localhost:8023/events", {"type": "PUBLISH", "source": token}, token)
 
 def call_event_sse(idx: int) -> Tuple[float, bool]:
-    start = time.perf_counter()
-    r = requests.post("http://localhost:8027/create", params={"type": "PUBLISH", "source": f"src_{RUN_ID}_{idx}"}, timeout=5)
-    return (time.perf_counter() - start) * 1000, r.status_code == 200
+    token = f"bench-{RUN_ID}-{idx}"
+    return sse_delivery("http://localhost:8027/sse/events", "http://localhost:8027/create", token, params={"type": "PUBLISH", "source": token})
 
 def call_event_websocket(idx: int) -> Tuple[float, bool]:
     if not HAS_WEBSOCKETS:
@@ -156,9 +168,9 @@ def call_user_grpc(idx: int) -> Tuple[float, bool]:
         _grpc_user_stub = user_pb2_grpc.UserServiceStub(ch)
     start = time.perf_counter()
     try:
-        req = user_pb2.GetUserRequest(id=idx)
-        _grpc_user_stub.GetUser(req, timeout=5)
-        return (time.perf_counter() - start) * 1000, True
+        req = user_pb2.CreateUserRequest(name=f"U{idx}", email=f"rnd_grpc_u_{RUN_ID}_{idx}@test.com")
+        response = _grpc_user_stub.CreateUser(req, timeout=5)
+        return (time.perf_counter() - start) * 1000, response.name == req.name and response.email == req.email
     except Exception:
         return (time.perf_counter() - start) * 1000, False
 
@@ -276,13 +288,17 @@ def run_multiprotocol_test(
 
     def execute_one(idx: int, target: Tuple[str, str, Callable[[int], Tuple[float, bool]]]) -> Tuple[str, str, float, bool]:
         s, p, handler = target
+        attempt_start = time.perf_counter()
         try:
             elapsed, ok = handler(idx)
         except Exception:
-            elapsed = 0.0
+            elapsed = (time.perf_counter() - attempt_start) * 1000
             ok = False
         return s, p, elapsed, ok
 
+    for service, port, route in (("user", 8003, "users"), ("message", 8004, "messages"), ("event", 8023, "events")):
+        if (service, "webhook") in {(s, p) for s, p, _ in targets}:
+            prepare_webhook(service, f"http://localhost:{port}/hooks/{route}")
     start_total = time.perf_counter()
     results = []
 
@@ -312,9 +328,9 @@ def run_multiprotocol_test(
         if p not in proto_stats:
             proto_stats[p] = {"count": 0, "success": 0, "errors": 0, "latencies": []}
         proto_stats[p]["count"] += 1
+        proto_stats[p]["latencies"].append(el)
         if ok:
             proto_stats[p]["success"] += 1
-            proto_stats[p]["latencies"].append(el)
         else:
             proto_stats[p]["errors"] += 1
 
@@ -322,9 +338,9 @@ def run_multiprotocol_test(
         if s not in service_stats:
             service_stats[s] = {"count": 0, "success": 0, "errors": 0, "latencies": []}
         service_stats[s]["count"] += 1
+        service_stats[s]["latencies"].append(el)
         if ok:
             service_stats[s]["success"] += 1
-            service_stats[s]["latencies"].append(el)
         else:
             service_stats[s]["errors"] += 1
 

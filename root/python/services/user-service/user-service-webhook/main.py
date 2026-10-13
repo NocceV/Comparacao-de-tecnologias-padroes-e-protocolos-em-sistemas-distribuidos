@@ -23,7 +23,8 @@ async def register_hook(request: Request):
     url = payload.get("callback_url")
     if not url:
         raise HTTPException(status_code=400, detail="callback_url required")
-    callbacks.append(url)
+    if url not in callbacks:
+        callbacks.append(url)
     REQUEST_COUNT.labels(method='POST', endpoint='/hooks/users').inc()
     REQUEST_LATENCY.labels(endpoint='/hooks/users').observe(time.perf_counter() - start)
     return {"status": "registered", "callback": url}

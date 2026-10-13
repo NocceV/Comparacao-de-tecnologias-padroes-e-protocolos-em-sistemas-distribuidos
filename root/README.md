@@ -187,11 +187,15 @@ networks:
 
 ## 🔬 Testes e Métricas
 
+Após atualizar o código, recrie os contêineres com `docker compose -f infra/docker-compose.yml up -d --build` para aplicar as mudanças dos serviços e a configuração de rede do Webhook.
 Para executar os dois regimes com a mesma carga, use `python run_app.py --mode all --requests 200`.
 O parâmetro `--requests` define a quantidade por combinação de serviço e protocolo em ambos os regimes.
 Com 3 serviços e 7 protocolos, cada regime faz 4.200 requisições (200 por combinação).
 No estocástico, a ordem dessas combinações é embaralhada, mas a quantidade de cada uma permanece fixa.
 Para WebSocket, a latência por operação inclui a abertura da conexão, o envio, a resposta e o fechamento; os resultados anteriores a essa correção devem ser medidos novamente.
+O orquestrador reinicia os contêineres antes de cada regime para limpar dados e callbacks em memória; o Docker Compose precisa estar disponível.
+Os testes usam criação de usuário, envio de mensagem e publicação de evento em todos os protocolos. Para SSE e Webhook, a latência termina quando o evento chega ao assinante ou callback, e não quando o POST inicial responde. O receptor local de Webhook usa a porta 8765 e o endereço `host.docker.internal`; altere `BENCHMARK_CALLBACK_PORT` ou `BENCHMARK_CALLBACK_HOST` se necessário.
+As médias de latência incluem tentativas com erro e timeout; consulte também a taxa de sucesso. Resultados salvos antes dessa metodologia não devem ser comparados diretamente com os novos.
 
 Os testes são conduzidos em três cenários distintos:
 

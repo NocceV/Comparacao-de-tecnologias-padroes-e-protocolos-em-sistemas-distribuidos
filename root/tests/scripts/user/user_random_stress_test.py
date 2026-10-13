@@ -4,10 +4,14 @@ import json
 import random
 import statistics
 import time
+import sys
 from datetime import datetime
+from pathlib import Path
 from typing import Callable, Dict, List, Optional
 
 import requests
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from benchmark_delivery import prepare_webhook, sse_delivery, webhook_delivery
 
 # Imports condicionais para bibliotecas opcionais
 try:
@@ -48,11 +52,15 @@ def req_rest(index: int) -> tuple[float, bool]:
 
 
 def req_graphql(index: int) -> tuple[float, bool]:
-    query = f"""query {{ user(id: {index}) {{ id name email }} }}"""
+    name = f"User{index}"
+    email = f"user_rnd_graphql_{RUN_ID}_{index}@example.com"
+    query = "mutation($name: String!, $email: String!) { createUser(name: $name, email: $email) { id name email } }"
     start = time.perf_counter()
-    r = requests.post(URL_GRAPHQL, json={"query": query}, headers={"Content-Type": "application/json"}, timeout=5)
+    r = requests.post(URL_GRAPHQL, json={"query": query, "variables": {"name": name, "email": email}}, timeout=5)
     elapsed = (time.perf_counter() - start) * 1000
-    return elapsed, r.status_code == 200 and "errors" not in r.json()
+    body = r.json()
+    user = (body.get("data") or {}).get("createUser") or {}
+    return elapsed, r.status_code == 200 and not body.get("errors") and user.get("name") == name and user.get("email") == email
 
 
 def req_soap(index: int) -> tuple[float, bool]:
@@ -72,19 +80,15 @@ def req_soap(index: int) -> tuple[float, bool]:
 
 
 def req_webhook(index: int) -> tuple[float, bool]:
-    payload = {"name": f"User{index}", "email": f"user_rnd_hook_{RUN_ID}_{index}@example.com"}
-    start = time.perf_counter()
-    r = requests.post(URL_WEBHOOK, json=payload, timeout=5)
-    elapsed = (time.perf_counter() - start) * 1000
-    return elapsed, r.status_code == 200
+    token = f"bench-{RUN_ID}-{index}"
+    payload = {"name": f"User{index}", "email": f"{token}@example.com"}
+    return webhook_delivery("user", "http://localhost:8003/hooks/users", URL_WEBHOOK, payload, token)
 
 
 def req_sse(index: int) -> tuple[float, bool]:
-    params = {"name": f"User{index}", "email": f"user_rnd_sse_{RUN_ID}_{index}@example.com"}
-    start = time.perf_counter()
-    r = requests.post(URL_SSE, params=params, timeout=5)
-    elapsed = (time.perf_counter() - start) * 1000
-    return elapsed, r.status_code == 200
+    token = f"bench-{RUN_ID}-{index}"
+    params = {"name": f"User{index}", "email": f"{token}@example.com"}
+    return sse_delivery("http://localhost:8007/sse/users", URL_SSE, token, params=params)
 
 
 def req_websocket(index: int) -> tuple[float, bool]:
@@ -117,10 +121,10 @@ def req_grpc(index: int) -> tuple[float, bool]:
 
     start = time.perf_counter()
     try:
-        req = user_pb2.GetUserRequest(id=index)
-        _grpc_stub.GetUser(req, timeout=5)
+        req = user_pb2.CreateUserRequest(name=f"User{index}", email=f"user_rnd_grpc_{RUN_ID}_{index}@example.com")
+        response = _grpc_stub.CreateUser(req, timeout=5)
         elapsed = (time.perf_counter() - start) * 1000
-        return elapsed, True
+        return elapsed, response.name == req.name and response.email == req.email
     except Exception:
         elapsed = (time.perf_counter() - start) * 1000
         return elapsed, False
@@ -166,21 +170,24 @@ def run_random_stress_test(requests_per_protocol: int = 200, selected_protocols:
         p: {"count": 0, "success": 0, "errors": 0, "latencies": []} for p in available
     }
 
+    if "webhook" in available:
+        prepare_webhook("user", "http://localhost:8003/hooks/users")
     start_total = time.perf_counter()
 
     for i, proto in enumerate(schedule, 1):
         handler = PROTOCOL_HANDLERS[proto]
 
+        attempt_start = time.perf_counter()
         try:
             elapsed, ok = handler(i)
-        except Exception as exc:
-            elapsed = 0.0
+        except Exception:
+            elapsed = (time.perf_counter() - attempt_start) * 1000
             ok = False
 
         stats[proto]["count"] += 1
+        stats[proto]["latencies"].append(elapsed)
         if ok:
             stats[proto]["success"] += 1
-            stats[proto]["latencies"].append(elapsed)
         else:
             stats[proto]["errors"] += 1
 

@@ -4,10 +4,14 @@ import json
 import random
 import statistics
 import time
+import sys
 from datetime import datetime
+from pathlib import Path
 from typing import Callable, Dict, List, Optional
 
 import requests
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from benchmark_delivery import prepare_webhook, sse_delivery, webhook_delivery
 
 try:
     import websockets
@@ -45,11 +49,15 @@ def req_rest(index: int) -> tuple[float, bool]:
 
 
 def req_graphql(index: int) -> tuple[float, bool]:
-    query = f"""query {{ event(id: {index}) {{ id type source status timestamp }} }}"""
+    event_type = "PUBLISH"
+    source = f"src_graphql_{RUN_ID}_{index}"
+    query = "mutation($type: String!, $source: String!) { publishEvent(type: $type, source: $source) { id type source } }"
     start = time.perf_counter()
-    r = requests.post(URL_GRAPHQL, json={"query": query}, headers={"Content-Type": "application/json"}, timeout=5)
+    r = requests.post(URL_GRAPHQL, json={"query": query, "variables": {"type": event_type, "source": source}}, timeout=5)
     elapsed = (time.perf_counter() - start) * 1000
-    return elapsed, r.status_code == 200 and "errors" not in r.json()
+    body = r.json()
+    event = (body.get("data") or {}).get("publishEvent") or {}
+    return elapsed, r.status_code == 200 and not body.get("errors") and event.get("type") == event_type and event.get("source") == source
 
 
 def req_soap(index: int) -> tuple[float, bool]:
@@ -69,19 +77,15 @@ def req_soap(index: int) -> tuple[float, bool]:
 
 
 def req_webhook(index: int) -> tuple[float, bool]:
-    payload = {"type": "PUBLISH", "source": f"src_hook_{RUN_ID}_{index}"}
-    start = time.perf_counter()
-    r = requests.post(URL_WEBHOOK, json=payload, timeout=5)
-    elapsed = (time.perf_counter() - start) * 1000
-    return elapsed, r.status_code == 200
+    token = f"bench-{RUN_ID}-{index}"
+    payload = {"type": "PUBLISH", "source": token}
+    return webhook_delivery("event", "http://localhost:8023/hooks/events", URL_WEBHOOK, payload, token)
 
 
 def req_sse(index: int) -> tuple[float, bool]:
-    params = {"type": "PUBLISH", "source": f"src_sse_{RUN_ID}_{index}"}
-    start = time.perf_counter()
-    r = requests.post(URL_SSE, params=params, timeout=5)
-    elapsed = (time.perf_counter() - start) * 1000
-    return elapsed, r.status_code == 200
+    token = f"bench-{RUN_ID}-{index}"
+    params = {"type": "PUBLISH", "source": token}
+    return sse_delivery("http://localhost:8027/sse/events", URL_SSE, token, params=params)
 
 
 def req_websocket(index: int) -> tuple[float, bool]:
@@ -163,21 +167,24 @@ def run_random_stress_test(requests_per_protocol: int = 200, selected_protocols:
         p: {"count": 0, "success": 0, "errors": 0, "latencies": []} for p in available
     }
 
+    if "webhook" in available:
+        prepare_webhook("event", "http://localhost:8023/hooks/events")
     start_total = time.perf_counter()
 
     for i, proto in enumerate(schedule, 1):
         handler = PROTOCOL_HANDLERS[proto]
 
+        attempt_start = time.perf_counter()
         try:
             elapsed, ok = handler(i)
         except Exception:
-            elapsed = 0.0
+            elapsed = (time.perf_counter() - attempt_start) * 1000
             ok = False
 
         stats[proto]["count"] += 1
+        stats[proto]["latencies"].append(elapsed)
         if ok:
             stats[proto]["success"] += 1
-            stats[proto]["latencies"].append(elapsed)
         else:
             stats[proto]["errors"] += 1
 

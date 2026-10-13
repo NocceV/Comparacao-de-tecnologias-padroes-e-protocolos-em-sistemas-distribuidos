@@ -6,23 +6,16 @@ GRAPHQL_URL = "http://localhost:8011/graphql"
 
 def run_stress_test(total_requests=500):
     latencies = []
-    print("=== TESTE DE STRESS - CONSULTAR MENSAGENS ===")
+    print("=== TESTE DE STRESS - ENVIAR MENSAGENS ===")
 
     start_time = time.perf_counter()
 
     for i in range(total_requests):
         message_id = i + 1
-        query = f"""
-        query {{
-            message(id: {message_id}) {{
-                id
-                sender
-                content
-                timestamp
-            }}
-        }}
-        """
-        payload = {"query": query}
+        sender = f"User{message_id}"
+        content = f"Msg GraphQL {message_id}"
+        query = "mutation($sender: String!, $content: String!) { sendMessage(sender: $sender, content: $content) { id sender content } }"
+        payload = {"query": query, "variables": {"sender": sender, "content": content}}
         headers = {"Content-Type": "application/json"}
 
         req_start = time.perf_counter()
@@ -31,8 +24,10 @@ def run_stress_test(total_requests=500):
         latencies.append(elapsed)
 
         status = response.status_code
-        status_text = "OK" if status == 200 else "ERRO"
-        print(f"Mensagem {message_id} consultada - Status: {status} {status_text} - Tempo: {elapsed:.0f}ms")
+        body = response.json()
+        sent = (body.get("data") or {}).get("sendMessage") or {}
+        status_text = "OK" if status == 200 and not body.get("errors") and sent.get("content") == content else "ERRO"
+        print(f"Mensagem {message_id} enviada - Status: {status} {status_text} - Tempo: {elapsed:.0f}ms")
 
     total_time = (time.perf_counter() - start_time) * 1000  # ms
     avg_latency = statistics.mean(latencies)

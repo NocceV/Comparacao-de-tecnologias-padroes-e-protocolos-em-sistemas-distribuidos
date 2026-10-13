@@ -16,6 +16,7 @@ RESULTS_RAW_DIR = os.path.join(TESTS_DIR, "results", "raw")
 RESULTS_PROC_DIR = os.path.join(TESTS_DIR, "results", "processed")
 SERVICES = ["user", "message", "event"]
 PROTOCOLS = ["rest", "soap", "grpc", "websocket", "graphql", "webhook", "sse"]
+REQUIRED_TARGETS = {f"{service}-{protocol}" for service in SERVICES for protocol in PROTOCOLS}
 
 # Python interpreter from .venv
 VENV_PYTHON = os.path.join(ROOT_DIR, ".venv", "Scripts", "python.exe")
@@ -90,6 +91,21 @@ def check_health(timeout: int = 3) -> Dict[str, bool]:
     print(f"\nTotal online: {online}/{total} serviços.")
     print("==========================================================================\n")
     return status_map
+
+
+def reset_services():
+    """Reinicia os serviços para remover dados e callbacks de execuções anteriores."""
+    compose_file = os.path.join(ROOT_DIR, "infra", "docker-compose.yml")
+    subprocess.run(["docker", "compose", "-f", compose_file, "restart"], check=True)
+    deadline = time.monotonic() + 60
+    while True:
+        status = check_health(timeout=1)
+        if all(status.get(name, False) for name in REQUIRED_TARGETS):
+            return
+        if time.monotonic() >= deadline:
+            missing = sorted(name for name in REQUIRED_TARGETS if not status.get(name, False))
+            raise RuntimeError(f"Serviços indisponíveis após reinício: {', '.join(missing)}")
+        time.sleep(2)
 
 
 def run_deterministic_suite(requests_per_protocol: int = 200, services: List[str] = None):
@@ -191,14 +207,16 @@ def main():
     if args.mode == "health":
         return
 
-    if not any(status.values()):
-        print("❌ Nenhum microsserviço detectado online. Certifique-se de executar 'docker compose up -d' na pasta infra/.")
+    if args.mode in ("all", "deterministic", "stochastic") and not all(status.get(name, False) for name in REQUIRED_TARGETS):
+        print("❌ Nem todos os 21 serviços estão online. Inicie o ambiente com 'docker compose up -d' na pasta infra/.")
         sys.exit(1)
 
     if args.mode in ("all", "deterministic"):
+        reset_services()
         run_deterministic_suite(requests_per_protocol=args.requests)
 
     if args.mode in ("all", "stochastic"):
+        reset_services()
         run_stochastic_suite(requests_per_target=args.requests, concurrency=args.concurrency)
 
     if args.mode in ("all", "metrics"):

@@ -11,6 +11,7 @@ from unittest.mock import patch
 
 
 SCRIPTS = Path(__file__).resolve().parent / "scripts"
+sys.path.insert(0, str(SCRIPTS))
 
 
 def load_script(path):

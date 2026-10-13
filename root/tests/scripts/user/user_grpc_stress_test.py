@@ -9,12 +9,14 @@ GRPC_SERVER_ADDR = "localhost:50051"
 TOTAL_REQUESTS = 500
 
 def create_user(stub, index):
-    """Envia uma requisição gRPC para obter informações do usuário."""
-    request = user_pb2.GetUserRequest(id=index)
+    """Cria um usuário via gRPC."""
+    request = user_pb2.CreateUserRequest(name=f"User{index}", email=f"grpc_user_{index}@example.com")
     start = time.perf_counter()
-    response = stub.GetUser(request)
+    response = stub.CreateUser(request)
     elapsed = (time.perf_counter() - start) * 1000  # ms
-    print(f"Usuário {index} consultado - Status: OK - Tempo: {elapsed:.0f}ms")
+    if response.name != request.name or response.email != request.email:
+        raise ValueError("Resposta gRPC não corresponde ao usuário criado")
+    print(f"Usuário {index} criado - Status: OK - Tempo: {elapsed:.0f}ms")
     return elapsed
 
 def main():
