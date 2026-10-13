@@ -62,11 +62,11 @@ def call_user_websocket(idx: int) -> Tuple[float, bool]:
     if not HAS_WEBSOCKETS:
         return 0.0, False
     async def _send():
+        s = time.perf_counter()
         async with websockets.connect("ws://localhost:8005/ws/users", close_timeout=2) as ws:
-            s = time.perf_counter()
             await ws.send(json.dumps({"action": "create_user", "data": {"name": f"U{idx}", "email": f"rnd_ws_{RUN_ID}_{idx}@test.com"}}))
             m = json.loads(await ws.recv())
-            return (time.perf_counter() - s) * 1000, m.get("event") == "user_created"
+        return (time.perf_counter() - s) * 1000, m.get("event") == "user_created"
     return asyncio.run(_send())
 
 # Message
@@ -100,11 +100,11 @@ def call_message_websocket(idx: int) -> Tuple[float, bool]:
     if not HAS_WEBSOCKETS:
         return 0.0, False
     async def _send():
+        s = time.perf_counter()
         async with websockets.connect("ws://localhost:8015/ws/messages", close_timeout=2) as ws:
-            s = time.perf_counter()
             await ws.send(json.dumps({"action": "send_message", "data": {"user": f"U{idx}", "content": f"WS {RUN_ID}_{idx}"}}))
             m = json.loads(await ws.recv())
-            return (time.perf_counter() - s) * 1000, m.get("event") == "message_created"
+        return (time.perf_counter() - s) * 1000, m.get("event") == "message_created"
     return asyncio.run(_send())
 
 # Event
@@ -138,11 +138,11 @@ def call_event_websocket(idx: int) -> Tuple[float, bool]:
     if not HAS_WEBSOCKETS:
         return 0.0, False
     async def _send():
+        s = time.perf_counter()
         async with websockets.connect("ws://localhost:8025/ws/events", close_timeout=2) as ws:
-            s = time.perf_counter()
             await ws.send(json.dumps({"action": "publish_event", "data": {"type": "publish", "source": f"src_{RUN_ID}_{idx}"}}))
             m = json.loads(await ws.recv())
-            return (time.perf_counter() - s) * 1000, m.get("event") == "event_published"
+        return (time.perf_counter() - s) * 1000, m.get("event") == "event_published"
     return asyncio.run(_send())
 
 
@@ -232,9 +232,10 @@ if HAS_GRPC:
 
 def run_multiprotocol_test(
     service_filter: str = "all",
-    total_requests: int = 500,
+    requests_per_target: int = 200,
     concurrency: int = 1,
-    output_file: Optional[str] = None
+    output_file: Optional[str] = None,
+    expected_targets: Optional[int] = None,
 ):
     # Monta lista de pares (serviço, protocolo, handler)
     targets = []
@@ -247,6 +248,17 @@ def run_multiprotocol_test(
     if not targets:
         print(f"❌ Nenhum alvo encontrado para o serviço '{service_filter}'.")
         return
+    if expected_targets is not None and len(targets) != expected_targets:
+        raise ValueError(f"Esperados {expected_targets} alvos, mas apenas {len(targets)} estão disponíveis.")
+    if requests_per_target <= 0:
+        raise ValueError("A quantidade de requisições por alvo deve ser positiva.")
+    if concurrency <= 0:
+        raise ValueError("A concorrência deve ser um inteiro positivo.")
+
+    # Cada combinação serviço/protocolo recebe exatamente a mesma carga.
+    total_requests = requests_per_target * len(targets)
+    schedule = targets * requests_per_target
+    random.shuffle(schedule)
 
     print("==========================================================================")
     print("🎲 TESTE DE CARGA MULTI-PROTOCOLO ALEATÓRIO UNIFICADO")
@@ -262,8 +274,8 @@ def run_multiprotocol_test(
     proto_stats: Dict[str, Dict] = {}
     service_stats: Dict[str, Dict] = {}
 
-    def execute_one(idx: int) -> Tuple[str, str, float, bool]:
-        s, p, handler = random.choice(targets)
+    def execute_one(idx: int, target: Tuple[str, str, Callable[[int], Tuple[float, bool]]]) -> Tuple[str, str, float, bool]:
+        s, p, handler = target
         try:
             elapsed, ok = handler(idx)
         except Exception:
@@ -275,15 +287,15 @@ def run_multiprotocol_test(
     results = []
 
     if concurrency <= 1:
-        for i in range(1, total_requests + 1):
-            res = execute_one(i)
+        for i, target in enumerate(schedule, 1):
+            res = execute_one(i, target)
             results.append(res)
             s, p, el, ok = res
             status_txt = "OK" if ok else "ERRO"
             print(f"[{i:04d}/{total_requests:04d}] {s.upper():<7} | {p.upper():<9} | {status_txt:<4} | {el:6.1f}ms")
     else:
         with concurrent.futures.ThreadPoolExecutor(max_workers=concurrency) as executor:
-            futures = [executor.submit(execute_one, i) for i in range(1, total_requests + 1)]
+            futures = [executor.submit(execute_one, i, target) for i, target in enumerate(schedule, 1)]
             for i, fut in enumerate(concurrent.futures.as_completed(futures), 1):
                 res = fut.result()
                 results.append(res)
@@ -371,6 +383,7 @@ def run_multiprotocol_test(
             "service_filter": service_filter,
             "timestamp": datetime.now().isoformat(),
             "total_requests": total_requests,
+            "requests_per_target": requests_per_target,
             "concurrency": concurrency,
             "total_time_ms": total_time_ms,
             "throughput_rps": throughput,
@@ -387,16 +400,18 @@ def run_multiprotocol_test(
 def main():
     parser = argparse.ArgumentParser(description="Teste de Carga Multi-Protocolo Aleatório")
     parser.add_argument("--service", choices=["all", "user", "message", "event"], default="all", help="Serviço alvo (padrão: all)")
-    parser.add_argument("--requests", type=int, default=500, help="Quantidade de requisições (padrão: 500)")
+    parser.add_argument("--requests", type=int, default=200, help="Requisições por combinação serviço/protocolo (padrão: 200)")
+    parser.add_argument("--expected-targets", type=int, default=None, help="Falha caso o número de combinações disponíveis seja diferente")
     parser.add_argument("--concurrency", type=int, default=1, help="Número de threads simultâneas (padrão: 1)")
     parser.add_argument("--output", type=str, default=None, help="Caminho do arquivo JSON para salvar relatório")
     args = parser.parse_args()
 
     run_multiprotocol_test(
         service_filter=args.service,
-        total_requests=args.requests,
+        requests_per_target=args.requests,
         concurrency=args.concurrency,
         output_file=args.output,
+        expected_targets=args.expected_targets,
     )
 
 

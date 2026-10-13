@@ -89,14 +89,14 @@ def req_websocket(index: int) -> tuple[float, bool]:
         return 0.0, False
 
     async def _send():
+        start = time.perf_counter()
         async with websockets.connect(URL_WS, close_timeout=2) as ws:
             payload = {"action": "publish_event", "data": {"type": "publish", "source": f"src_ws_{RUN_ID}_{index}"}}
-            start = time.perf_counter()
             await ws.send(json.dumps(payload))
             msg = json.loads(await ws.recv())
-            elapsed = (time.perf_counter() - start) * 1000
-            ok = msg.get("event") == "event_published"
-            return elapsed, ok
+        elapsed = (time.perf_counter() - start) * 1000
+        ok = msg.get("event") == "event_published"
+        return elapsed, ok
 
     return asyncio.run(_send())
 
@@ -138,11 +138,19 @@ if HAS_GRPC:
     PROTOCOL_HANDLERS["grpc"] = req_grpc
 
 
-def run_random_stress_test(total_requests: int = 500, selected_protocols: Optional[List[str]] = None, output_file: Optional[str] = None):
+def run_random_stress_test(requests_per_protocol: int = 200, selected_protocols: Optional[List[str]] = None, output_file: Optional[str] = None):
     available = [p for p in (selected_protocols or list(PROTOCOL_HANDLERS.keys())) if p in PROTOCOL_HANDLERS]
+    if selected_protocols and len(available) != len(selected_protocols):
+        missing = set(selected_protocols) - set(available)
+        raise ValueError(f"Protocolos indisponíveis: {', '.join(sorted(missing))}")
     if not available:
         print("❌ Nenhum protocolo válido disponível para execução.")
         return
+    if requests_per_protocol <= 0:
+        raise ValueError("A quantidade de requisições por protocolo deve ser positiva.")
+    total_requests = requests_per_protocol * len(available)
+    schedule = available * requests_per_protocol
+    random.shuffle(schedule)
 
     print("==================================================================")
     print("🎲 TESTE DE STRESS ALEATÓRIO (MULTI-PROTOCOLO) — EVENT SERVICE")
@@ -157,8 +165,7 @@ def run_random_stress_test(total_requests: int = 500, selected_protocols: Option
 
     start_total = time.perf_counter()
 
-    for i in range(1, total_requests + 1):
-        proto = random.choice(available)
+    for i, proto in enumerate(schedule, 1):
         handler = PROTOCOL_HANDLERS[proto]
 
         try:
@@ -224,6 +231,7 @@ def run_random_stress_test(total_requests: int = 500, selected_protocols: Option
             "service": "event",
             "timestamp": datetime.now().isoformat(),
             "total_requests": total_requests,
+            "requests_per_protocol": requests_per_protocol,
             "total_time_ms": total_time_ms,
             "throughput_rps": overall_throughput,
             "protocols": summary_data,
@@ -235,13 +243,13 @@ def run_random_stress_test(total_requests: int = 500, selected_protocols: Option
 
 def main():
     parser = argparse.ArgumentParser(description="Teste de Stress Aleatório Multi-Protocolo (Event Service)")
-    parser.add_argument("--requests", type=int, default=500, help="Quantidade total de requisições (padrão: 500)")
+    parser.add_argument("--requests", type=int, default=200, help="Requisições por protocolo selecionado (padrão: 200)")
     parser.add_argument("--protocols", type=str, default="", help="Lista separada por vírgula de protocolos")
     parser.add_argument("--output", type=str, default="", help="Caminho do arquivo JSON para salvar os resultados")
     args = parser.parse_args()
 
     selected = [p.strip().lower() for p in args.protocols.split(",") if p.strip()] if args.protocols else None
-    run_random_stress_test(total_requests=args.requests, selected_protocols=selected, output_file=args.output or None)
+    run_random_stress_test(requests_per_protocol=args.requests, selected_protocols=selected, output_file=args.output or None)
 
 
 if __name__ == "__main__":

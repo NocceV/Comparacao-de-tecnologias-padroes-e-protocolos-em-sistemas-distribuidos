@@ -14,6 +14,8 @@ TESTS_DIR = os.path.join(ROOT_DIR, "tests")
 SCRIPTS_DIR = os.path.join(TESTS_DIR, "scripts")
 RESULTS_RAW_DIR = os.path.join(TESTS_DIR, "results", "raw")
 RESULTS_PROC_DIR = os.path.join(TESTS_DIR, "results", "processed")
+SERVICES = ["user", "message", "event"]
+PROTOCOLS = ["rest", "soap", "grpc", "websocket", "graphql", "webhook", "sse"]
 
 # Python interpreter from .venv
 VENV_PYTHON = os.path.join(ROOT_DIR, ".venv", "Scripts", "python.exe")
@@ -95,8 +97,8 @@ def run_deterministic_suite(requests_per_protocol: int = 200, services: List[str
     print("📊 EXECUÇÃO: REGIME DETERMINÍSTICO (ISOLADO POR SERVIÇO E PROTOCOLO)")
     print("==========================================================================")
     if services is None:
-        services = ["user", "message", "event"]
-    protocols = ["rest", "soap", "grpc", "websocket", "graphql", "webhook", "sse"]
+        services = SERVICES
+    protocols = PROTOCOLS
 
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     os.makedirs(RESULTS_RAW_DIR, exist_ok=True)
@@ -132,19 +134,22 @@ def run_deterministic_suite(requests_per_protocol: int = 200, services: List[str
     return results
 
 
-def run_stochastic_suite(total_requests: int = 500, concurrency: int = 1):
+def run_stochastic_suite(requests_per_target: int = 200, concurrency: int = 1):
     print("==========================================================================")
     print("🎲 EXECUÇÃO: REGIME ESTOCÁSTICO (MULTI-PROTOCOLO ALEATÓRIO)")
     print("==========================================================================")
     multi_script = os.path.join(SCRIPTS_DIR, "multiprotocol_random_stress_test.py")
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     out_file = os.path.join(RESULTS_RAW_DIR, f"stochastic_all_{ts}.json")
+    os.makedirs(RESULTS_RAW_DIR, exist_ok=True)
+    os.makedirs(RESULTS_PROC_DIR, exist_ok=True)
 
     cmd = [
         VENV_PYTHON,
         multi_script,
         "--service", "all",
-        "--requests", str(total_requests),
+        "--requests", str(requests_per_target),
+        "--expected-targets", str(len(SERVICES) * len(PROTOCOLS)),
         "--concurrency", str(concurrency),
         "--output", out_file
     ]
@@ -174,9 +179,13 @@ def collect_prometheus_metrics():
 def main():
     parser = argparse.ArgumentParser(description="Orquestrador de Testes e Benchmark de Sistemas Distribuídos")
     parser.add_argument("--mode", choices=["all", "health", "deterministic", "stochastic", "metrics"], default="all", help="Regime a executar")
-    parser.add_argument("--requests", type=int, default=200, help="Quantidade de requisições por protocolo (determinístico) ou total (estocástico)")
+    parser.add_argument("--requests", type=int, default=200, help="Quantidade de requisições por combinação serviço/protocolo em ambos os regimes")
     parser.add_argument("--concurrency", type=int, default=1, help="Número de threads simultâneas para o teste estocástico")
     args = parser.parse_args()
+    if args.requests <= 0:
+        parser.error("--requests deve ser um inteiro positivo")
+    if args.concurrency <= 0:
+        parser.error("--concurrency deve ser um inteiro positivo")
 
     status = check_health()
     if args.mode == "health":
@@ -190,7 +199,7 @@ def main():
         run_deterministic_suite(requests_per_protocol=args.requests)
 
     if args.mode in ("all", "stochastic"):
-        run_stochastic_suite(total_requests=args.requests * 2 if args.mode == "all" else args.requests, concurrency=args.concurrency)
+        run_stochastic_suite(requests_per_target=args.requests, concurrency=args.concurrency)
 
     if args.mode in ("all", "metrics"):
         collect_prometheus_metrics()

@@ -187,6 +187,12 @@ networks:
 
 ## 🔬 Testes e Métricas
 
+Para executar os dois regimes com a mesma carga, use `python run_app.py --mode all --requests 200`.
+O parâmetro `--requests` define a quantidade por combinação de serviço e protocolo em ambos os regimes.
+Com 3 serviços e 7 protocolos, cada regime faz 4.200 requisições (200 por combinação).
+No estocástico, a ordem dessas combinações é embaralhada, mas a quantidade de cada uma permanece fixa.
+Para WebSocket, a latência por operação inclui a abertura da conexão, o envio, a resposta e o fechamento; os resultados anteriores a essa correção devem ser medidos novamente.
+
 Os testes são conduzidos em três cenários distintos:
 
 - **Ideal:** ambiente estável e com baixa latência.
