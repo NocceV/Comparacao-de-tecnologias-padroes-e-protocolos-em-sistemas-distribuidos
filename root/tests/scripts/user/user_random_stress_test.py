@@ -4,10 +4,14 @@ import json
 import random
 import statistics
 import time
+import sys
 from datetime import datetime
+from pathlib import Path
 from typing import Callable, Dict, List, Optional
 
 import requests
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from benchmark_delivery import prepare_webhook, sse_delivery, webhook_delivery
 
 # Imports condicionais para bibliotecas opcionais
 try:
@@ -48,11 +52,15 @@ def req_rest(index: int) -> tuple[float, bool]:
 
 
 def req_graphql(index: int) -> tuple[float, bool]:
-    query = f"""query {{ user(id: {index}) {{ id name email }} }}"""
+    name = f"User{index}"
+    email = f"user_rnd_graphql_{RUN_ID}_{index}@example.com"
+    query = "mutation($name: String!, $email: String!) { createUser(name: $name, email: $email) { id name email } }"
     start = time.perf_counter()
-    r = requests.post(URL_GRAPHQL, json={"query": query}, headers={"Content-Type": "application/json"}, timeout=5)
+    r = requests.post(URL_GRAPHQL, json={"query": query, "variables": {"name": name, "email": email}}, timeout=5)
     elapsed = (time.perf_counter() - start) * 1000
-    return elapsed, r.status_code == 200 and "errors" not in r.json()
+    body = r.json()
+    user = (body.get("data") or {}).get("createUser") or {}
+    return elapsed, r.status_code == 200 and not body.get("errors") and user.get("name") == name and user.get("email") == email
 
 
 def req_soap(index: int) -> tuple[float, bool]:
@@ -72,19 +80,15 @@ def req_soap(index: int) -> tuple[float, bool]:
 
 
 def req_webhook(index: int) -> tuple[float, bool]:
-    payload = {"name": f"User{index}", "email": f"user_rnd_hook_{RUN_ID}_{index}@example.com"}
-    start = time.perf_counter()
-    r = requests.post(URL_WEBHOOK, json=payload, timeout=5)
-    elapsed = (time.perf_counter() - start) * 1000
-    return elapsed, r.status_code == 200
+    token = f"bench-{RUN_ID}-{index}"
+    payload = {"name": f"User{index}", "email": f"{token}@example.com"}
+    return webhook_delivery("user", "http://localhost:8003/hooks/users", URL_WEBHOOK, payload, token)
 
 
 def req_sse(index: int) -> tuple[float, bool]:
-    params = {"name": f"User{index}", "email": f"user_rnd_sse_{RUN_ID}_{index}@example.com"}
-    start = time.perf_counter()
-    r = requests.post(URL_SSE, params=params, timeout=5)
-    elapsed = (time.perf_counter() - start) * 1000
-    return elapsed, r.status_code == 200
+    token = f"bench-{RUN_ID}-{index}"
+    params = {"name": f"User{index}", "email": f"{token}@example.com"}
+    return sse_delivery("http://localhost:8007/sse/users", URL_SSE, token, params=params)
 
 
 def req_websocket(index: int) -> tuple[float, bool]:
@@ -92,14 +96,14 @@ def req_websocket(index: int) -> tuple[float, bool]:
         return 0.0, False
 
     async def _send():
+        start = time.perf_counter()
         async with websockets.connect(URL_WS, close_timeout=2) as ws:
             payload = {"action": "create_user", "data": {"name": f"User{index}", "email": f"user_rnd_ws_{RUN_ID}_{index}@example.com"}}
-            start = time.perf_counter()
             await ws.send(json.dumps(payload))
             msg = json.loads(await ws.recv())
-            elapsed = (time.perf_counter() - start) * 1000
-            ok = msg.get("event") == "user_created"
-            return elapsed, ok
+        elapsed = (time.perf_counter() - start) * 1000
+        ok = msg.get("event") == "user_created"
+        return elapsed, ok
 
     return asyncio.run(_send())
 
@@ -117,10 +121,10 @@ def req_grpc(index: int) -> tuple[float, bool]:
 
     start = time.perf_counter()
     try:
-        req = user_pb2.GetUserRequest(id=index)
-        _grpc_stub.GetUser(req, timeout=5)
+        req = user_pb2.CreateUserRequest(name=f"User{index}", email=f"user_rnd_grpc_{RUN_ID}_{index}@example.com")
+        response = _grpc_stub.CreateUser(req, timeout=5)
         elapsed = (time.perf_counter() - start) * 1000
-        return elapsed, True
+        return elapsed, response.name == req.name and response.email == req.email
     except Exception:
         elapsed = (time.perf_counter() - start) * 1000
         return elapsed, False
@@ -141,11 +145,19 @@ if HAS_GRPC:
     PROTOCOL_HANDLERS["grpc"] = req_grpc
 
 
-def run_random_stress_test(total_requests: int = 500, selected_protocols: Optional[List[str]] = None, output_file: Optional[str] = None):
+def run_random_stress_test(requests_per_protocol: int = 200, selected_protocols: Optional[List[str]] = None, output_file: Optional[str] = None):
     available = [p for p in (selected_protocols or list(PROTOCOL_HANDLERS.keys())) if p in PROTOCOL_HANDLERS]
+    if selected_protocols and len(available) != len(selected_protocols):
+        missing = set(selected_protocols) - set(available)
+        raise ValueError(f"Protocolos indisponíveis: {', '.join(sorted(missing))}")
     if not available:
         print("❌ Nenhum protocolo válido disponível para execução.")
         return
+    if requests_per_protocol <= 0:
+        raise ValueError("A quantidade de requisições por protocolo deve ser positiva.")
+    total_requests = requests_per_protocol * len(available)
+    schedule = available * requests_per_protocol
+    random.shuffle(schedule)
 
     print("=================================================================")
     print("🎲 TESTE DE STRESS ALEATÓRIO (MULTI-PROTOCOLO) — USER SERVICE")
@@ -158,22 +170,24 @@ def run_random_stress_test(total_requests: int = 500, selected_protocols: Option
         p: {"count": 0, "success": 0, "errors": 0, "latencies": []} for p in available
     }
 
+    if "webhook" in available:
+        prepare_webhook("user", "http://localhost:8003/hooks/users")
     start_total = time.perf_counter()
 
-    for i in range(1, total_requests + 1):
-        proto = random.choice(available)
+    for i, proto in enumerate(schedule, 1):
         handler = PROTOCOL_HANDLERS[proto]
 
+        attempt_start = time.perf_counter()
         try:
             elapsed, ok = handler(i)
-        except Exception as exc:
-            elapsed = 0.0
+        except Exception:
+            elapsed = (time.perf_counter() - attempt_start) * 1000
             ok = False
 
         stats[proto]["count"] += 1
+        stats[proto]["latencies"].append(elapsed)
         if ok:
             stats[proto]["success"] += 1
-            stats[proto]["latencies"].append(elapsed)
         else:
             stats[proto]["errors"] += 1
 
@@ -227,6 +241,7 @@ def run_random_stress_test(total_requests: int = 500, selected_protocols: Option
             "service": "user",
             "timestamp": datetime.now().isoformat(),
             "total_requests": total_requests,
+            "requests_per_protocol": requests_per_protocol,
             "total_time_ms": total_time_ms,
             "throughput_rps": overall_throughput,
             "protocols": summary_data,
@@ -238,13 +253,13 @@ def run_random_stress_test(total_requests: int = 500, selected_protocols: Option
 
 def main():
     parser = argparse.ArgumentParser(description="Teste de Stress Aleatório Multi-Protocolo (User Service)")
-    parser.add_argument("--requests", type=int, default=500, help="Quantidade total de requisições (padrão: 500)")
+    parser.add_argument("--requests", type=int, default=200, help="Requisições por protocolo selecionado (padrão: 200)")
     parser.add_argument("--protocols", type=str, default="", help="Lista separada por vírgula de protocolos (ex: rest,graphql,sse)")
     parser.add_argument("--output", type=str, default="", help="Caminho do arquivo JSON para salvar os resultados")
     args = parser.parse_args()
 
     selected = [p.strip().lower() for p in args.protocols.split(",") if p.strip()] if args.protocols else None
-    run_random_stress_test(total_requests=args.requests, selected_protocols=selected, output_file=args.output or None)
+    run_random_stress_test(requests_per_protocol=args.requests, selected_protocols=selected, output_file=args.output or None)
 
 
 if __name__ == "__main__":

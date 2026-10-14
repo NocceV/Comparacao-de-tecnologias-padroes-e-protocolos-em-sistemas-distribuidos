@@ -3,7 +3,7 @@ import warnings
 
 from . import user_pb2 as user__pb2
 
-GRPC_GENERATED_VERSION = '1.76.0'
+GRPC_GENERATED_VERSION = '1.84.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -23,7 +23,7 @@ if _version_not_supported:
     )
 
 
-class UserServiceStub(object):
+class UserServiceStub:
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -37,13 +37,23 @@ class UserServiceStub(object):
                 request_serializer=user__pb2.GetUserRequest.SerializeToString,
                 response_deserializer=user__pb2.UserResponse.FromString,
                 _registered_method=True)
+        self.CreateUser = channel.unary_unary(
+                '/user.UserService/CreateUser',
+                request_serializer=user__pb2.CreateUserRequest.SerializeToString,
+                response_deserializer=user__pb2.UserResponse.FromString,
+                _registered_method=True)
 
 
-class UserServiceServicer(object):
+class UserServiceServicer:
     """Missing associated documentation comment in .proto file."""
 
     def GetUser(self, request, context):
         """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CreateUser(self, request, context):
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -56,6 +66,11 @@ def add_UserServiceServicer_to_server(servicer, server):
                     request_deserializer=user__pb2.GetUserRequest.FromString,
                     response_serializer=user__pb2.UserResponse.SerializeToString,
             ),
+            'CreateUser': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreateUser,
+                    request_deserializer=user__pb2.CreateUserRequest.FromString,
+                    response_serializer=user__pb2.UserResponse.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
             'user.UserService', rpc_method_handlers)
@@ -63,7 +78,7 @@ def add_UserServiceServicer_to_server(servicer, server):
     server.add_registered_method_handlers('user.UserService', rpc_method_handlers)
 
 
-class UserService(object):
+class UserService:
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -82,6 +97,33 @@ class UserService(object):
             target,
             '/user.UserService/GetUser',
             user__pb2.GetUserRequest.SerializeToString,
+            user__pb2.UserResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CreateUser(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/user.UserService/CreateUser',
+            user__pb2.CreateUserRequest.SerializeToString,
             user__pb2.UserResponse.FromString,
             options,
             channel_credentials,

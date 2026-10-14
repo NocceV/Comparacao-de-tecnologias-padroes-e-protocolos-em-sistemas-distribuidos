@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from fastapi.responses import Response
-from ariadne import QueryType, make_executable_schema
+from ariadne import QueryType, MutationType, make_executable_schema
 from ariadne.asgi import GraphQL
 import time
+from threading import Lock
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
 type_defs = """
@@ -15,9 +16,17 @@ type_defs = """
     type Query {
       user(id: Int!): User
     }
+
+    type Mutation {
+      createUser(name: String!, email: String!): User!
+    }
 """
 
 query = QueryType()
+mutation = MutationType()
+users = {}
+next_user_id = 0
+users_lock = Lock()
 
 REQUEST_COUNT = Counter('http_requests_total', 'Total de requisições HTTP', ['method', 'endpoint'])
 REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'Tempo de resposta das requisições', ['endpoint'])
@@ -27,11 +36,23 @@ REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'Tempo de resposta 
 def resolve_user(*_, id):
   start = time.perf_counter()
   REQUEST_COUNT.labels(method='GRAPHQL', endpoint='/graphql/user').inc()
-  resp = {"id": id, "name": f"User{id}", "email": "user@example.com"}
+  resp = users.get(id) or {"id": id, "name": f"User{id}", "email": "user@example.com"}
   REQUEST_LATENCY.labels(endpoint='/graphql/user').observe(time.perf_counter() - start)
   return resp
 
-schema = make_executable_schema(type_defs, query)
+@mutation.field("createUser")
+def resolve_create_user(*_, name, email):
+  global next_user_id
+  start = time.perf_counter()
+  REQUEST_COUNT.labels(method='GRAPHQL', endpoint='/graphql/createUser').inc()
+  with users_lock:
+    user = {"id": next_user_id, "name": name, "email": email}
+    users[next_user_id] = user
+    next_user_id += 1
+  REQUEST_LATENCY.labels(endpoint='/graphql/createUser').observe(time.perf_counter() - start)
+  return user
+
+schema = make_executable_schema(type_defs, [query, mutation])
 app = FastAPI()
 app.mount("/graphql", GraphQL(schema, debug=True))
 
