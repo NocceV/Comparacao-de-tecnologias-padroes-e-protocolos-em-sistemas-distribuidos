@@ -1,0 +1,74 @@
+{
+  "user_graphql": {
+    "http_requests_total": 383.0
+  },
+  "user_soap": {
+    "http_requests_total": 357.0
+  },
+  "user_sse": {
+    "http_requests_total": 358.0,
+    "sse_events_total": 272.0,
+    "sse_connections_total": 1.0
+  },
+  "message_webhook": {
+    "http_requests_total": 354.0
+  },
+  "message_rest": {
+    "http_requests_total": 665.0
+  },
+  "event_rest": {
+    "http_requests_total": 671.0
+  },
+  "user_rest": {
+    "http_requests_total": 669.0
+  },
+  "event_webhook": {
+    "http_requests_total": 354.0
+  },
+  "user_webhook": {
+    "http_requests_total": 354.0
+  },
+  "message_graphql": {
+    "http_requests_total": 379.0
+  },
+  "message_soap": {
+    "http_requests_total": 356.0
+  },
+  "event_soap": {
+    "http_requests_total": 358.0
+  },
+  "message_sse": {
+    "http_requests_total": 355.0,
+    "sse_events_total": 354.0,
+    "sse_connections_total": 1.0
+  },
+  "event_graphql": {
+    "http_requests_total": 375.0
+  },
+  "event_sse": {
+    "http_requests_total": 357.0,
+    "sse_events_total": 354.0,
+    "sse_connections_total": 1.0
+  },
+  "user_grpc": {
+    "grpc_requests_total": 2103.0
+  },
+  "event_grpc": {
+    "grpc_requests_total": 2104.0
+  },
+  "message_grpc": {
+    "grpc_requests_total": 2103.0
+  },
+  "user_websocket": {
+    "ws_messages_total": 356.0,
+    "ws_connections_total": 355.0
+  },
+  "event_websocket": {
+    "ws_messages_total": 355.0,
+    "ws_connections_total": 356.0
+  },
+  "message_websocket": {
+    "ws_messages_total": 354.0,
+    "ws_connections_total": 355.0
+  }
+}

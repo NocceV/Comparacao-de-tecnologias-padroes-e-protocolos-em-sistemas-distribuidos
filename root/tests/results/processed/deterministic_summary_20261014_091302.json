@@ -1,0 +1,386 @@
+{
+  "user": {
+    "rest": {
+      "service": "user",
+      "timestamp": "2026-10-14T09:13:03.853995",
+      "total_requests": 100,
+      "total_time_ms": 570.1818999996249,
+      "throughput_rps": 175.38262789482758,
+      "protocols": {
+        "rest": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 5.62,
+          "min_latency_ms": 2.59,
+          "max_latency_ms": 26.16
+        }
+      }
+    },
+    "soap": {
+      "service": "user",
+      "timestamp": "2026-10-14T09:13:04.834257",
+      "total_requests": 100,
+      "total_time_ms": 562.0354000002408,
+      "throughput_rps": 177.92473570162514,
+      "protocols": {
+        "soap": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 5.54,
+          "min_latency_ms": 2.34,
+          "max_latency_ms": 25.89
+        }
+      }
+    },
+    "grpc": {
+      "service": "user",
+      "timestamp": "2026-10-14T09:13:05.386547",
+      "total_requests": 100,
+      "total_time_ms": 126.24620000042341,
+      "throughput_rps": 792.1030494356631,
+      "protocols": {
+        "grpc": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 1.19,
+          "min_latency_ms": 0.64,
+          "max_latency_ms": 48.17
+        }
+      }
+    },
+    "websocket": {
+      "service": "user",
+      "timestamp": "2026-10-14T09:13:06.304714",
+      "total_requests": 100,
+      "total_time_ms": 494.6171999999933,
+      "throughput_rps": 202.17655188699737,
+      "protocols": {
+        "websocket": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 0.52,
+          "min_latency_ms": 0.46,
+          "max_latency_ms": 0.69
+        }
+      }
+    },
+    "graphql": {
+      "service": "user",
+      "timestamp": "2026-10-14T09:13:12.087178",
+      "total_requests": 100,
+      "total_time_ms": 5346.864299999652,
+      "throughput_rps": 18.702550577168473,
+      "protocols": {
+        "graphql": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 53.34,
+          "min_latency_ms": 46.35,
+          "max_latency_ms": 75.61
+        }
+      }
+    },
+    "webhook": {
+      "service": "user",
+      "timestamp": "2026-10-14T09:13:13.354396",
+      "total_requests": 100,
+      "total_time_ms": 809.8725999998351,
+      "throughput_rps": 123.47621094974735,
+      "protocols": {
+        "webhook": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 8.0,
+          "min_latency_ms": 4.67,
+          "max_latency_ms": 29.29
+        }
+      }
+    },
+    "sse": {
+      "service": "user",
+      "timestamp": "2026-10-14T09:13:14.348347",
+      "total_requests": 100,
+      "total_time_ms": 567.4131999994643,
+      "throughput_rps": 176.23840968115374,
+      "protocols": {
+        "sse": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 5.59,
+          "min_latency_ms": 2.42,
+          "max_latency_ms": 25.56
+        }
+      }
+    }
+  },
+  "message": {
+    "rest": {
+      "service": "message",
+      "timestamp": "2026-10-14T09:13:15.490360",
+      "total_requests": 100,
+      "total_time_ms": 716.856199999711,
+      "throughput_rps": 139.49799136847852,
+      "protocols": {
+        "rest": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 7.08,
+          "min_latency_ms": 2.59,
+          "max_latency_ms": 27.05
+        }
+      }
+    },
+    "soap": {
+      "service": "message",
+      "timestamp": "2026-10-14T09:13:16.442457",
+      "total_requests": 100,
+      "total_time_ms": 533.8793000000805,
+      "throughput_rps": 187.30825488080342,
+      "protocols": {
+        "soap": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 5.26,
+          "min_latency_ms": 2.38,
+          "max_latency_ms": 27.28
+        }
+      }
+    },
+    "grpc": {
+      "service": "message",
+      "timestamp": "2026-10-14T09:13:16.993252",
+      "total_requests": 100,
+      "total_time_ms": 125.12040000001434,
+      "throughput_rps": 799.230181489098,
+      "protocols": {
+        "grpc": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 1.18,
+          "min_latency_ms": 0.64,
+          "max_latency_ms": 48.08
+        }
+      }
+    },
+    "websocket": {
+      "service": "message",
+      "timestamp": "2026-10-14T09:13:17.992894",
+      "total_requests": 100,
+      "total_time_ms": 575.2460999992763,
+      "throughput_rps": 173.83864054032838,
+      "protocols": {
+        "websocket": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 0.57,
+          "min_latency_ms": 0.46,
+          "max_latency_ms": 0.88
+        }
+      }
+    },
+    "graphql": {
+      "service": "message",
+      "timestamp": "2026-10-14T09:13:23.761987",
+      "total_requests": 100,
+      "total_time_ms": 5335.96850000049,
+      "throughput_rps": 18.74074031733711,
+      "protocols": {
+        "graphql": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 53.23,
+          "min_latency_ms": 46.66,
+          "max_latency_ms": 72.68
+        }
+      }
+    },
+    "webhook": {
+      "service": "message",
+      "timestamp": "2026-10-14T09:13:24.993059",
+      "total_requests": 100,
+      "total_time_ms": 803.6771999995835,
+      "throughput_rps": 124.42806639288986,
+      "protocols": {
+        "webhook": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 7.94,
+          "min_latency_ms": 4.58,
+          "max_latency_ms": 29.3
+        }
+      }
+    },
+    "sse": {
+      "service": "message",
+      "timestamp": "2026-10-14T09:13:25.944715",
+      "total_requests": 100,
+      "total_time_ms": 528.9674999994531,
+      "throughput_rps": 189.0475312757464,
+      "protocols": {
+        "sse": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 5.21,
+          "min_latency_ms": 2.42,
+          "max_latency_ms": 27.38
+        }
+      }
+    }
+  },
+  "event": {
+    "rest": {
+      "service": "event",
+      "timestamp": "2026-10-14T09:13:26.937681",
+      "total_requests": 100,
+      "total_time_ms": 570.0965000005453,
+      "throughput_rps": 175.40890007201295,
+      "protocols": {
+        "rest": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 5.62,
+          "min_latency_ms": 2.59,
+          "max_latency_ms": 27.01
+        }
+      }
+    },
+    "soap": {
+      "service": "event",
+      "timestamp": "2026-10-14T09:13:27.965697",
+      "total_requests": 100,
+      "total_time_ms": 604.4703000006848,
+      "throughput_rps": 165.43409990513464,
+      "protocols": {
+        "soap": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 5.96,
+          "min_latency_ms": 2.32,
+          "max_latency_ms": 28.23
+        }
+      }
+    },
+    "grpc": {
+      "service": "event",
+      "timestamp": "2026-10-14T09:13:28.523066",
+      "total_requests": 100,
+      "total_time_ms": 128.03309999981138,
+      "throughput_rps": 781.0480258632128,
+      "protocols": {
+        "grpc": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 1.21,
+          "min_latency_ms": 0.66,
+          "max_latency_ms": 48.39
+        }
+      }
+    },
+    "websocket": {
+      "service": "event",
+      "timestamp": "2026-10-14T09:13:29.482122",
+      "total_requests": 100,
+      "total_time_ms": 517.2397999995155,
+      "throughput_rps": 193.33392364642796,
+      "protocols": {
+        "websocket": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 0.52,
+          "min_latency_ms": 0.45,
+          "max_latency_ms": 0.83
+        }
+      }
+    },
+    "graphql": {
+      "service": "event",
+      "timestamp": "2026-10-14T09:13:35.273506",
+      "total_requests": 100,
+      "total_time_ms": 5332.0231999996395,
+      "throughput_rps": 18.754607069227824,
+      "protocols": {
+        "graphql": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 53.2,
+          "min_latency_ms": 47.0,
+          "max_latency_ms": 76.48
+        }
+      }
+    },
+    "webhook": {
+      "service": "event",
+      "timestamp": "2026-10-14T09:13:36.627234",
+      "total_requests": 100,
+      "total_time_ms": 926.721599999837,
+      "throughput_rps": 107.90727225956273,
+      "protocols": {
+        "webhook": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 9.17,
+          "min_latency_ms": 4.58,
+          "max_latency_ms": 28.58
+        }
+      }
+    },
+    "sse": {
+      "service": "event",
+      "timestamp": "2026-10-14T09:13:37.666199",
+      "total_requests": 100,
+      "total_time_ms": 624.1909999998825,
+      "throughput_rps": 160.2073724228943,
+      "protocols": {
+        "sse": {
+          "requests": 100,
+          "percentage": 100.0,
+          "success": 100,
+          "errors": 0,
+          "avg_latency_ms": 6.15,
+          "min_latency_ms": 2.47,
+          "max_latency_ms": 25.53
+        }
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@ import requests
 import time
 import statistics
 
-GRAPHQL_URL = "http://localhost:8021/graphql"
+GRAPHQL_URL = "http://localhost:8021/graphql/"
 TOTAL_REQUESTS = 500
 
 def publish_event(index):

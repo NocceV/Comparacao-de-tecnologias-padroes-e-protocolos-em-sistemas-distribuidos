@@ -1,0 +1,386 @@
+{
+  "scenario": "ideal",
+  "per_service": 100,
+  "concurrency": 8,
+  "timestamp": "2026-11-13T22:44:25.539530",
+  "protocols": {
+    "rest": {
+      "protocol": "rest",
+      "containers": [
+        "user-rest",
+        "message-rest",
+        "event-rest"
+      ],
+      "requests": 300,
+      "concurrency": 8,
+      "client": {
+        "requests": 300,
+        "success": 300,
+        "errors": 0,
+        "success_rate_pct": 100.0,
+        "avg_latency_ms": 8.849,
+        "median_latency_ms": 8.053,
+        "stdev_latency_ms": 3.57,
+        "p95_latency_ms": 16.446,
+        "p99_latency_ms": 23.569,
+        "min_latency_ms": 3.681,
+        "max_latency_ms": 32.093,
+        "wall_time_s": 0.3675,
+        "throughput_rps": 816.291,
+        "goodput_rps": 816.291
+      },
+      "cpu": {
+        "gross_cpu_seconds": 0.3895,
+        "idle_cpu_seconds_estimated": 0.0013,
+        "net_cpu_seconds": 0.3882,
+        "net_cpu_ms_per_request": 1.294,
+        "gross_cpu_ms_per_request": 1.2985,
+        "mean_pct_of_one_core": 100.84,
+        "peak_pct_of_one_core_1s": 108.2,
+        "idle_pct_of_one_core": 0.345,
+        "throttled_periods": 0,
+        "throttled_seconds": 0.0,
+        "load_duration_s": 0.386,
+        "quota_pct_of_one_core_total": 150.0
+      },
+      "memory": {
+        "idle_mib": 118.1,
+        "mean_during_load_mib": 122.36,
+        "peak_during_load_mib": 123.88,
+        "after_load_mib": 123.86,
+        "growth_mib": 5.76,
+        "limit_total_mib": 768.0,
+        "per_container_after_mib": {
+          "user-rest": 41.37,
+          "message-rest": 41.28,
+          "event-rest": 41.21
+        },
+        "samples": 3
+      }
+    },
+    "soap": {
+      "protocol": "soap",
+      "containers": [
+        "user-soap",
+        "message-soap",
+        "event-soap"
+      ],
+      "requests": 300,
+      "concurrency": 8,
+      "client": {
+        "requests": 300,
+        "success": 300,
+        "errors": 0,
+        "success_rate_pct": 100.0,
+        "avg_latency_ms": 7.98,
+        "median_latency_ms": 7.567,
+        "stdev_latency_ms": 2.204,
+        "p95_latency_ms": 11.477,
+        "p99_latency_ms": 14.569,
+        "min_latency_ms": 4.92,
+        "max_latency_ms": 25.477,
+        "wall_time_s": 0.3402,
+        "throughput_rps": 881.733,
+        "goodput_rps": 881.733
+      },
+      "cpu": {
+        "gross_cpu_seconds": 0.226,
+        "idle_cpu_seconds_estimated": 0.0011,
+        "net_cpu_seconds": 0.2249,
+        "net_cpu_ms_per_request": 0.7498,
+        "gross_cpu_ms_per_request": 0.7534,
+        "mean_pct_of_one_core": 64.17,
+        "peak_pct_of_one_core_1s": 64.17,
+        "idle_pct_of_one_core": 0.309,
+        "throttled_periods": 0,
+        "throttled_seconds": 0.0,
+        "load_duration_s": 0.352,
+        "quota_pct_of_one_core_total": 150.0
+      },
+      "memory": {
+        "idle_mib": 118.12,
+        "mean_during_load_mib": 120.91,
+        "peak_during_load_mib": 123.21,
+        "after_load_mib": 122.09,
+        "growth_mib": 3.97,
+        "limit_total_mib": 768.0,
+        "per_container_after_mib": {
+          "user-soap": 40.25,
+          "message-soap": 40.78,
+          "event-soap": 41.06
+        },
+        "samples": 2
+      }
+    },
+    "grpc": {
+      "protocol": "grpc",
+      "containers": [
+        "user-grpc",
+        "message-grpc",
+        "event-grpc"
+      ],
+      "requests": 300,
+      "concurrency": 8,
+      "client": {
+        "requests": 300,
+        "success": 300,
+        "errors": 0,
+        "success_rate_pct": 100.0,
+        "avg_latency_ms": 2.231,
+        "median_latency_ms": 1.363,
+        "stdev_latency_ms": 4.28,
+        "p95_latency_ms": 4.063,
+        "p99_latency_ms": 28.657,
+        "min_latency_ms": 0.72,
+        "max_latency_ms": 29.106,
+        "wall_time_s": 0.0883,
+        "throughput_rps": 3396.589,
+        "goodput_rps": 3396.589
+      },
+      "cpu": {
+        "gross_cpu_seconds": 0.1792,
+        "idle_cpu_seconds_estimated": 0.0004,
+        "net_cpu_seconds": 0.1788,
+        "net_cpu_ms_per_request": 0.596,
+        "gross_cpu_ms_per_request": 0.5973,
+        "mean_pct_of_one_core": 180.22,
+        "peak_pct_of_one_core_1s": 180.22,
+        "idle_pct_of_one_core": 0.401,
+        "throttled_periods": 1,
+        "throttled_seconds": 0.0566,
+        "load_duration_s": 0.099,
+        "quota_pct_of_one_core_total": 150.0
+      },
+      "memory": {
+        "idle_mib": 72.39,
+        "mean_during_load_mib": 73.14,
+        "peak_during_load_mib": 73.14,
+        "after_load_mib": 78.12,
+        "growth_mib": 5.73,
+        "limit_total_mib": 768.0,
+        "per_container_after_mib": {
+          "user-grpc": 24.8,
+          "message-grpc": 26.29,
+          "event-grpc": 27.04
+        },
+        "samples": 1
+      }
+    },
+    "websocket": {
+      "protocol": "websocket",
+      "containers": [
+        "user-websocket",
+        "message-websocket",
+        "event-websocket"
+      ],
+      "requests": 300,
+      "concurrency": 8,
+      "client": {
+        "requests": 300,
+        "success": 300,
+        "errors": 0,
+        "success_rate_pct": 100.0,
+        "avg_latency_ms": 1.983,
+        "median_latency_ms": 1.727,
+        "stdev_latency_ms": 1.022,
+        "p95_latency_ms": 3.792,
+        "p99_latency_ms": 5.122,
+        "min_latency_ms": 0.605,
+        "max_latency_ms": 9.598,
+        "wall_time_s": 0.7506,
+        "throughput_rps": 399.692,
+        "goodput_rps": 399.692
+      },
+      "cpu": {
+        "gross_cpu_seconds": 0.3413,
+        "idle_cpu_seconds_estimated": 0.0025,
+        "net_cpu_seconds": 0.3388,
+        "net_cpu_ms_per_request": 1.1294,
+        "gross_cpu_ms_per_request": 1.1376,
+        "mean_pct_of_one_core": 44.79,
+        "peak_pct_of_one_core_1s": 48.75,
+        "idle_pct_of_one_core": 0.324,
+        "throttled_periods": 0,
+        "throttled_seconds": 0.0,
+        "load_duration_s": 0.762,
+        "quota_pct_of_one_core_total": 150.0
+      },
+      "memory": {
+        "idle_mib": 120.16,
+        "mean_during_load_mib": 124.59,
+        "peak_during_load_mib": 127.41,
+        "after_load_mib": 127.03,
+        "growth_mib": 6.87,
+        "limit_total_mib": 768.0,
+        "per_container_after_mib": {
+          "user-websocket": 40.8,
+          "message-websocket": 42.63,
+          "event-websocket": 43.59
+        },
+        "samples": 5
+      }
+    },
+    "graphql": {
+      "protocol": "graphql",
+      "containers": [
+        "user-graphql",
+        "message-graphql",
+        "event-graphql"
+      ],
+      "requests": 300,
+      "concurrency": 8,
+      "client": {
+        "requests": 300,
+        "success": 300,
+        "errors": 0,
+        "success_rate_pct": 100.0,
+        "avg_latency_ms": 20.904,
+        "median_latency_ms": 7.808,
+        "stdev_latency_ms": 67.341,
+        "p95_latency_ms": 28.138,
+        "p99_latency_ms": 415.105,
+        "min_latency_ms": 3.845,
+        "max_latency_ms": 452.455,
+        "wall_time_s": 0.8054,
+        "throughput_rps": 372.481,
+        "goodput_rps": 372.481
+      },
+      "cpu": {
+        "gross_cpu_seconds": 0.773,
+        "idle_cpu_seconds_estimated": 0.0028,
+        "net_cpu_seconds": 0.7702,
+        "net_cpu_ms_per_request": 2.5674,
+        "gross_cpu_ms_per_request": 2.5766,
+        "mean_pct_of_one_core": 94.6,
+        "peak_pct_of_one_core_1s": 106.83,
+        "idle_pct_of_one_core": 0.34,
+        "throttled_periods": 9,
+        "throttled_seconds": 0.28,
+        "load_duration_s": 0.817,
+        "quota_pct_of_one_core_total": 150.0
+      },
+      "memory": {
+        "idle_mib": 132.14,
+        "mean_during_load_mib": 135.56,
+        "peak_during_load_mib": 138.23,
+        "after_load_mib": 137.27,
+        "growth_mib": 5.13,
+        "limit_total_mib": 768.0,
+        "per_container_after_mib": {
+          "user-graphql": 46.17,
+          "message-graphql": 45.0,
+          "event-graphql": 46.09
+        },
+        "samples": 5
+      }
+    },
+    "webhook": {
+      "protocol": "webhook",
+      "containers": [
+        "user-webhook",
+        "message-webhook",
+        "event-webhook"
+      ],
+      "requests": 300,
+      "concurrency": 8,
+      "client": {
+        "requests": 300,
+        "success": 300,
+        "errors": 0,
+        "success_rate_pct": 100.0,
+        "avg_latency_ms": 52.548,
+        "median_latency_ms": 40.884,
+        "stdev_latency_ms": 40.519,
+        "p95_latency_ms": 112.535,
+        "p99_latency_ms": 158.972,
+        "min_latency_ms": 3.397,
+        "max_latency_ms": 164.092,
+        "wall_time_s": 2.0347,
+        "throughput_rps": 147.442,
+        "goodput_rps": 147.442
+      },
+      "cpu": {
+        "gross_cpu_seconds": 3.0274,
+        "idle_cpu_seconds_estimated": 0.0067,
+        "net_cpu_seconds": 3.0207,
+        "net_cpu_ms_per_request": 10.0691,
+        "gross_cpu_ms_per_request": 10.0915,
+        "mean_pct_of_one_core": 147.86,
+        "peak_pct_of_one_core_1s": 164.6,
+        "idle_pct_of_one_core": 0.328,
+        "throttled_periods": 56,
+        "throttled_seconds": 2.9579,
+        "load_duration_s": 2.047,
+        "quota_pct_of_one_core_total": 150.0
+      },
+      "memory": {
+        "idle_mib": 133.55,
+        "mean_during_load_mib": 144.39,
+        "peak_during_load_mib": 148.21,
+        "after_load_mib": 147.36,
+        "growth_mib": 13.82,
+        "limit_total_mib": 768.0,
+        "per_container_after_mib": {
+          "user-webhook": 49.66,
+          "message-webhook": 49.0,
+          "event-webhook": 48.7
+        },
+        "samples": 13
+      }
+    },
+    "sse": {
+      "protocol": "sse",
+      "containers": [
+        "user-sse",
+        "message-sse",
+        "event-sse"
+      ],
+      "requests": 300,
+      "concurrency": 8,
+      "client": {
+        "requests": 300,
+        "success": 300,
+        "errors": 0,
+        "success_rate_pct": 100.0,
+        "avg_latency_ms": 8.552,
+        "median_latency_ms": 7.417,
+        "stdev_latency_ms": 5.119,
+        "p95_latency_ms": 17.162,
+        "p99_latency_ms": 36.887,
+        "min_latency_ms": 2.791,
+        "max_latency_ms": 41.913,
+        "wall_time_s": 0.3457,
+        "throughput_rps": 867.743,
+        "goodput_rps": 867.743
+      },
+      "cpu": {
+        "gross_cpu_seconds": 0.2964,
+        "idle_cpu_seconds_estimated": 0.0012,
+        "net_cpu_seconds": 0.2952,
+        "net_cpu_ms_per_request": 0.984,
+        "gross_cpu_ms_per_request": 0.988,
+        "mean_pct_of_one_core": 83.02,
+        "peak_pct_of_one_core_1s": 83.02,
+        "idle_pct_of_one_core": 0.335,
+        "throttled_periods": 0,
+        "throttled_seconds": 0.0,
+        "load_duration_s": 0.357,
+        "quota_pct_of_one_core_total": 150.0
+      },
+      "memory": {
+        "idle_mib": 116.55,
+        "mean_during_load_mib": 120.01,
+        "peak_during_load_mib": 121.98,
+        "after_load_mib": 121.81,
+        "growth_mib": 5.26,
+        "limit_total_mib": 768.0,
+        "per_container_after_mib": {
+          "user-sse": 40.45,
+          "message-sse": 40.56,
+          "event-sse": 40.8
+        },
+        "samples": 2
+      }
+    }
+  }
+}

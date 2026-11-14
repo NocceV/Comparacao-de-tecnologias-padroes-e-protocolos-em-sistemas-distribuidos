@@ -5,11 +5,19 @@ import json
 import os
 import random
 import statistics
+import sys
 import time
 from datetime import datetime
 from typing import Callable, Dict, List, Optional, Tuple
 
 import requests
+
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
 
 try:
     import websockets
@@ -39,7 +47,7 @@ def call_user_rest(idx: int) -> Tuple[float, bool]:
 
 def call_user_graphql(idx: int) -> Tuple[float, bool]:
     start = time.perf_counter()
-    r = requests.post("http://localhost:8001/graphql", json={"query": f"query {{ user(id: {idx}) {{ id name email }} }}"}, timeout=5)
+    r = requests.post("http://localhost:8001/graphql/", json={"query": f"query {{ user(id: {idx}) {{ id name email }} }}"}, timeout=5)
     return (time.perf_counter() - start) * 1000, r.status_code == 200 and "errors" not in r.json()
 
 def call_user_soap(idx: int) -> Tuple[float, bool]:
@@ -62,49 +70,57 @@ def call_user_websocket(idx: int) -> Tuple[float, bool]:
     if not HAS_WEBSOCKETS:
         return 0.0, False
     async def _send():
-        async with websockets.connect("ws://localhost:8005/ws/users", close_timeout=2) as ws:
+        email = f"rnd_ws_{RUN_ID}_{idx}@test.com"
+        async with websockets.connect("ws://localhost:8005/ws/users", open_timeout=5, close_timeout=1) as ws:
             s = time.perf_counter()
-            await ws.send(json.dumps({"action": "create_user", "data": {"name": f"U{idx}", "email": f"rnd_ws_{RUN_ID}_{idx}@test.com"}}))
-            m = json.loads(await ws.recv())
+            await ws.send(json.dumps({"action": "create_user", "data": {"name": f"U{idx}", "email": email}}))
+            m = json.loads(await asyncio.wait_for(ws.recv(), timeout=5))
             return (time.perf_counter() - s) * 1000, m.get("event") == "user_created"
     return asyncio.run(_send())
 
 # Message
 def call_message_rest(idx: int) -> Tuple[float, bool]:
     start = time.perf_counter()
-    r = requests.post("http://localhost:8012/messages/create", json={"user": f"U{idx}", "content": f"Msg {RUN_ID}_{idx}"}, timeout=5)
+    r = requests.post("http://localhost:8012/messages/create", json={"user": f"User{idx}", "content": f"Msg {RUN_ID}_{idx}"}, timeout=5)
     return (time.perf_counter() - start) * 1000, r.status_code == 200
 
 def call_message_graphql(idx: int) -> Tuple[float, bool]:
     start = time.perf_counter()
-    r = requests.post("http://localhost:8011/graphql", json={"query": f"query {{ message(id: {idx}) {{ id sender content }} }}"}, timeout=5)
+    r = requests.post("http://localhost:8011/graphql/", json={"query": f"query {{ message(id: {idx}) {{ id sender content }} }}"}, timeout=5)
     return (time.perf_counter() - start) * 1000, r.status_code == 200 and "errors" not in r.json()
 
 def call_message_soap(idx: int) -> Tuple[float, bool]:
-    body = f"""<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><CreateMessage><user>U{idx}</user><content>SOAP {RUN_ID}_{idx}</content></CreateMessage></soap:Body></soap:Envelope>"""
+    body = f"""<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><CreateMessage><user>User{idx}</user><content>SOAP {RUN_ID}_{idx}</content></CreateMessage></soap:Body></soap:Envelope>"""
     start = time.perf_counter()
     r = requests.post("http://localhost:8016/soap/messages", data=body, headers={"Content-Type": "text/xml"}, timeout=5)
     return (time.perf_counter() - start) * 1000, r.status_code == 200
 
 def call_message_webhook(idx: int) -> Tuple[float, bool]:
     start = time.perf_counter()
-    r = requests.post("http://localhost:8004/messages", json={"sender": f"U{idx}", "content": f"Hook {RUN_ID}_{idx}"}, timeout=5)
+    r = requests.post("http://localhost:8004/messages", json={"sender": f"User{idx}", "content": f"Hook {RUN_ID}_{idx}"}, timeout=5)
     return (time.perf_counter() - start) * 1000, r.status_code == 200
 
 def call_message_sse(idx: int) -> Tuple[float, bool]:
     start = time.perf_counter()
-    r = requests.post("http://localhost:8017/messages/create", json={"user": f"U{idx}", "content": f"SSE {RUN_ID}_{idx}"}, timeout=5)
+    r = requests.post("http://localhost:8017/messages/create", json={"user": f"User{idx}", "content": f"SSE {RUN_ID}_{idx}"}, timeout=5)
     return (time.perf_counter() - start) * 1000, r.status_code == 200
 
 def call_message_websocket(idx: int) -> Tuple[float, bool]:
     if not HAS_WEBSOCKETS:
         return 0.0, False
     async def _send():
-        async with websockets.connect("ws://localhost:8015/ws/messages", close_timeout=2) as ws:
+        content = f"WS {RUN_ID}_{idx}"
+        async with websockets.connect("ws://localhost:8015/ws/messages", open_timeout=5, close_timeout=1) as ws:
             s = time.perf_counter()
-            await ws.send(json.dumps({"action": "send_message", "data": {"user": f"U{idx}", "content": f"WS {RUN_ID}_{idx}"}}))
-            m = json.loads(await ws.recv())
-            return (time.perf_counter() - s) * 1000, m.get("event") == "message_created"
+            await ws.send(json.dumps({"action": "send_message", "data": {"user": f"User{idx}", "content": content}}))
+            deadline = s + 5.0
+            while True:
+                rem = deadline - time.perf_counter()
+                if rem <= 0:
+                    raise TimeoutError("ws recv timeout")
+                m = json.loads(await asyncio.wait_for(ws.recv(), timeout=rem))
+                if m.get("event") == "message_created" and m.get("data", {}).get("content") == content:
+                    return (time.perf_counter() - s) * 1000, True
     return asyncio.run(_send())
 
 # Event
@@ -115,7 +131,7 @@ def call_event_rest(idx: int) -> Tuple[float, bool]:
 
 def call_event_graphql(idx: int) -> Tuple[float, bool]:
     start = time.perf_counter()
-    r = requests.post("http://localhost:8021/graphql", json={"query": f"query {{ event(id: {idx}) {{ id type source }} }}"}, timeout=5)
+    r = requests.post("http://localhost:8021/graphql/", json={"query": f"query {{ event(id: {idx}) {{ id type source }} }}"}, timeout=5)
     return (time.perf_counter() - start) * 1000, r.status_code == 200 and "errors" not in r.json()
 
 def call_event_soap(idx: int) -> Tuple[float, bool]:
@@ -138,11 +154,18 @@ def call_event_websocket(idx: int) -> Tuple[float, bool]:
     if not HAS_WEBSOCKETS:
         return 0.0, False
     async def _send():
-        async with websockets.connect("ws://localhost:8025/ws/events", close_timeout=2) as ws:
+        source = f"src_{RUN_ID}_{idx}"
+        async with websockets.connect("ws://localhost:8025/ws/events", open_timeout=5, close_timeout=1) as ws:
             s = time.perf_counter()
-            await ws.send(json.dumps({"action": "publish_event", "data": {"type": "publish", "source": f"src_{RUN_ID}_{idx}"}}))
-            m = json.loads(await ws.recv())
-            return (time.perf_counter() - s) * 1000, m.get("event") == "event_published"
+            await ws.send(json.dumps({"action": "publish_event", "data": {"type": "publish", "source": source}}))
+            deadline = s + 5.0
+            while True:
+                rem = deadline - time.perf_counter()
+                if rem <= 0:
+                    raise TimeoutError("ws recv timeout")
+                m = json.loads(await asyncio.wait_for(ws.recv(), timeout=rem))
+                if m.get("event") == "event_published" and m.get("data", {}).get("source") == source:
+                    return (time.perf_counter() - s) * 1000, True
     return asyncio.run(_send())
 
 
@@ -257,13 +280,22 @@ def run_multiprotocol_test(
     print(f"Alvos disponíveis ({len(targets)} combinações):")
     for s, p, _ in targets:
         print(f"  • {s.upper()} via {p.upper()}")
+    # Garante igualdade no número de requisições por tecnologia e microsserviço
+    k = max(1, round(total_requests / len(targets)))
+    plan: List[Tuple[str, str, Callable]] = []
+    for s, p, handler in targets:
+        plan.extend([(s, p, handler)] * k)
+    random.shuffle(plan)
+    actual_total = len(plan)
+
+    print(f"Total planejado ajustado (igualdade estrita): {actual_total} requisições ({k} por combinação)")
     print("--------------------------------------------------------------------------")
 
     proto_stats: Dict[str, Dict] = {}
     service_stats: Dict[str, Dict] = {}
 
-    def execute_one(idx: int) -> Tuple[str, str, float, bool]:
-        s, p, handler = random.choice(targets)
+    def execute_one(item: Tuple[int, Tuple[str, str, Callable]]) -> Tuple[str, str, float, bool]:
+        idx, (s, p, handler) = item
         try:
             elapsed, ok = handler(idx)
         except Exception:
@@ -275,24 +307,25 @@ def run_multiprotocol_test(
     results = []
 
     if concurrency <= 1:
-        for i in range(1, total_requests + 1):
-            res = execute_one(i)
+        for i, item in enumerate(plan, 1):
+            res = execute_one((i, item))
             results.append(res)
             s, p, el, ok = res
             status_txt = "OK" if ok else "ERRO"
-            print(f"[{i:04d}/{total_requests:04d}] {s.upper():<7} | {p.upper():<9} | {status_txt:<4} | {el:6.1f}ms")
+            print(f"[{i:04d}/{actual_total:04d}] {s.upper():<7} | {p.upper():<9} | {status_txt:<4} | {el:6.1f}ms")
     else:
         with concurrent.futures.ThreadPoolExecutor(max_workers=concurrency) as executor:
-            futures = [executor.submit(execute_one, i) for i in range(1, total_requests + 1)]
+            items = list(enumerate(plan, 1))
+            futures = [executor.submit(execute_one, it) for it in items]
             for i, fut in enumerate(concurrent.futures.as_completed(futures), 1):
                 res = fut.result()
                 results.append(res)
                 s, p, el, ok = res
                 status_txt = "OK" if ok else "ERRO"
-                print(f"[{i:04d}/{total_requests:04d}] {s.upper():<7} | {p.upper():<9} | {status_txt:<4} | {el:6.1f}ms")
+                print(f"[{i:04d}/{actual_total:04d}] {s.upper():<7} | {p.upper():<9} | {status_txt:<4} | {el:6.1f}ms")
 
     total_time_ms = (time.perf_counter() - start_total) * 1000
-    throughput = total_requests / (total_time_ms / 1000) if total_time_ms > 0 else 0
+    throughput = actual_total / (total_time_ms / 1000) if total_time_ms > 0 else 0
 
     # Agregar estatísticas
     for s, p, el, ok in results:
@@ -326,7 +359,7 @@ def run_multiprotocol_test(
     proto_summary = {}
     for p, st in sorted(proto_stats.items()):
         cnt = st["count"]
-        pct = (cnt / total_requests) * 100
+        pct = (cnt / actual_total) * 100
         lats = st["latencies"]
         avg_l = statistics.mean(lats) if lats else 0.0
         min_l = min(lats) if lats else 0.0
@@ -345,7 +378,7 @@ def run_multiprotocol_test(
     service_summary = {}
     for s, st in sorted(service_stats.items()):
         cnt = st["count"]
-        pct = (cnt / total_requests) * 100
+        pct = (cnt / actual_total) * 100
         lats = st["latencies"]
         avg_l = statistics.mean(lats) if lats else 0.0
         service_summary[s] = {"requests": cnt, "percentage": pct, "success": st["success"], "errors": st["errors"], "avg_latency_ms": round(avg_l, 2)}
@@ -356,7 +389,7 @@ def run_multiprotocol_test(
     total_err = sum(st["errors"] for st in proto_stats.values())
     print(f"Tempo total do teste: {total_time_ms / 1000:.2f}s ({total_time_ms:.0f}ms)")
     print(f"Throughput geral: {throughput:.2f} req/s")
-    print(f"Taxa de sucesso global: {(total_succ / total_requests) * 100:.1f}% ({total_succ} sucessos, {total_err} erros)")
+    print(f"Taxa de sucesso global: {(total_succ / actual_total) * 100:.1f}% ({total_succ} sucessos, {total_err} erros)")
     print("=" * 80)
 
     # Salva em JSON se solicitado ou padrão
@@ -370,7 +403,7 @@ def run_multiprotocol_test(
             "title": "Teste de Carga Aleatório Multi-Protocolo",
             "service_filter": service_filter,
             "timestamp": datetime.now().isoformat(),
-            "total_requests": total_requests,
+            "total_requests": actual_total,
             "concurrency": concurrency,
             "total_time_ms": total_time_ms,
             "throughput_rps": throughput,

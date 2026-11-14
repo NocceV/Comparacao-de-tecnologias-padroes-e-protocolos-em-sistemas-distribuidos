@@ -1,0 +1,18 @@
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Regime determinístico, cenário realista (300 requisições por tecnologia).}
+\label{tab:det_realista}
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Tecnologia} & \textbf{Média (ms)} & \textbf{Mediana (ms)} & \textbf{Desvio (ms)} & \textbf{p95 (ms)} & \textbf{p99 (ms)} & \textbf{Mín (ms)} & \textbf{Máx (ms)} & \textbf{Vazão útil (req/s)} & \textbf{Sucesso} \\ \hline
+WebSocket & 86,44 & 75,81 & 62,37 & 99,34 & 394,08 & 50,92 & 640,91 & 2,81 & 100,0\% \\ \hline
+gRPC & 84,97 & 78,36 & 51,45 & 100,86 & 369,00 & 51,28 & 565,05 & 11,77 & 100,0\% \\ \hline
+SOAP & 205,41 & 162,15 & 195,85 & 514,36 & 1.261,85 & 110,59 & 1.279,20 & 4,87 & 100,0\% \\ \hline
+REST & 192,38 & 165,41 & 139,25 & 293,17 & 1.223,40 & 115,99 & 1.263,53 & 5,20 & 100,0\% \\ \hline
+SSE & 211,25 & 166,26 & 200,58 & 513,55 & 1.268,89 & 115,08 & 1.303,66 & 4,73 & 100,0\% \\ \hline
+GraphQL & 189,59 & 164,19 & 150,51 & 205,74 & 1.221,93 & 117,99 & 1.380,57 & 5,27 & 100,0\% \\ \hline
+Webhook & 181,80 & 164,89 & 124,83 & 195,16 & 828,95 & 112,20 & 1.297,54 & 5,50 & 100,0\% \\ \hline
+\end{tabular}
+{\footnotesize\\ \textbf{Fonte: Dados da pesquisa (2026).}}
+\end{table}

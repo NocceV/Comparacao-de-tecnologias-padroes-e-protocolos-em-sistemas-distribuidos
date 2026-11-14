@@ -1,0 +1,18 @@
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Regime estocástico, cenário realista: 210 requisições, 10 cliente(s) simultâneo(s); duração 5,74 s; vazão global 36,59 req/s; sucesso 100,00\%.}
+\label{tab:sto_realista}
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Tecnologia} & \textbf{Req.} & \textbf{% da carga} & \textbf{Sucesso} & \textbf{Média (ms)} & \textbf{Mediana (ms)} & \textbf{p95 (ms)} & \textbf{Mín (ms)} & \textbf{Máx (ms)} \\ \hline
+WebSocket & 30 & 14,3\% & 30 & 77,17 & 76,88 & 95,72 & 53,66 & 99,92 \\ \hline
+gRPC & 30 & 14,3\% & 30 & 83,19 & 72,91 & 151,66 & 52,64 & 170,30 \\ \hline
+SOAP & 30 & 14,3\% & 30 & 166,83 & 164,33 & 231,59 & 121,53 & 256,92 \\ \hline
+REST & 30 & 14,3\% & 30 & 263,23 & 164,99 & 1.053,03 & 128,02 & 1.301,68 \\ \hline
+SSE & 30 & 14,3\% & 30 & 263,77 & 171,81 & 520,80 & 124,55 & 1.719,64 \\ \hline
+GraphQL & 30 & 14,3\% & 30 & 234,30 & 171,82 & 665,20 & 133,76 & 1.202,94 \\ \hline
+Webhook & 30 & 14,3\% & 30 & 395,49 & 179,07 & 1.248,20 & 153,52 & 1.279,66 \\ \hline
+\end{tabular}
+{\footnotesize\\ \textbf{Fonte: Dados da pesquisa (2026).}}
+\end{table}

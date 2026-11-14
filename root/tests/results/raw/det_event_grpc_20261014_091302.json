@@ -1,0 +1,18 @@
+{
+  "service": "event",
+  "timestamp": "2026-10-14T09:13:28.523066",
+  "total_requests": 100,
+  "total_time_ms": 128.03309999981138,
+  "throughput_rps": 781.0480258632128,
+  "protocols": {
+    "grpc": {
+      "requests": 100,
+      "percentage": 100.0,
+      "success": 100,
+      "errors": 0,
+      "avg_latency_ms": 1.21,
+      "min_latency_ms": 0.66,
+      "max_latency_ms": 48.39
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "service": "message",
+  "timestamp": "2026-10-14T09:13:25.944715",
+  "total_requests": 100,
+  "total_time_ms": 528.9674999994531,
+  "throughput_rps": 189.0475312757464,
+  "protocols": {
+    "sse": {
+      "requests": 100,
+      "percentage": 100.0,
+      "success": 100,
+      "errors": 0,
+      "avg_latency_ms": 5.21,
+      "min_latency_ms": 2.42,
+      "max_latency_ms": 27.38
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "done": [
+    "prepare",
+    "grpc_variation",
+    "scenario_ideal",
+    "scenario_realista",
+    "scenario_critico",
+    "resilience",
+    "report"
+  ],
+  "errors": {}
+}

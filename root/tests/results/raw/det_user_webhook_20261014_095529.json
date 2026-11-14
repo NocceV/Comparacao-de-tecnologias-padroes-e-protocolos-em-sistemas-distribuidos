@@ -1,0 +1,18 @@
+{
+  "service": "user",
+  "timestamp": "2026-10-14T09:55:35.219710",
+  "total_requests": 100,
+  "total_time_ms": 760.9910000001037,
+  "throughput_rps": 131.4075987757889,
+  "protocols": {
+    "webhook": {
+      "requests": 100,
+      "percentage": 100.0,
+      "success": 100,
+      "errors": 0,
+      "avg_latency_ms": 7.5,
+      "min_latency_ms": 4.83,
+      "max_latency_ms": 26.55
+    }
+  }
+}

@@ -1,6 +1,15 @@
-import requests
 import json
+import sys
 from datetime import datetime
+
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
+import requests
 
 PROM_URL = "http://localhost:9090/api/v1/query"
 

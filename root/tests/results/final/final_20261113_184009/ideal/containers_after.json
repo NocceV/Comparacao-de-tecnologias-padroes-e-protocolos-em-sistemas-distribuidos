@@ -1,0 +1,212 @@
+[
+  {
+    "name": "user-rest",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "message-rest",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "event-rest",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "user-soap",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "message-soap",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "event-soap",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "user-grpc",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "message-grpc",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "event-grpc",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "user-websocket",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "message-websocket",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "event-websocket",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "user-graphql",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "message-graphql",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "event-graphql",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "user-webhook",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "message-webhook",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "event-webhook",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "user-sse",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "message-sse",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  },
+  {
+    "name": "event-sse",
+    "status": "running",
+    "oom_killed": false,
+    "restart_count": 0,
+    "nano_cpus": 500000000,
+    "memory": 268435456,
+    "memory_swap": 268435456,
+    "pids_limit": 256
+  }
+]

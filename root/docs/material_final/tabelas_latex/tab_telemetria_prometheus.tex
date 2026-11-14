@@ -1,0 +1,32 @@
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Contadores do Prometheus versus requisições disparadas pelo gerador de carga.}
+\label{tab:telemetria}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Cenário} & \textbf{Tecnologia} & \textbf{Métrica do servidor} & \textbf{Δ Prometheus} & \textbf{Requisições disparadas (incl. aquecimento)} \\ \hline
+Ideal & WebSocket & ws_messages_total & 657 & 657 \\ \hline
+Ideal & gRPC & grpc_requests_total & 657 & 657 \\ \hline
+Ideal & SOAP & http_requests_total & 657 & 657 \\ \hline
+Ideal & REST & http_requests_total & 657 & 657 \\ \hline
+Ideal & SSE & http_requests_total & 657 & 657 \\ \hline
+Ideal & GraphQL & http_requests_total & 657 & 657 \\ \hline
+Ideal & Webhook & http_requests_total & 657 & 657 \\ \hline
+Realista & WebSocket & ws_messages_total & 657 & 657 \\ \hline
+Realista & gRPC & grpc_requests_total & 657 & 657 \\ \hline
+Realista & SOAP & http_requests_total & 657 & 657 \\ \hline
+Realista & REST & http_requests_total & 657 & 657 \\ \hline
+Realista & SSE & http_requests_total & 657 & 657 \\ \hline
+Realista & GraphQL & http_requests_total & 657 & 657 \\ \hline
+Realista & Webhook & http_requests_total & 657 & 657 \\ \hline
+Crítico & WebSocket & ws_messages_total & 595 & 657 \\ \hline
+Crítico & gRPC & grpc_requests_total & 657 & 657 \\ \hline
+Crítico & SOAP & http_requests_total & 657 & 657 \\ \hline
+Crítico & REST & http_requests_total & 657 & 657 \\ \hline
+Crítico & SSE & http_requests_total & 657 & 657 \\ \hline
+Crítico & GraphQL & http_requests_total & 657 & 657 \\ \hline
+Crítico & Webhook & http_requests_total & 657 & 657 \\ \hline
+\end{tabular}
+{\footnotesize\\ \textbf{Fonte: Dados da pesquisa (2026).}}
+\end{table}

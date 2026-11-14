@@ -3,9 +3,17 @@ import asyncio
 import json
 import random
 import statistics
+import sys
 import time
 from datetime import datetime
 from typing import Callable, Dict, List, Optional
+
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
 
 import requests
 
@@ -26,7 +34,7 @@ except (ImportError, ModuleNotFoundError):
 RUN_ID = int(time.time())
 
 URL_REST = "http://localhost:8022/create"
-URL_GRAPHQL = "http://localhost:8021/graphql"
+URL_GRAPHQL = "http://localhost:8021/graphql/"
 URL_SOAP = "http://localhost:8026/soap/events"
 URL_WEBHOOK = "http://localhost:8023/events"
 URL_WS = "ws://localhost:8025/ws/events"

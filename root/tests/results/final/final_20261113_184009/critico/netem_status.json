@@ -1,0 +1,30 @@
+{
+  "applied": {
+    "user-rest": true,
+    "message-rest": true,
+    "event-rest": true,
+    "user-soap": true,
+    "message-soap": true,
+    "event-soap": true,
+    "user-grpc": true,
+    "message-grpc": true,
+    "event-grpc": true,
+    "user-websocket": true,
+    "message-websocket": true,
+    "event-websocket": true,
+    "user-graphql": true,
+    "message-graphql": true,
+    "event-graphql": true,
+    "user-webhook": true,
+    "message-webhook": true,
+    "event-webhook": true,
+    "user-sse": true,
+    "message-sse": true,
+    "event-sse": true
+  },
+  "sample_qdisc": {
+    "user-grpc": "qdisc netem 801e: root refcnt 17 limit 1000 delay 350ms  150ms loss 12.5% seed 10473034538350518355",
+    "message-websocket": "qdisc netem 8027: root refcnt 17 limit 1000 delay 350ms  150ms loss 12.5% seed 18214917013581387349",
+    "event-rest": "qdisc netem 801b: root refcnt 17 limit 1000 delay 350ms  150ms loss 12.5% seed 16627895119854423331"
+  }
+}

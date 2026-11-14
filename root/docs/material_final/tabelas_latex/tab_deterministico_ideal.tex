@@ -1,0 +1,18 @@
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Regime determinístico, cenário ideal (300 requisições por tecnologia).}
+\label{tab:det_ideal}
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Tecnologia} & \textbf{Média (ms)} & \textbf{Mediana (ms)} & \textbf{Desvio (ms)} & \textbf{p95 (ms)} & \textbf{p99 (ms)} & \textbf{Mín (ms)} & \textbf{Máx (ms)} & \textbf{Vazão útil (req/s)} & \textbf{Sucesso} \\ \hline
+WebSocket & 0,55 & 0,54 & 0,05 & 0,64 & 0,73 & 0,47 & 0,92 & 194,56 & 100,0\% \\ \hline
+gRPC & 0,73 & 0,72 & 0,05 & 0,82 & 0,91 & 0,65 & 0,94 & 1.366,81 & 100,0\% \\ \hline
+SOAP & 5,96 & 2,97 & 6,79 & 23,51 & 27,45 & 2,41 & 28,24 & 165,53 & 100,0\% \\ \hline
+REST & 6,03 & 3,31 & 6,61 & 23,08 & 27,04 & 2,64 & 47,38 & 163,83 & 100,0\% \\ \hline
+SSE & 6,70 & 3,48 & 7,12 & 24,99 & 27,53 & 2,41 & 28,37 & 147,47 & 100,0\% \\ \hline
+GraphQL & 7,93 & 3,84 & 33,98 & 23,46 & 27,43 & 3,14 & 585,79 & 124,67 & 100,0\% \\ \hline
+Webhook & 15,83 & 7,23 & 16,93 & 59,35 & 63,90 & 4,94 & 70,73 & 62,75 & 100,0\% \\ \hline
+\end{tabular}
+{\footnotesize\\ \textbf{Fonte: Dados da pesquisa (2026).}}
+\end{table}

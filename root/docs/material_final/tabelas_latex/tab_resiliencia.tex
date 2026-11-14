@@ -1,0 +1,27 @@
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Resiliência a falhas de conexão (10 req/s, timeout de 2 s, janela de 30 s).}
+\label{tab:resiliencia}
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\hline
+\textbf{Falha} & \textbf{Cliente} & \textbf{Requisições} & \textbf{Falhas} & \textbf{Falhas (%)} & \textbf{Indisponibilidade (s)} & \textbf{Recuperação após fim da falha (s)} & \textbf{1ª resposta após recuperação (ms)} \\ \hline
+Blackout 6 s & REST & 300 & 3 & 1,0 & 6,04 & 0,00 & 1.106,0 \\ \hline
+Blackout 6 s & SOAP & 300 & 3 & 1,0 & 6,04 & 0,00 & 1.096,5 \\ \hline
+Blackout 6 s & GraphQL & 300 & 3 & 1,0 & 6,04 & 0,00 & 1.101,7 \\ \hline
+Blackout 6 s & Webhook & 300 & 3 & 1,0 & 6,04 & 0,00 & 1.119,2 \\ \hline
+Blackout 6 s & SSE & 300 & 3 & 1,0 & 6,04 & 0,00 & 1.092,8 \\ \hline
+Blackout 6 s & WebSocket & 300 & 3 & 1,0 & 6,55 & 0,00 & 69,4 \\ \hline
+Blackout 6 s & gRPC & 300 & 3 & 1,0 & 6,04 & 0,00 & 916,9 \\ \hline
+Blackout 6 s & gRPC (backoff ajustado) & 300 & 3 & 1,0 & 6,04 & 0,00 & 466,0 \\ \hline
+Reinício do contêiner & REST & 300 & 114 & 38,0 & 3,30 & 1,00 & 27,7 \\ \hline
+Reinício do contêiner & SOAP & 300 & 114 & 38,0 & 3,30 & 1,10 & 10,7 \\ \hline
+Reinício do contêiner & GraphQL & 300 & 32 & 10,7 & 3,20 & 1,34 & 9,6 \\ \hline
+Reinício do contêiner & Webhook & 300 & 33 & 11,0 & 3,30 & 1,06 & 10,2 \\ \hline
+Reinício do contêiner & SSE & 300 & 114 & 38,0 & 3,40 & 1,19 & 13,1 \\ \hline
+Reinício do contêiner & WebSocket & 300 & 31 & 10,3 & 3,10 & 0,95 & 10,6 \\ \hline
+Reinício do contêiner & gRPC & 300 & 24 & 8,0 & 2,40 & 1,22 & 3,4 \\ \hline
+Reinício do contêiner & gRPC (backoff ajustado) & 300 & 10 & 3,3 & 1,00 & 0,51 & 2,8 \\ \hline
+\end{tabular}
+{\footnotesize\\ \textbf{Fonte: Dados da pesquisa (2026).}}
+\end{table}

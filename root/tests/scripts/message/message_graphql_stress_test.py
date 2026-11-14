@@ -2,7 +2,7 @@ import requests
 import time
 import statistics
 
-GRAPHQL_URL = "http://localhost:8011/graphql"
+GRAPHQL_URL = "http://localhost:8011/graphql/"
 
 def run_stress_test(total_requests=500):
     latencies = []

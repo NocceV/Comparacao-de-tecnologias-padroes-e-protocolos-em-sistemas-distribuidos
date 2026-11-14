@@ -1,0 +1,18 @@
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Consumo de CPU e memória por tecnologia, cenário ideal (300 requisições por tecnologia, 8 clientes; valores somados nos 3 contêineres, cada um limitado a 0,5 vCPU e 256 MiB).}
+\label{tab:cpu_mem_ideal}
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Tecnologia} & \textbf{CPU líq. (ms/req.)} & \textbf{CPU p/ 100 req/s (% de 1 vCPU)} & \textbf{CPU média na carga (%)} & \textbf{Pico CPU 1 s (%)} & \textbf{Throttling (períodos)} & \textbf{RAM ociosa (MiB)} & \textbf{RAM média carga (MiB)} & \textbf{RAM pico carga (MiB)} & \textbf{Crescimento (MiB)} \\ \hline
+gRPC & 0,596 & 6,0 & 180,2 & 180,2 & 1 & 72,4 & 73,1 & 73,1 & 5,7 \\ \hline
+SOAP & 0,750 & 7,5 & 64,2 & 64,2 & 0 & 118,1 & 120,9 & 123,2 & 4,0 \\ \hline
+SSE & 0,984 & 9,8 & 83,0 & 83,0 & 0 & 116,5 & 120,0 & 122,0 & 5,3 \\ \hline
+WebSocket & 1,129 & 11,3 & 44,8 & 48,8 & 0 & 120,2 & 124,6 & 127,4 & 6,9 \\ \hline
+REST & 1,294 & 12,9 & 100,8 & 108,2 & 0 & 118,1 & 122,4 & 123,9 & 5,8 \\ \hline
+GraphQL & 2,567 & 25,7 & 94,6 & 106,8 & 9 & 132,1 & 135,6 & 138,2 & 5,1 \\ \hline
+Webhook & 10,069 & 100,7 & 147,9 & 164,6 & 56 & 133,6 & 144,4 & 148,2 & 13,8 \\ \hline
+\end{tabular}
+{\footnotesize\\ \textbf{Fonte: Dados da pesquisa (2026).}}
+\end{table}

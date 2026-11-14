@@ -1,0 +1,270 @@
+{
+  "run_id": "final_20261113_184009",
+  "started_at": "2026-11-13T18:40:11.572839",
+  "host": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "docker": "29.8.0",
+    "docker_info": "CPUs=16 MemTotal=8283381760 Kernel=6.18.33.2-microsoft-standard-WSL2"
+  },
+  "git_commit": "d1334b4b13451d1a7343b802d654e011667e0023",
+  "git_dirty": true,
+  "limits_per_service_container": {
+    "cpus": 0.5,
+    "mem": "256MiB",
+    "swap": "desabilitado",
+    "pids": 256,
+    "fonte": "infra/docker-compose.yml (x-service-limits)"
+  },
+  "containers": [
+    {
+      "name": "user-rest",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "message-rest",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "event-rest",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "user-soap",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "message-soap",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "event-soap",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "user-grpc",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "message-grpc",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "event-grpc",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "user-websocket",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "message-websocket",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "event-websocket",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "user-graphql",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "message-graphql",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "event-graphql",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "user-webhook",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "message-webhook",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "event-webhook",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "user-sse",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "message-sse",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    },
+    {
+      "name": "event-sse",
+      "status": "running",
+      "oom_killed": false,
+      "restart_count": 0,
+      "nano_cpus": 500000000,
+      "memory": 268435456,
+      "memory_swap": 268435456,
+      "pids_limit": 256
+    }
+  ],
+  "scenarios": {
+    "ideal": {
+      "label": "Ideal",
+      "delay_ms": 0,
+      "jitter_ms": 0,
+      "loss_pct": 0.0,
+      "stochastic_concurrency": 1,
+      "resource_concurrency": 8,
+      "description": "Rede local sem degradação (0 % de perda), carga sequencial."
+    },
+    "realista": {
+      "label": "Realista",
+      "delay_ms": 75,
+      "jitter_ms": 25,
+      "loss_pct": 2.5,
+      "stochastic_concurrency": 10,
+      "resource_concurrency": 8,
+      "description": "Atraso 50-100 ms, perda 2,5 %, carga moderada (10 clientes simultâneos)."
+    },
+    "critico": {
+      "label": "Crítico",
+      "delay_ms": 350,
+      "jitter_ms": 150,
+      "loss_pct": 12.5,
+      "stochastic_concurrency": 50,
+      "resource_concurrency": 8,
+      "description": "Atraso 200-500 ms, perda 12,5 %, carga alta (50 clientes simultâneos)."
+    }
+  },
+  "parameters": {
+    "deterministic_requests_per_combination": 10,
+    "stochastic_requests_per_combination": 2,
+    "warmup_per_combination": 2,
+    "resource_requests_per_service": 40,
+    "grpc_variation_repetitions": 2,
+    "resilience_variants": "websocket,grpc",
+    "shuffle_seed": 42
+  },
+  "network_emulation": "tc netem na interface eth0 de cada contêiner de serviço (caminho de resposta)"
+}

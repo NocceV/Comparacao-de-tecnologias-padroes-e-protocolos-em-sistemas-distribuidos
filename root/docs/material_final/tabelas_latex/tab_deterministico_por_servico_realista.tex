@@ -1,0 +1,32 @@
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Regime determinístico por serviço, cenário realista (100 requisições por célula).}
+\label{tab:det_srv_realista}
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\hline
+\textbf{Tecnologia} & \textbf{Serviço} & \textbf{Média (ms)} & \textbf{p95 (ms)} & \textbf{Mín (ms)} & \textbf{Máx (ms)} & \textbf{Vazão (req/s)} & \textbf{Sucesso} \\ \hline
+WebSocket & User & 80,71 & 96,85 & 51,85 & 399,09 & 2,84 & 100,0\% \\ \hline
+ & Message & 90,70 & 111,99 & 50,92 & 395,12 & 2,85 & 100,0\% \\ \hline
+ & Event & 87,90 & 98,89 & 51,09 & 640,91 & 2,73 & 100,0\% \\ \hline
+gRPC & User & 83,15 & 100,13 & 51,28 & 345,01 & 12,03 & 100,0\% \\ \hline
+ & Message & 89,97 & 100,88 & 51,82 & 565,05 & 11,11 & 100,0\% \\ \hline
+ & Event & 81,78 & 100,87 & 51,94 & 368,78 & 12,23 & 100,0\% \\ \hline
+SOAP & User & 204,86 & 491,88 & 120,11 & 1.272,00 & 4,88 & 100,0\% \\ \hline
+ & Message & 231,03 & 604,90 & 110,59 & 1.279,20 & 4,33 & 100,0\% \\ \hline
+ & Event & 180,34 & 196,46 & 122,31 & 1.233,74 & 5,54 & 100,0\% \\ \hline
+REST & User & 194,34 & 439,68 & 115,99 & 1.223,22 & 5,14 & 100,0\% \\ \hline
+ & Message & 177,99 & 258,35 & 120,48 & 552,80 & 5,62 & 100,0\% \\ \hline
+ & Event & 204,83 & 294,55 & 124,04 & 1.263,53 & 4,88 & 100,0\% \\ \hline
+SSE & User & 210,09 & 502,63 & 119,64 & 1.240,55 & 4,76 & 100,0\% \\ \hline
+ & Message & 217,50 & 527,21 & 115,08 & 1.277,36 & 4,59 & 100,0\% \\ \hline
+ & Event & 206,16 & 271,93 & 115,78 & 1.303,66 & 4,85 & 100,0\% \\ \hline
+GraphQL & User & 182,25 & 200,06 & 117,99 & 1.221,65 & 5,48 & 100,0\% \\ \hline
+ & Message & 182,72 & 200,64 & 123,82 & 1.249,94 & 5,47 & 100,0\% \\ \hline
+ & Event & 203,80 & 290,25 & 120,29 & 1.380,57 & 4,90 & 100,0\% \\ \hline
+Webhook & User & 208,19 & 304,29 & 116,35 & 1.297,54 & 4,80 & 100,0\% \\ \hline
+ & Message & 173,87 & 197,02 & 112,20 & 526,57 & 5,75 & 100,0\% \\ \hline
+ & Event & 163,35 & 191,07 & 125,28 & 198,98 & 6,12 & 100,0\% \\ \hline
+\end{tabular}
+{\footnotesize\\ \textbf{Fonte: Dados da pesquisa (2026).}}
+\end{table}

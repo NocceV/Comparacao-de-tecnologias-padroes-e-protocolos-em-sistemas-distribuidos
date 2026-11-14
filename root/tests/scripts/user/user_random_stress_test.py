@@ -3,9 +3,17 @@ import asyncio
 import json
 import random
 import statistics
+import sys
 import time
 from datetime import datetime
 from typing import Callable, Dict, List, Optional
+
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
 
 import requests
 
@@ -28,7 +36,7 @@ RUN_ID = int(time.time())
 
 # Configurações de endpoints
 URL_REST = "http://localhost:8002/user/create"
-URL_GRAPHQL = "http://localhost:8001/graphql"
+URL_GRAPHQL = "http://localhost:8001/graphql/"
 URL_SOAP = "http://localhost:8006/soap/users"
 URL_WEBHOOK = "http://localhost:8003/users"
 URL_WS = "ws://localhost:8005/ws/users"

@@ -1,0 +1,15 @@
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Experimento do gRPC: isolado × misturado (8 repetições por condição).}
+\label{tab:grpc_variacao}
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+\textbf{Condição} & \textbf{Amostras/rodada} & \textbf{Média (ms)} & \textbf{Desvio entre rodadas (ms)} & \textbf{Mediana (ms)} & \textbf{p95 (ms)} & \textbf{Máx (ms)} \\ \hline
+A — isolado, sem aquecimento & 300 & 1,390 & 0,254 & 0,752 & 1,12 & 157,52 \\ \hline
+B — isolado, com aquecimento & 300 & 0,909 & 0,160 & 0,775 & 1,15 & 44,39 \\ \hline
+C — misturado, sem aquecimento & 30 & 7,310 & 0,373 & 1,301 & 47,12 & 51,35 \\ \hline
+D — misturado, com aquecimento & 30 & 2,902 & 1,049 & 1,276 & 11,22 & 41,38 \\ \hline
+\end{tabular}
+{\footnotesize\\ \textbf{Fonte: Dados da pesquisa (2026).}}
+\end{table}

@@ -9,6 +9,13 @@ from typing import Dict, List
 
 import requests
 
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 TESTS_DIR = os.path.join(ROOT_DIR, "tests")
 SCRIPTS_DIR = os.path.join(TESTS_DIR, "scripts")

@@ -1,0 +1,18 @@
+{
+  "service": "message",
+  "timestamp": "2026-10-14T09:55:38.103715",
+  "total_requests": 100,
+  "total_time_ms": 508.25480000003154,
+  "throughput_rps": 196.75170800156496,
+  "protocols": {
+    "soap": {
+      "requests": 100,
+      "percentage": 100.0,
+      "success": 100,
+      "errors": 0,
+      "avg_latency_ms": 4.99,
+      "min_latency_ms": 2.54,
+      "max_latency_ms": 27.49
+    }
+  }
+}

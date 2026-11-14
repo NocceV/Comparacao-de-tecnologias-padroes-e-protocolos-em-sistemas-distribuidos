@@ -1,0 +1,32 @@
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Regime determinístico por serviço, cenário ideal (100 requisições por célula).}
+\label{tab:det_srv_ideal}
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\hline
+\textbf{Tecnologia} & \textbf{Serviço} & \textbf{Média (ms)} & \textbf{p95 (ms)} & \textbf{Mín (ms)} & \textbf{Máx (ms)} & \textbf{Vazão (req/s)} & \textbf{Sucesso} \\ \hline
+WebSocket & User & 0,55 & 0,64 & 0,47 & 0,74 & 187,99 & 100,0\% \\ \hline
+ & Message & 0,54 & 0,61 & 0,47 & 0,75 & 200,80 & 100,0\% \\ \hline
+ & Event & 0,54 & 0,64 & 0,47 & 0,92 & 195,32 & 100,0\% \\ \hline
+gRPC & User & 0,71 & 0,84 & 0,65 & 0,94 & 1.396,53 & 100,0\% \\ \hline
+ & Message & 0,73 & 0,82 & 0,66 & 0,94 & 1.358,30 & 100,0\% \\ \hline
+ & Event & 0,74 & 0,83 & 0,67 & 0,91 & 1.346,58 & 100,0\% \\ \hline
+SOAP & User & 5,23 & 20,51 & 2,41 & 25,38 & 188,69 & 100,0\% \\ \hline
+ & Message & 7,19 & 24,13 & 2,49 & 28,24 & 137,50 & 100,0\% \\ \hline
+ & Event & 5,47 & 26,29 & 2,48 & 28,14 & 180,16 & 100,0\% \\ \hline
+REST & User & 6,30 & 22,52 & 2,80 & 27,03 & 156,77 & 100,0\% \\ \hline
+ & Message & 6,56 & 24,39 & 2,78 & 47,38 & 150,57 & 100,0\% \\ \hline
+ & Event & 5,22 & 18,83 & 2,64 & 27,30 & 188,98 & 100,0\% \\ \hline
+SSE & User & 6,09 & 25,53 & 2,56 & 28,37 & 162,14 & 100,0\% \\ \hline
+ & Message & 6,04 & 23,85 & 2,41 & 25,99 & 163,59 & 100,0\% \\ \hline
+ & Event & 7,98 & 25,38 & 2,93 & 27,76 & 124,04 & 100,0\% \\ \hline
+GraphQL & User & 13,28 & 25,75 & 3,15 & 585,79 & 74,78 & 100,0\% \\ \hline
+ & Message & 4,99 & 15,09 & 3,14 & 27,43 & 196,74 & 100,0\% \\ \hline
+ & Event & 5,53 & 20,96 & 3,33 & 27,00 & 178,25 & 100,0\% \\ \hline
+Webhook & User & 15,94 & 58,92 & 4,96 & 70,73 & 62,30 & 100,0\% \\ \hline
+ & Message & 16,12 & 60,03 & 5,22 & 66,71 & 61,65 & 100,0\% \\ \hline
+ & Event & 15,44 & 57,43 & 4,94 & 62,03 & 64,35 & 100,0\% \\ \hline
+\end{tabular}
+{\footnotesize\\ \textbf{Fonte: Dados da pesquisa (2026).}}
+\end{table}

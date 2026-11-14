@@ -1,0 +1,18 @@
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Consumo de CPU e memória por tecnologia, cenário realista (300 requisições por tecnologia, 10 clientes; valores somados nos 3 contêineres, cada um limitado a 0,5 vCPU e 256 MiB).}
+\label{tab:cpu_mem_realista}
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Tecnologia} & \textbf{CPU líq. (ms/req.)} & \textbf{CPU p/ 100 req/s (% de 1 vCPU)} & \textbf{CPU média na carga (%)} & \textbf{Pico CPU 1 s (%)} & \textbf{Throttling (períodos)} & \textbf{RAM ociosa (MiB)} & \textbf{RAM média carga (MiB)} & \textbf{RAM pico carga (MiB)} & \textbf{Crescimento (MiB)} \\ \hline
+gRPC & 0,832 & 8,3 & 8,6 & 10,0 & 0 & 72,0 & 75,0 & 76,0 & 3,5 \\ \hline
+SSE & 0,968 & 9,7 & 2,4 & 4,5 & 0 & 117,2 & 121,2 & 122,6 & 4,2 \\ \hline
+SOAP & 1,037 & 10,4 & 2,4 & 16,2 & 0 & 117,2 & 121,4 & 122,5 & 3,7 \\ \hline
+REST & 1,302 & 13,0 & 2,8 & 5,6 & 0 & 117,8 & 122,2 & 124,1 & 3,8 \\ \hline
+WebSocket & 1,349 & 13,5 & 2,9 & 4,5 & 0 & 121,8 & 125,9 & 127,8 & 5,8 \\ \hline
+GraphQL & 1,979 & 19,8 & 5,4 & 8,8 & 0 & 131,0 & 135,6 & 136,6 & 4,5 \\ \hline
+Webhook & 9,384 & 93,8 & 19,5 & 42,2 & 0 & 145,0 & 148,3 & 149,7 & 3,2 \\ \hline
+\end{tabular}
+{\footnotesize\\ \textbf{Fonte: Dados da pesquisa (2026).}}
+\end{table}

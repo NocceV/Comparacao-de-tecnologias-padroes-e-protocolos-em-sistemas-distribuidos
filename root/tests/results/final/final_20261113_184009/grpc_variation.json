@@ -1,0 +1,191 @@
+{
+  "timestamp": "2026-11-13T18:40:28.485126",
+  "repetitions": 2,
+  "cold_vs_warm_first_call": {
+    "user": {
+      "first_call_mean_ms": 48.854,
+      "second_call_mean_ms": 0.961,
+      "first_call_median_ms": 48.854,
+      "excess_cold_ms": 47.892
+    },
+    "message": {
+      "first_call_mean_ms": 46.918,
+      "second_call_mean_ms": 1.181,
+      "first_call_median_ms": 46.918,
+      "excess_cold_ms": 45.737
+    },
+    "event": {
+      "first_call_mean_ms": 50.651,
+      "second_call_mean_ms": 1.242,
+      "first_call_median_ms": 50.651,
+      "excess_cold_ms": 49.409
+    }
+  },
+  "mean_cold_excess_ms": 47.679,
+  "A_isolado_sem_aquecimento": {
+    "runs": 2,
+    "samples_per_run": [
+      300
+    ],
+    "mean_of_run_means_ms": 1.354,
+    "stdev_between_runs_ms": 0.019,
+    "median_ms": 0.836,
+    "p95_ms": 1.164,
+    "max_ms": 49.817,
+    "min_ms": 0.688
+  },
+  "B_isolado_com_aquecimento": {
+    "runs": 2,
+    "samples_per_run": [
+      300
+    ],
+    "mean_of_run_means_ms": 0.786,
+    "stdev_between_runs_ms": 0.003,
+    "median_ms": 0.758,
+    "p95_ms": 0.971,
+    "max_ms": 1.24,
+    "min_ms": 0.67
+  },
+  "C_misturado_sem_aquecimento": {
+    "runs": 2,
+    "samples_per_run": [
+      30
+    ],
+    "mean_of_run_means_ms": 6.26,
+    "stdev_between_runs_ms": 0.331,
+    "median_ms": 1.471,
+    "p95_ms": 47.521,
+    "max_ms": 49.186,
+    "min_ms": 0.83
+  },
+  "D_misturado_com_aquecimento": {
+    "runs": 2,
+    "samples_per_run": [
+      30
+    ],
+    "mean_of_run_means_ms": 5.329,
+    "stdev_between_runs_ms": 1.338,
+    "median_ms": 1.346,
+    "p95_ms": 32.464,
+    "max_ms": 43.785,
+    "min_ms": 0.876
+  },
+  "decomposicao": {
+    "diferenca_misturado_vs_isolado_sem_aquecimento_ms": 4.906,
+    "diferenca_misturado_vs_isolado_com_aquecimento_ms": 4.543,
+    "contribuicao_teorica_cold_isolado_ms": 0.477,
+    "contribuicao_teorica_cold_misturado_ms": 4.768,
+    "reducao_da_diferenca_pelo_aquecimento_ms": 0.363
+  },
+  "F_gap_sweep_grpc": {
+    "0": {
+      "samples": 30,
+      "mean_ms": 2.003,
+      "median_ms": 0.772,
+      "p95_ms": 1.116,
+      "max_ms": 36.52,
+      "share_over_10ms_pct": 3.33
+    },
+    "5": {
+      "samples": 30,
+      "mean_ms": 1.101,
+      "median_ms": 1.071,
+      "p95_ms": 1.416,
+      "max_ms": 1.49,
+      "share_over_10ms_pct": 0.0
+    },
+    "20": {
+      "samples": 30,
+      "mean_ms": 3.551,
+      "median_ms": 1.451,
+      "p95_ms": 18.527,
+      "max_ms": 33.181,
+      "share_over_10ms_pct": 6.67
+    },
+    "50": {
+      "samples": 30,
+      "mean_ms": 3.491,
+      "median_ms": 1.531,
+      "p95_ms": 11.935,
+      "max_ms": 40.994,
+      "share_over_10ms_pct": 6.67
+    },
+    "100": {
+      "samples": 30,
+      "mean_ms": 3.31,
+      "median_ms": 1.637,
+      "p95_ms": 13.738,
+      "max_ms": 28.806,
+      "share_over_10ms_pct": 6.67
+    },
+    "250": {
+      "samples": 30,
+      "mean_ms": 1.654,
+      "median_ms": 1.625,
+      "p95_ms": 1.924,
+      "max_ms": 2.003,
+      "share_over_10ms_pct": 0.0
+    }
+  },
+  "F_gap_sweep_rest_controle": {
+    "0": {
+      "samples": 30,
+      "mean_ms": 8.768,
+      "median_ms": 3.895,
+      "p95_ms": 26.338,
+      "max_ms": 26.916,
+      "share_over_10ms_pct": 30.0
+    },
+    "5": {
+      "samples": 30,
+      "mean_ms": 7.284,
+      "median_ms": 5.189,
+      "p95_ms": 19.063,
+      "max_ms": 26.786,
+      "share_over_10ms_pct": 16.67
+    },
+    "20": {
+      "samples": 30,
+      "mean_ms": 6.425,
+      "median_ms": 5.207,
+      "p95_ms": 14.705,
+      "max_ms": 28.641,
+      "share_over_10ms_pct": 6.67
+    },
+    "50": {
+      "samples": 30,
+      "mean_ms": 6.889,
+      "median_ms": 4.857,
+      "p95_ms": 22.786,
+      "max_ms": 27.967,
+      "share_over_10ms_pct": 10.0
+    },
+    "100": {
+      "samples": 30,
+      "mean_ms": 7.91,
+      "median_ms": 5.234,
+      "p95_ms": 22.313,
+      "max_ms": 26.128,
+      "share_over_10ms_pct": 20.0
+    },
+    "250": {
+      "samples": 30,
+      "mean_ms": 7.526,
+      "median_ms": 5.154,
+      "p95_ms": 21.757,
+      "max_ms": 23.519,
+      "share_over_10ms_pct": 13.33
+    }
+  },
+  "gap_sweep_params": {
+    "gaps_ms": [
+      0,
+      5,
+      20,
+      50,
+      100,
+      250
+    ],
+    "calls_per_service": 10
+  }
+}

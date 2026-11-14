@@ -1,0 +1,18 @@
+{
+  "service": "user",
+  "timestamp": "2026-10-14T09:55:31.971303",
+  "total_requests": 100,
+  "total_time_ms": 102.01559999950405,
+  "throughput_rps": 980.242237466487,
+  "protocols": {
+    "grpc": {
+      "requests": 100,
+      "percentage": 100.0,
+      "success": 100,
+      "errors": 0,
+      "avg_latency_ms": 0.94,
+      "min_latency_ms": 0.64,
+      "max_latency_ms": 12.05
+    }
+  }
+}
