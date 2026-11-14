@@ -25,7 +25,9 @@ def publish_event(index):
     elapsed = (time.perf_counter() - start) * 1000  # ms
 
     status = response.status_code
-    status_text = "OK" if status == 200 else "ERRO"
+    body = response.json()
+    published = (body.get("data") or {}).get("publishEvent") or {}
+    status_text = "OK" if status == 200 and not body.get("errors") and published.get("source") == "event-graphql" and published.get("type") == f"Teste_{index}" else "ERRO"
     print(f"Evento {index} publicado - Status: {status} {status_text} - Tempo: {elapsed:.0f}ms")
     return elapsed
 

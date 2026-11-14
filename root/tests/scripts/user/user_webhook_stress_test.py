@@ -1,29 +1,29 @@
-import requests
+import sys
 import time
 import statistics
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from benchmark_delivery import prepare_webhook, webhook_delivery
 import random
 
 BASE_URL = "http://localhost:8003"
 TOTAL_REQUESTS = 500
+RUN_ID = int(time.time())
 
 def register_webhook():
-    callback_url = f"{BASE_URL}/webhook/receiver"
-    response = requests.post(f"{BASE_URL}/hooks/users", json={"callback_url": callback_url})
-    if response.status_code != 200:
-        print("❌ Erro ao registrar webhook:", response.text)
-    else:
-        print("✅ Webhook registrado com sucesso")
+    prepare_webhook("user", f"{BASE_URL}/hooks/users")
 
 def create_user(index):
     user_data = {
         "name": f"User{index}",
-        "email": f"user{index}@example.com"
+        "email": f"bench-{RUN_ID}-{index}@example.com"
     }
-    start = time.perf_counter()
-    response = requests.post(f"{BASE_URL}/users", json=user_data)
-    elapsed = (time.perf_counter() - start) * 1000  # ms
-    status = response.status_code
-    print(f"Usuário {index} criado - Status: {status} {'OK' if status == 200 else 'ERRO'} - Tempo: {elapsed:.0f}ms")
+    token = f"bench-{RUN_ID}-{index}"
+    elapsed, ok = webhook_delivery("user", f"{BASE_URL}/hooks/users", f"{BASE_URL}/users", user_data, token)
+    print(f"Usuário {index} criado - Status: {'OK' if ok else 'ERRO'} - Tempo: {elapsed:.0f}ms")
+    if not ok:
+        raise RuntimeError("Callback de usuário não recebido")
     return elapsed
 
 def main():

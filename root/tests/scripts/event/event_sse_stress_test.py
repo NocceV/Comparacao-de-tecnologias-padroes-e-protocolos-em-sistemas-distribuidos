@@ -1,6 +1,10 @@
-import requests
+import sys
 import time
 import statistics
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from benchmark_delivery import sse_delivery
 
 BASE_URL = "http://localhost:8027"
 TOTAL_REQUESTS = 500
@@ -8,15 +12,15 @@ RUN_ID = int(time.time())
 
 
 def create_event(index):
+    token = f"bench-{RUN_ID}-{index}"
     params = {
         "type": "PUBLISH",
-        "source": f"source_sse_{RUN_ID}_{index}"
+        "source": token
     }
-    start = time.perf_counter()
-    response = requests.post(f"{BASE_URL}/create", params=params)
-    elapsed = (time.perf_counter() - start) * 1000
-    status = response.status_code
-    print(f"Evento {index} criado via SSE - Status: {status} {'OK' if status == 200 else 'ERRO'} - Tempo: {elapsed:.0f}ms")
+    elapsed, ok = sse_delivery(f"{BASE_URL}/sse/events", f"{BASE_URL}/create", token, params=params)
+    print(f"Evento {index} criado via SSE - Status: {'OK' if ok else 'ERRO'} - Tempo: {elapsed:.0f}ms")
+    if not ok:
+        raise RuntimeError("Evento SSE não recebido")
     return elapsed
 
 

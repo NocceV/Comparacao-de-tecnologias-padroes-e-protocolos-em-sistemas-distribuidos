@@ -1,30 +1,29 @@
-import requests
+import sys
 import time
 import statistics
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from benchmark_delivery import prepare_webhook, webhook_delivery
 
 BASE_URL = "http://localhost:8004"
 TOTAL_REQUESTS = 500
+RUN_ID = int(time.time())
 
 def register_webhook():
-    callback_url = f"{BASE_URL}/webhook/receiver"
-    response = requests.post(f"{BASE_URL}/hooks/messages", json={"callback_url": callback_url})
-    if response.status_code == 200:
-        print("✅ Webhook registrado com sucesso")
-    else:
-        print("❌ Erro ao registrar webhook:", response.text)
+    prepare_webhook("message", f"{BASE_URL}/hooks/messages")
 
 
 def send_message(index):
     message_data = {
         "sender": f"User{index}",
-        "content": f"Mensagem de teste #{index}"
+        "content": f"bench-{RUN_ID}-{index}"
     }
-    start = time.perf_counter()
-    response = requests.post(f"{BASE_URL}/messages", json=message_data)
-    elapsed = (time.perf_counter() - start) * 1000  # ms
-    status = response.status_code
-    status_text = "OK" if status == 200 else "ERRO"
-    print(f"Mensagem {index} enviada - Status: {status} {status_text} - Tempo: {elapsed:.0f}ms")
+    token = f"bench-{RUN_ID}-{index}"
+    elapsed, ok = webhook_delivery("message", f"{BASE_URL}/hooks/messages", f"{BASE_URL}/messages", message_data, token)
+    print(f"Mensagem {index} enviada - Status: {'OK' if ok else 'ERRO'} - Tempo: {elapsed:.0f}ms")
+    if not ok:
+        raise RuntimeError("Callback de mensagem não recebido")
     return elapsed
 
 

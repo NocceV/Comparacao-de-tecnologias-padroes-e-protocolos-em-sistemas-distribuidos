@@ -128,6 +128,8 @@ services:
     <<: *service-limits
     ports:
       - "8003:8003"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - testnet
 
@@ -138,6 +140,8 @@ services:
     <<: *service-limits
     ports:
       - "8004:8004"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - testnet
 
@@ -148,6 +152,8 @@ services:
     <<: *service-limits
     ports:
       - "8023:8023"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - testnet
 

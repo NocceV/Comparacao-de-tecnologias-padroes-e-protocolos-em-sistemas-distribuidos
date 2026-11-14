@@ -1,33 +1,37 @@
-import requests
+import sys
 import time
 import statistics
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from benchmark_delivery import prepare_webhook, webhook_delivery
 
 BASE_URL = "http://localhost:8023"  # Porta padrão do Event Webhook
 TOTAL_REQUESTS = 500
+RUN_ID = int(time.time())
 
 
 def send_event(index):
     """Envia um evento via webhook e mede o tempo de resposta."""
+    token = f"bench-{RUN_ID}-{index}"
     event_data = {
         "id": index,
-        "type": f"event_type_{index}",
-        "source": "stress_test",
+        "type": "PUBLISH",
+        "source": token,
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     }
 
-    start = time.perf_counter()
-    response = requests.post(f"{BASE_URL}/events", json=event_data)
-    elapsed = (time.perf_counter() - start) * 1000  # ms
-
-    status = response.status_code
-    status_text = "OK" if status == 200 else "ERRO"
-    print(f"Evento {index} enviado - Status: {status} {status_text} - Tempo: {elapsed:.0f}ms")
+    elapsed, ok = webhook_delivery("event", f"{BASE_URL}/hooks/events", f"{BASE_URL}/events", event_data, token)
+    print(f"Evento {index} enviado - Status: {'OK' if ok else 'ERRO'} - Tempo: {elapsed:.0f}ms")
+    if not ok:
+        raise RuntimeError("Callback de evento não recebido")
 
     return elapsed
 
 
 def main():
     print("=== TESTE DE STRESS - EVENT WEBHOOK ===")
+    prepare_webhook("event", f"{BASE_URL}/hooks/events")
 
     latencies = []
     start_total = time.perf_counter()

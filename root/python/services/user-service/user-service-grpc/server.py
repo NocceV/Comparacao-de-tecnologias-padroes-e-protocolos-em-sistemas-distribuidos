@@ -1,5 +1,6 @@
 import grpc
 from concurrent import futures
+from threading import Lock
 import time
 from prometheus_client import start_http_server, Counter, Histogram
 import protos.user_pb2 as user_pb2
@@ -7,6 +8,9 @@ import protos.user_pb2_grpc as user_pb2_grpc
 
 REQUEST_COUNT = Counter('grpc_requests_total', 'Total de chamadas gRPC', ['method'])
 REQUEST_LATENCY = Histogram('grpc_request_latency_seconds', 'Latência por método', ['method'])
+_users = {}
+_next_user_id = 0
+_users_lock = Lock()
 
 class UserService(user_pb2_grpc.UserServiceServicer):
     def GetUser(self, request, context):
@@ -15,6 +19,18 @@ class UserService(user_pb2_grpc.UserServiceServicer):
         REQUEST_COUNT.labels(method='GetUser').inc()
         response = user_pb2.UserResponse(id=request.id, name=f"User{request.id}", email="user@example.com")
         REQUEST_LATENCY.labels(method='GetUser').observe(time.perf_counter() - start)
+        return response
+
+    def CreateUser(self, request, context):
+        global _next_user_id
+        start = time.perf_counter()
+        REQUEST_COUNT.labels(method='CreateUser').inc()
+        with _users_lock:
+            user_id = _next_user_id
+            _next_user_id += 1
+            response = user_pb2.UserResponse(id=user_id, name=request.name, email=request.email)
+            _users[user_id] = response
+        REQUEST_LATENCY.labels(method='CreateUser').observe(time.perf_counter() - start)
         return response
 
 def serve():

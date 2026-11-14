@@ -1,4 +1,4 @@
-grpcio
-grpcio-tools
-protobuf
+grpcio>=1.84.0
+grpcio-tools>=1.84.0
+protobuf>=7.35.1
 prometheus-client

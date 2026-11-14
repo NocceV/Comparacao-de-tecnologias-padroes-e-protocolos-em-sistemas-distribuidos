@@ -12,16 +12,10 @@ def run_stress_test(total_requests=500):
 
     for i in range(total_requests):
         user_id = i + 1
-        query = f"""
-        query {{
-            user(id: {user_id}) {{
-                id
-                name
-                email
-            }}
-        }}
-        """
-        payload = {"query": query}
+        name = f"User{user_id}"
+        email = f"graphql_user_{user_id}@example.com"
+        query = "mutation($name: String!, $email: String!) { createUser(name: $name, email: $email) { id name email } }"
+        payload = {"query": query, "variables": {"name": name, "email": email}}
         headers = {"Content-Type": "application/json"}
 
         req_start = time.perf_counter()
@@ -30,7 +24,9 @@ def run_stress_test(total_requests=500):
         latencies.append(elapsed)
 
         status = response.status_code
-        status_text = "OK" if status == 200 else "ERRO"
+        body = response.json()
+        created = (body.get("data") or {}).get("createUser") or {}
+        status_text = "OK" if status == 200 and not body.get("errors") and created.get("email") == email else "ERRO"
         print(f"Usuário {user_id} criado - Status: {status} {status_text} - Tempo: {elapsed:.0f}ms")
 
     total_time = (time.perf_counter() - start_time) * 1000  # ms
