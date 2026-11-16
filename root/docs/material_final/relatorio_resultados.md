@@ -1,6 +1,6 @@
 # Relatório Final de Resultados — Comparação de Tecnologias de Comunicação
 
-*Gerado automaticamente em 13/11/2026 23:10 a partir da execução* `final_20261113_224136` *(dados em `dados_brutos/`).*
+*Gerado automaticamente em 16/11/2026 11:10 a partir da execução* `final_20261113_224136` *(dados em `dados_brutos/`).*
 
 ## 1. Configuração do experimento e igualdade de infraestrutura
 
@@ -282,22 +282,22 @@
 
 | Falha | Cliente | Requisições | Falhas | Falhas (%) | Indisponibilidade (s) | Recuperação após fim da falha (s) | 1ª resposta após recuperação (ms) |
 |---|---|---|---|---|---|---|---|
-| Blackout 6 s | REST | 300 | 3 | 1,0 | 6,04 | 0,00 | 1.106,0 |
-| Blackout 6 s | SOAP | 300 | 3 | 1,0 | 6,04 | 0,00 | 1.096,5 |
-| Blackout 6 s | GraphQL | 300 | 3 | 1,0 | 6,04 | 0,00 | 1.101,7 |
-| Blackout 6 s | Webhook | 300 | 3 | 1,0 | 6,04 | 0,00 | 1.119,2 |
-| Blackout 6 s | SSE | 300 | 3 | 1,0 | 6,04 | 0,00 | 1.092,8 |
-| Blackout 6 s | WebSocket | 300 | 3 | 1,0 | 6,55 | 0,00 | 69,4 |
-| Blackout 6 s | gRPC | 300 | 3 | 1,0 | 6,04 | 0,00 | 916,9 |
-| Blackout 6 s | gRPC (backoff ajustado) | 300 | 3 | 1,0 | 6,04 | 0,00 | 466,0 |
-| Reinício do contêiner | REST | 300 | 114 | 38,0 | 3,30 | 1,00 | 27,7 |
-| Reinício do contêiner | SOAP | 300 | 114 | 38,0 | 3,30 | 1,10 | 10,7 |
-| Reinício do contêiner | GraphQL | 300 | 32 | 10,7 | 3,20 | 1,34 | 9,6 |
-| Reinício do contêiner | Webhook | 300 | 33 | 11,0 | 3,30 | 1,06 | 10,2 |
-| Reinício do contêiner | SSE | 300 | 114 | 38,0 | 3,40 | 1,19 | 13,1 |
-| Reinício do contêiner | WebSocket | 300 | 31 | 10,3 | 3,10 | 0,95 | 10,6 |
-| Reinício do contêiner | gRPC | 300 | 24 | 8,0 | 2,40 | 1,22 | 3,4 |
-| Reinício do contêiner | gRPC (backoff ajustado) | 300 | 10 | 3,3 | 1,00 | 0,51 | 2,8 |
+| Blackout 6 s | REST | 300 | 3 | 1,0 | 6,04 | 0,00 | 1.118,4 |
+| Blackout 6 s | SOAP | 300 | 3 | 1,0 | 6,05 | 0,00 | 1.083,0 |
+| Blackout 6 s | GraphQL | 300 | 3 | 1,0 | 6,04 | 0,00 | 1.123,3 |
+| Blackout 6 s | Webhook | 300 | 3 | 1,0 | 6,06 | 0,00 | 1.130,6 |
+| Blackout 6 s | SSE | 300 | 3 | 1,0 | 6,04 | 0,00 | 1.115,0 |
+| Blackout 6 s | WebSocket | 300 | 3 | 1,0 | 6,54 | 0,00 | 87,4 |
+| Blackout 6 s | gRPC | 300 | 3 | 1,0 | 6,03 | 0,00 | 830,2 |
+| Blackout 6 s | gRPC (backoff ajustado) | 300 | 3 | 1,0 | 6,03 | 0,00 | 957,9 |
+| Reinício do contêiner | REST | 300 | 25 | 8,3 | 2,50 | 0,87 | 21,9 |
+| Reinício do contêiner | SOAP | 300 | 22 | 7,3 | 2,20 | 0,93 | 10,8 |
+| Reinício do contêiner | GraphQL | 300 | 26 | 8,7 | 2,60 | 1,03 | 9,3 |
+| Reinício do contêiner | Webhook | 300 | 23 | 7,7 | 2,30 | 0,83 | 14,5 |
+| Reinício do contêiner | SSE | 300 | 22 | 7,3 | 2,20 | 0,89 | 33,5 |
+| Reinício do contêiner | WebSocket | 300 | 24 | 8,0 | 2,40 | 0,89 | 15,2 |
+| Reinício do contêiner | gRPC | 300 | 12 | 4,0 | 1,20 | 0,49 | 3,1 |
+| Reinício do contêiner | gRPC (backoff ajustado) | 300 | 9 | 3,0 | 0,90 | 0,43 | 3,2 |
 
 
 > **Análise técnica — Reação do gRPC e do WebSocket quando a conexão falha ou degrada:**

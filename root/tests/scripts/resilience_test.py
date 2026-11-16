@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import argparse
 import concurrent.futures
+import itertools
 import json
 import os
 import subprocess
@@ -61,15 +62,19 @@ VARIANTS = ["rest", "soap", "graphql", "webhook", "sse", "websocket", "grpc", "g
 LABEL = {**lab.PROTOCOL_LABEL, "grpc_tuned": "gRPC (backoff ajustado)"}
 
 
+_ID_BLOCK = itertools.count(1_000_000, 10_000)
+
+
 class HttpClient:
     def __init__(self, proto):
         self.proto = proto
         self.handler = mp.REGISTRY["user"][proto]
+        self.base = next(_ID_BLOCK)
         self.i = 0
 
     def call(self):
         self.i += 1
-        el, ok = self.handler(500_000 + self.i)
+        el, ok = self.handler(self.base + self.i)
         if not ok:
             raise RuntimeError("resposta inválida")
 
@@ -256,6 +261,7 @@ def main():
     ap.add_argument("--variants", default=",".join(VARIANTS))
     ap.add_argument("--faults", default="blackout,restart")
     a = ap.parse_args()
+    mp.RUN_ID = int(time.time() * 1000)
     lab.ensure_sidecar_image()
     report = {"timestamp": datetime.now().isoformat(),
               "params": {"rate_hz": RATE_HZ, "duration_s": DURATION_S, "fault_at_s": FAULT_AT_S,
